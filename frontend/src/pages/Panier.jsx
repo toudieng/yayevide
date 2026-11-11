@@ -86,16 +86,22 @@ export default function Panier() {
                       {item.titre}
                     </Link>
                     {item.typeOffre === 'location' ? (
-                      <p className="text-[12px] text-teal-dark font-semibold mt-1">
+                      <p className="text-[12px] text-ink font-semibold mt-1">
                         Location · {item.dateDebut} → {item.dateFin} ({item.nbJours} jour{item.nbJours > 1 ? 's' : ''}) · Caution {formatFCFA(item.caution)}
                       </p>
                     ) : (
                       <p className="text-[12px] text-ink-soft/75 mt-1">{item.categorieNom || 'Yaay Vidé'}</p>
                     )}
+                    {/* rappel de la taille, pour repérer une erreur avant de commander */}
+                    {item.taille && (
+                      <p className="text-[12px] text-ink mt-0.5">
+                        Taille : <span className="font-semibold">{item.taille}</span>
+                      </p>
+                    )}
                     <button
                       type="button"
                       onClick={() => removeItem(item.cleId)}
-                      className="text-[12px] text-clay-dark font-semibold mt-1.5 py-1 hover:underline"
+                      className="text-[12px] text-ink font-semibold mt-1.5 py-1 underline underline-offset-2 hover:text-clay-dark"
                     >
                       Retirer
                     </button>

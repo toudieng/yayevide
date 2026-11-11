@@ -373,15 +373,15 @@ export default function Checkout() {
             </div>
             <div className="flex justify-between text-[13px] text-ink-soft/75 pt-2">
               <span>Sous-total</span>
-              <span>{formatFCFA(subtotal)}</span>
+              <span className="whitespace-nowrap">{formatFCFA(subtotal)}</span>
             </div>
             <div className="flex justify-between text-[13px] text-ink-soft/75">
               <span>Livraison estimée</span>
               <span>{form.zone ? formatFCFA(fraisLivraison) : '—'}</span>
             </div>
-            <div className="flex justify-between text-[16px] font-bold text-ink pt-3 border-t border-line">
+            <div className="flex justify-between items-end gap-4 text-[16px] font-bold text-ink pt-3 border-t border-line">
               <span>Total à payer à la livraison</span>
-              <span>{formatFCFA(totalGeneral)}</span>
+              <span className="whitespace-nowrap">{formatFCFA(totalGeneral)}</span>
             </div>
           </div>
         </div>

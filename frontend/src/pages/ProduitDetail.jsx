@@ -13,13 +13,6 @@ const ETAT_LABELS = {
   bon: "Bon état",
 };
 
-const ETAT_BADGE = {
-  // Fonds assez foncés pour un texte blanc lisible (contraste AA)
-  neuf: "bg-green-700",
-  excellent: "bg-teal-dark",
-  bon: "bg-clay-dark",
-};
-
 function formatFCFA(value) {
   if (value === null || value === undefined || Number.isNaN(value)) return "—";
   return Math.round(Number(value)).toLocaleString("fr-FR") + " FCFA";
@@ -246,17 +239,17 @@ export default function ProduitDetail() {
 
             <div className="absolute top-4 left-4 flex flex-col gap-2 items-start">
               {isLocation && (
-                <span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide bg-ink text-white shadow-sm">
+                <span className="px-3 py-1.5 rounded-btn text-[12px] font-semibold shadow-[0_2px_6px_rgba(27,36,48,0.28)] bg-ink text-white">
                   À louer
                 </span>
               )}
               <span
-                className={`px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || "bg-clay-dark"}`}
+                className="px-3 py-1.5 rounded-btn text-[12px] font-semibold shadow-[0_2px_6px_rgba(27,36,48,0.28)] bg-white text-ink"
               >
                 {ETAT_LABELS[produit.etat] || "Bon état"}
               </span>
               {estBonneAffaire && (
-                <span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide bg-red-600 text-white shadow-sm">
+                <span className="px-3 py-1.5 rounded-btn text-[12px] font-semibold shadow-[0_2px_6px_rgba(27,36,48,0.28)] bg-red-600 text-white">
                   Bonne affaire
                 </span>
               )}
