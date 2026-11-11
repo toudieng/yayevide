@@ -27,7 +27,11 @@ export default function Connexion({ onLoginSuccess }) {
 
       if (response.ok) {
         onLoginSuccess(data);
-        if (data.role === 'vendeur') {
+        // Retour vers la messagerie quand on y était envoyé (bouton
+        // « Contacter la vendeuse », icône Messages…), quel que soit le rôle
+        if (location.state?.from?.startsWith('/messages')) {
+          navigate(location.state.from);
+        } else if (data.role === 'vendeur') {
           navigate('/dashboard');
         } else if (data.role === 'admin') {
           navigate('/admin');

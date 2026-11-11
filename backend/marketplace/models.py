@@ -661,3 +661,57 @@ class AvisVendeur(models.Model):
 
     def __str__(self):
         return f"Avis {self.note}/5 pour {self.boutique.nom_boutique}"
+
+# ==========================================
+# MESSAGERIE (acheteuse <-> vendeuse)
+# ==========================================
+class Conversation(models.Model):
+    """
+    Fil de discussion entre deux utilisateurs (en pratique une acheteuse et
+    une vendeuse). Une seule conversation par paire : `participant_1` a
+    toujours l'identifiant le plus petit, ce qui rend la paire unique quel
+    que soit celui qui écrit en premier.
+    """
+    participant_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='conversations_1')
+    participant_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='conversations_2')
+    cree_le = models.DateTimeField(auto_now_add=True)
+    # Mis à jour à chaque nouveau message : sert à trier la liste
+    dernier_message_le = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['participant_1', 'participant_2'], name='conversation_unique_par_paire'),
+        ]
+        ordering = ['-dernier_message_le']
+
+    def __str__(self):
+        return f"{self.participant_1} ↔ {self.participant_2}"
+
+    @classmethod
+    def entre(cls, user_a, user_b):
+        """Récupère (ou crée) la conversation entre deux utilisateurs."""
+        p1, p2 = sorted([user_a, user_b], key=lambda u: u.pk)
+        conversation, _ = cls.objects.get_or_create(participant_1=p1, participant_2=p2)
+        return conversation
+
+    def participants(self):
+        return [self.participant_1, self.participant_2]
+
+    def interlocuteur_de(self, user):
+        return self.participant_2 if user.pk == self.participant_1_id else self.participant_1
+
+
+class Message(models.Model):
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, related_name='messages')
+    auteur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages_envoyes')
+    texte = models.TextField(max_length=2000)
+    # Article joint (ex. bouton « Contacter la vendeuse » d'une fiche produit)
+    produit = models.ForeignKey(Produit, on_delete=models.SET_NULL, null=True, blank=True, related_name='messages')
+    envoye_le = models.DateTimeField(auto_now_add=True, db_index=True)
+    lu_le = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['envoye_le', 'id']
+
+    def __str__(self):
+        return f"{self.auteur} : {self.texte[:40]}"

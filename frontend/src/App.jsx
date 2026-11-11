@@ -9,6 +9,7 @@ import Ebook from './pages/Ebook';
 import ProduitDetail from './pages/ProduitDetail';
 import BoutiqueVendeuse from './pages/BoutiqueVendeuse';
 import Panier from './pages/Panier';
+import Messages from './pages/Messages';
 import MonCompte from './pages/MonCompte';
 import Checkout from './pages/Checkout';
 import Blog from './pages/Blog';
@@ -73,6 +74,7 @@ function App() {
           <Route path="/inscription" element={<RegisterPage />} />
           <Route path="/verification-compte" element={<VerificationCompte />} />
           <Route path="/verifier-email/:username/:token" element={<VerifierEmail />} />
+          <Route path="/messages" element={<Messages />} />
           <Route path="/mot-de-passe-oublie" element={<MotDePasseOublie />} />
           <Route path="/reinitialiser-mot-de-passe/:uid/:token" element={<ReinitialiserMotDePasse />} />
 

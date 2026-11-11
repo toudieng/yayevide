@@ -572,6 +572,18 @@ export default function ProduitDetail() {
             </>
           )}
 
+          {/* Messagerie : ouvre la conversation avec la vendeuse, article joint
+              et message prérempli (rien n'est envoyé sans validation) */}
+          <Link
+            to={`/messages?produit=${produit.id}`}
+            className="mt-4 w-full min-h-[48px] flex items-center justify-center gap-2.5 rounded-btn border-2 border-ink text-ink text-sm font-bold hover:bg-ink hover:text-white transition-colors"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5" aria-hidden="true">
+              <path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z" />
+            </svg>
+            Contacter la vendeuse
+          </Link>
+
           {produit.boutique_nom && (
             <Link
               to={`/boutique/${produit.boutique_slug}`}
