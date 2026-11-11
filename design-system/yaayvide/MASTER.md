@@ -86,8 +86,8 @@ Sections : `py-12` mobile → `py-16`/`py-20` desktop. Écart entre cartes : `ga
 - Erreur : bordure `red-500`, message `text-red-700 text-[13px]` sous le champ.
 
 ### Cartes produit
-- Compactes, image carrée, ~190 px de large en grille — **ne pas agrandir**.
-- Prix lisible (`ink` ou `orange-dark` gras), badges ≥ 10 px, bouton ≥ 36 px.
+- Image 4/3, badge d'état pêche (`bg-peche text-ink`), catégorie en texte teal, titre + prix sur une ligne, lieu · date + bouclier vérifié, bouton à contour clay.
+- Grilles : `grid-cols-2` sur mobile, `repeat(auto-fill, minmax(200px, 1fr))` dès `sm` (les cartes remplissent la ligne, pas de vide au bord).
 
 ### États (composants partagés)
 - `components/ui/EtatVide.jsx` : état vide (icône douce + titre + texte + action), `compact` / `bordure={false}` dans les blocs.

@@ -254,7 +254,7 @@ export default function Boutique() {
           </div>
 
           {/* GRILLE PRODUITS */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {/* Barre recherche + tri */}
             <Reveal className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between mb-7">
               <input
@@ -301,7 +301,7 @@ export default function Boutique() {
             )}
 
             {chargement ? (
-              <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(0,190px))] gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div
                     key={i}
@@ -339,7 +339,7 @@ export default function Boutique() {
                       Tout le catalogue
                     </h3>
                   )}
-                <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(0,190px))] gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
                   {produitsPage.map((produit, i) => (
                     <ProductCard key={produit.id} produit={produit} index={i} />
                   ))}

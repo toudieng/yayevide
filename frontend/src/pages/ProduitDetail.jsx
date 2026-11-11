@@ -765,9 +765,9 @@ export default function ProduitDetail() {
                 </svg>
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
               {autresArticles.map((p, i) => (
-                <div key={p.id} className="w-[160px] sm:w-[190px]">
+                <div key={p.id}>
                   <ProductCard produit={p} index={i} />
                 </div>
               ))}
@@ -787,9 +787,9 @@ export default function ProduitDetail() {
                 Produits similaires
               </h2>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
               {produitsSimilaires.map((p, i) => (
-                <div key={p.id} className="w-[160px] sm:w-[190px]">
+                <div key={p.id}>
                   <ProductCard produit={p} index={i} />
                 </div>
               ))}

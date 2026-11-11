@@ -13,7 +13,7 @@ function RangeeProduits({ titre, sousTitre, produits }) {
       </div>
       <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-1 px-1 no-scrollbar">
         {produits.map((p, i) => (
-          <div key={p.id} className="w-[160px] sm:w-[190px] shrink-0 snap-start">
+          <div key={p.id} className="flex-1 min-w-[160px] sm:min-w-[220px] max-w-[300px] shrink-0 snap-start">
             <ProductCard produit={p} index={i} />
           </div>
         ))}

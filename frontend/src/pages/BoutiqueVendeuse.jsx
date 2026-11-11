@@ -291,7 +291,7 @@ export default function BoutiqueVendeuse() {
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(0,190px))] gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
                   {produitsPage.map((p, i) => (
                     <ProductCard key={p.id} produit={p} index={i} />
                   ))}
