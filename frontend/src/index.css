@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/* ==========================================================
+   1. DESIGN TOKENS — direction validée avec la cliente
+   ========================================================== */
+@theme {
+  /* Palette : encre marine (structure/texte), fond quasi-blanc (sable) pour
+     TOUTES les surfaces (page + cartes/formulaires — la crème foncée qui
+     servait avant aux cartes est retirée au profit d'un rendu beaucoup
+     plus clair, quasi blanc partout), argile (CTA principal, proche de
+     l'orange du logo), teal exact du logo, orange exact du logo. */
+  --color-ink: #1b2430;
+  --color-ink-soft: #3a4350;
+  --color-night: #0a2b58;
+  --color-sable: #ffffff;
+  --color-cream: #ffffff;
+  --color-clay: #c4602f;
+  --color-clay-dark: #a24e25;
+  --color-teal: #1e93ac;
+  --color-teal-dark: #176f84;
+  --color-orange: #fb8502;
+  --color-orange-dark: #d66f20;
+  --color-line: #ded5c2;
+
+  /* font-serif et font-sans pilotent déjà les classes Tailwind
+     existantes (ex: font-serif utilisé dans les pages auth) */
+  --font-serif: "Playfair Display", serif;
+  --font-display: "Playfair Display", serif;
+  --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-impact: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-rounded: "Quicksand", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-banner: "Cormorant Garamond", serif;
+
+  --radius-btn: 8px;
+  --radius-m: 16px;
+}
+
+/* ==========================================================
+   2. BASE
+   ========================================================== */
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-sable);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-clay);
+    outline-offset: 3px;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-cream) inset !important;
+    -webkit-text-fill-color: var(--color-ink) !important;
+  }
+}
+
+/* ==========================================================
+   3. ANIMATIONS SUR-MESURE (effets "wahou" validés)
+   ========================================================== */
+@layer utilities {
+  /* --- apparition au scroll --- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- zoom lent de la photo hero --- */
+  @keyframes kenburns {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.13) translate(-1.5%, -1%); }
+  }
+  .animate-kenburns { animation: kenburns 26s ease-in-out infinite alternate; }
+
+  /* --- bandeaux défilants --- */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-marquee { animation: marquee 30s linear infinite; }
+  .animate-marquee-reverse { animation: marquee 38s linear infinite reverse; }
+  .pause-on-hover:hover .animate-marquee,
+  .pause-on-hover:hover .animate-marquee-reverse { animation-play-state: paused; }
+
+  /* --- flottement doux (icônes engagements) --- */
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .animate-float { animation: floatY 5s ease-in-out infinite; }
+
+  /* --- motifs flottants dans le hero --- */
+  @keyframes drift1 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(14px,-18px) rotate(12deg); } }
+  @keyframes drift2 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(-16px,12px) rotate(-10deg); } }
+  @keyframes drift3 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(10px,14px) rotate(8deg); } }
+  @keyframes drift4 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(-12px,-10px) rotate(-14deg); } }
+  .animate-drift-1 { animation: drift1 9s ease-in-out infinite alternate; }
+  .animate-drift-2 { animation: drift2 12s ease-in-out infinite alternate; }
+  .animate-drift-3 { animation: drift3 15s ease-in-out infinite alternate; }
+  .animate-drift-4 { animation: drift4 11s ease-in-out infinite alternate; }
+
+  /* --- sceau "deuxième vie" qui tourne --- */
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  .animate-spin-slow { animation: spin-slow 22s linear infinite; }
+
+  /* --- pastille "live" --- */
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+    50% { box-shadow: 0 0 0 5px rgba(74, 222, 128, 0); }
+  }
+  .animate-pulse-dot { animation: pulseDot 1.6s ease-in-out infinite; }
+
+  /* --- halo du bouton principal du hero --- */
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(196, 96, 47, 0.45); }
+    50% { box-shadow: 0 0 0 9px rgba(196, 96, 47, 0); }
+  }
+  .animate-pulse-glow { animation: pulseGlow 2.6s ease-in-out infinite; }
+
+  /* --- trait dessiné à la main sous "Sénégal" --- */
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+  .animate-draw path {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: draw 1.4s 0.9s ease forwards;
+  }
+
+  /* --- indicateur de scroll --- */
+  @keyframes slideCue {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(200%); }
+  }
+  .animate-slide-cue { animation: slideCue 1.8s ease-in-out infinite; }
+
+  /* --- reflet qui glisse sur le bouton principal --- */
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.7s ease;
+  }
+  .btn-shine:hover::after { left: 120%; }
+
+  /* --- masquer la scrollbar des rangées défilantes horizontales --- */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+
+  /* --- apparition douce du texte quand on change de rôle (inscription) --- */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in { animation: fadeIn 0.45s ease both; }
+
+  /* --- apparition échelonnée des cartes produits (boutique) --- */
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-card-in { animation: cardIn 0.5s cubic-bezier(.2,.7,.2,1) both; }
+
+  /* --- transition entre les étapes du formulaire d'ajout de produit --- */
+  @keyframes stepInNext {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes stepInPrev {
+    from { opacity: 0; transform: translateX(-24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-step-next { animation: stepInNext 0.35s cubic-bezier(.2,.7,.2,1) both; }
+  .animate-step-prev { animation: stepInPrev 0.35s cubic-bezier(.2,.7,.2,1) both; }
+
+  /* --- petit "pop" quand le prix calculé change --- */
+  @keyframes pricePop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+  .animate-price-pop { animation: pricePop 0.35s ease; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns,
+  .animate-marquee,
+  .animate-marquee-reverse,
+  .animate-float,
+  .animate-drift-1,
+  .animate-drift-2,
+  .animate-drift-3,
+  .animate-drift-4,
+  .animate-spin-slow,
+  .animate-pulse-dot,
+  .animate-pulse-glow,
+  .animate-slide-cue,
+  .animate-fade-in,
+  .animate-card-in,
+  .animate-step-next,
+  .animate-step-prev,
+  .animate-price-pop,
+  .animate-draw path {
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

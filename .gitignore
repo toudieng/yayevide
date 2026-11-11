@@ -1,0 +1,33 @@
+# Dépendances (très lourdes, à ne jamais push)
+node_modules/
+.pnpm-store/
+
+# Environnements virtuels (Python / Django / Flask)
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Variables d'environnement (Contiennent tes mots de passe/clés API)
+.env
+.env.local
+.env.development.local
+
+# Builds et dossiers générés (Java / Spring Boot / React / Next)
+target/
+.next/
+dist/
+build/
+
+# Fichiers système ou d'éditeurs
+.DS_Store
+.idea/
+.vscode/
+
+# Base de données locale (contient les vrais comptes)
+db.sqlite3
+*.sqlite3
+
+# Photos uploadées (inutiles pour le code)
+backend/media/
