@@ -452,7 +452,7 @@ export default function MonCompte() {
                 <div>
                   <h1 className="font-impact font-extrabold text-2xl text-ink mb-2">Centre de plainte</h1>
                   <p className="text-[13px] text-ink-soft/75 max-w-lg">
-                    Les ventes étant fermes et définitives, ceci n'est pas un formulaire de remboursement — mais toute plainte est examinée individuellement par notre équipe.
+                    Un article non conforme, avec un défaut majeur non signalé ou abîmé pendant le transport ? Signalez-le dans les 24 heures après réception, photos à l'appui : notre équipe examine chaque demande et peut proposer un échange, un remboursement ou un avoir.
                   </p>
                 </div>
 

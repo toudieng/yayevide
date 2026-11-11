@@ -53,12 +53,12 @@ const STEPS = [
   {
     title: 'Réceptionnez votre colis vérifié',
     tag: 'Réception',
-    description: "Chaque article passe un contrôle qualité avant expédition. Les ventes sont fermes et définitives — en cas de problème avéré à la réception, le Centre de plainte accessible depuis votre compte permet de le signaler à notre équipe.",
+    description: "Chaque article passe un contrôle qualité avant expédition. Si l'article n'est pas conforme à l'annonce, présente un défaut majeur non signalé ou a été abîmé pendant le transport, vous disposez de 24 heures après réception pour le signaler : selon le cas, nous vous proposons un échange, un remboursement ou un avoir.",
     image: imgColis,
-    points: ['Contrôle qualité systématique', 'Ventes fermes et définitives', 'Centre de plainte disponible', 'Examen individuel par notre équipe'],
+    points: ['Contrôle qualité systématique', 'Réclamation sous 24 h après réception', 'Échange, remboursement ou avoir', 'Examen individuel par notre équipe'],
     tip: {
       title: 'Un souci après réception ?',
-      description: "Le Centre de plainte, accessible depuis votre compte, permet de signaler tout problème avéré.",
+      description: "Contactez-nous par WhatsApp, e-mail ou formulaire de contact avec des photos claires du problème. Un simple changement d'avis ou un article vendu « en l'état » ne peut pas être retourné.",
     },
   },
 ];

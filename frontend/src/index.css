@@ -23,6 +23,8 @@
   --color-line: #ded5c2;
   /* pêche doux : bandeau d'annonce + accent du titre du hero */
   --color-peche: #f9e9de;
+  /* crème chaud : fonds de page plus vivants (page e-book) */
+  --color-creme: #fdf6ee;
 
   /* font-serif et font-sans pilotent déjà les classes Tailwind
      existantes (ex: font-serif utilisé dans les pages auth) */

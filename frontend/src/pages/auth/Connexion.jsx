@@ -1,6 +1,6 @@
 // frontend/src/pages/auth/Connexion.jsx
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../../components/ui/Logo';
 import { apiFetch } from '../../utils/api';
 
@@ -126,9 +126,9 @@ export default function Connexion({ onLoginSuccess }) {
               Se souvenir de moi
             </label>
           </div>
-          <a href="#" className="text-xs text-ink-soft/75 hover:text-clay-dark underline underline-offset-2 font-medium">
+          <Link to="/mot-de-passe-oublie" className="text-xs text-ink-soft/75 hover:text-clay-dark underline underline-offset-2 font-medium py-1">
             Mot de passe perdu ?
-          </a>
+          </Link>
         </div>
 
         <button

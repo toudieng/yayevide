@@ -214,6 +214,9 @@ WHATSAPP_SUPPORT_NUMBER = os.environ.get('WHATSAPP_SUPPORT_NUMBER', '22177000000
 
 # URL du frontend (utilisée dans le lien envoyé par email)
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5173')
+
+# Durée de validité du lien « Mot de passe oublié » (2 heures)
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 2
 BACKEND_URL = os.environ.get('BACKEND_URL', 'http://localhost:8000')
 
 # ==========================================

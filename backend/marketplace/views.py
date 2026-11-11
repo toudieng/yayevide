@@ -1,6 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.utils import translation
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.conf import settings
 from django.db.models import Count, Q
 from django.utils.dateparse import parse_date
@@ -534,6 +540,97 @@ class RenvoyerEmailVerificationView(APIView):
         envoyer_email_verification(user)
         return Response({"message": f"Email envoyé à {user.email}."}, status=status.HTTP_200_OK)
     
+
+# ==========================================
+# MOT DE PASSE OUBLIÉ
+# ==========================================
+MESSAGE_LIEN_ENVOYE = (
+    "Si un compte correspond à cet identifiant, un lien de réinitialisation "
+    "vient d'être envoyé à l'adresse e-mail associée."
+)
+
+
+class MotDePasseOublieView(APIView):
+    """
+    Étape 1 : la personne donne son e-mail, son identifiant ou son numéro.
+    Si un compte avec une adresse e-mail correspond, on lui envoie un lien
+    à usage unique (jeton Django, expire après PASSWORD_RESET_TIMEOUT).
+    La réponse est toujours la même, que le compte existe ou non, pour ne
+    pas révéler quels comptes existent.
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        identifiant = (request.data.get('identifiant') or '').strip()
+        if not identifiant:
+            return Response(
+                {"identifiant": "Indiquez votre e-mail, votre identifiant ou votre numéro."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        user = (
+            User.objects.filter(
+                Q(email__iexact=identifiant) | Q(username=identifiant) | Q(phone_number=identifiant)
+            )
+            .filter(is_active=True)
+            .exclude(email='')
+            .first()
+        )
+        if user is not None:
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            jeton = default_token_generator.make_token(user)
+            lien = f"{settings.FRONTEND_URL}/reinitialiser-mot-de-passe/{uid}/{jeton}"
+            send_mail(
+                subject="Réinitialisez votre mot de passe Yaay Vidé",
+                message=(
+                    f"Bonjour,\n\n"
+                    f"Vous avez demandé à réinitialiser votre mot de passe Yaay Vidé.\n"
+                    f"Cliquez sur ce lien pour en choisir un nouveau :\n{lien}\n\n"
+                    f"Ce lien n'est valable que pendant 2 heures et ne peut servir qu'une fois.\n"
+                    f"Si vous n'êtes pas à l'origine de cette demande, ignorez simplement ce message.\n\n"
+                    f"L'équipe Yaay Vidé"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                fail_silently=True,
+            )
+        return Response({"message": MESSAGE_LIEN_ENVOYE}, status=status.HTTP_200_OK)
+
+
+class ReinitialiserMotDePasseView(APIView):
+    """Étape 2 : lien reçu par e-mail (uid + jeton) + nouveau mot de passe."""
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        uid = request.data.get('uid') or ''
+        jeton = request.data.get('token') or ''
+        mot_de_passe = request.data.get('mot_de_passe') or ''
+
+        lien_invalide = Response(
+            {"general": "Ce lien n'est plus valable. Refaites une demande depuis « Mot de passe oublié »."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+        try:
+            user = User.objects.get(pk=force_str(urlsafe_base64_decode(uid)), is_active=True)
+        except (User.DoesNotExist, ValueError, TypeError, OverflowError):
+            return lien_invalide
+        if not default_token_generator.check_token(user, jeton):
+            return lien_invalide
+
+        try:
+            # messages des validateurs Django en français
+            with translation.override('fr'):
+                validate_password(mot_de_passe, user)
+        except ValidationError as erreur:
+            return Response({"mot_de_passe": list(erreur.messages)}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(mot_de_passe)
+        user.save()  # change le hash : le lien ne peut plus resservir
+        return Response(
+            {"message": "Votre mot de passe a été modifié. Vous pouvez vous connecter."},
+            status=status.HTTP_200_OK,
+        )
+
 
 class ModifierProduitView(APIView):
     """

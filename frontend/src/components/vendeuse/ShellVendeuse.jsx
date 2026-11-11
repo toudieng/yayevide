@@ -1,6 +1,6 @@
 // frontend/src/components/vendeuse/ShellVendeuse.jsx
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../ui/Logo';
 import { apiFetch } from '../../utils/api';
 
@@ -72,7 +72,9 @@ export default function ShellVendeuse({ active, moi, titre, children }) {
       {/* SIDEBAR */}
       <aside className="w-64 bg-white border-r border-line hidden md:flex flex-col">
         <div className="p-8">
-          <Logo className="h-9 w-auto mb-2" />
+          <Link to="/" aria-label="Retour à l'accueil du site" className="inline-block rounded-btn">
+            <Logo className="h-9 w-auto mb-2" />
+          </Link>
           <p className="text-[10px] text-ink-soft/75 uppercase tracking-widest mt-1">Espace Vendeuse</p>
         </div>
 
@@ -112,17 +114,29 @@ export default function ShellVendeuse({ active, moi, titre, children }) {
       {/* CONTENU PRINCIPAL */}
       <main className="flex-1 flex flex-col min-w-0">
 
-        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line flex items-center justify-between px-8">
-          <div>
-            <h2 className="text-xl font-impact font-extrabold text-ink">
+        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line flex items-center justify-between gap-3 px-4 sm:px-8">
+          <div className="min-w-0">
+            <h2 className="text-lg sm:text-xl font-impact font-extrabold text-ink truncate">
               {titre || (
                 <>Bonjour, <span className="text-orange-dark">{moi?.nom_boutique || moi?.username}</span></>
               )}
             </h2>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
+            {/* Retour au site public (accueil) */}
+            <Link
+              to="/"
+              className="h-9 inline-flex items-center gap-2 px-3 sm:px-4 rounded-full border border-line bg-white text-[13px] font-semibold text-ink hover:border-teal hover:text-teal-dark transition-colors"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+                <path d="M3 11l9-7 9 7M5 10v10h5v-6h4v6h5V10" />
+              </svg>
+              <span className="hidden sm:inline">Retour au site</span>
+              <span className="sr-only sm:hidden">Retour à l'accueil du site</span>
+            </Link>
             <button
               onClick={() => navigate('/vendeuse/commandes')}
+              aria-label="Commandes en attente"
               className="relative h-9 w-9 flex items-center justify-center bg-white border border-line rounded-full hover:border-teal transition-colors"
             >
               <NavIcon id="bell" />
@@ -138,7 +152,7 @@ export default function ShellVendeuse({ active, moi, titre, children }) {
           </div>
         </header>
 
-        <div className="p-8 space-y-8 flex-1 bg-white">
+        <div className="p-4 sm:p-8 space-y-6 sm:space-y-8 flex-1 bg-white">
           {children}
         </div>
       </main>

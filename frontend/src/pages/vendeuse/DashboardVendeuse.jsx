@@ -28,19 +28,64 @@ function useCountUp(target, durationMs = 900) {
   return value;
 }
 
-function calculerRevenuParSemaine(commandes) {
+// Périodes du graphique « Bilan des revenus »
+const PERIODES = [
+  { id: 'mois', label: 'Mensuel' },
+  { id: 'trimestre', label: 'Trimestriel' },
+  { id: 'semestre', label: 'Semestriel' },
+  { id: 'annee', label: 'Annuel' },
+];
+const NB_MOIS = { trimestre: 3, semestre: 6, annee: 12 };
+
+/**
+ * Revenus nets (commandes payées) découpés en barres selon la période :
+ * - mensuel : les 4 semaines du mois en cours (S1…S4, la 4e va jusqu'à la fin du mois) ;
+ * - trimestriel / semestriel / annuel : les 3, 6 ou 12 derniers mois, mois en cours inclus.
+ */
+function bilanPeriode(commandes, periode) {
   const maintenant = new Date();
-  const semaines = [0, 0, 0, 0];
-  commandes
-    .filter((c) => c.statut_paiement === 'paye' && c.date_paiement)
-    .forEach((c) => {
+  const payees = commandes.filter((c) => c.statut_paiement === 'paye' && c.date_paiement);
+  const montant = (c) => Number(c.montant_net_vendeuse || 0);
+
+  if (periode === 'mois') {
+    const barres = ['S1', 'S2', 'S3', 'S4'].map((label) => ({ label, valeur: 0 }));
+    let nb = 0;
+    payees.forEach((c) => {
       const d = new Date(c.date_paiement);
       if (d.getFullYear() !== maintenant.getFullYear() || d.getMonth() !== maintenant.getMonth()) return;
-      const semaine = Math.min(3, Math.floor((d.getDate() - 1) / 7));
-      semaines[semaine] += Number(c.montant_net_vendeuse || 0);
+      barres[Math.min(3, Math.floor((d.getDate() - 1) / 7))].valeur += montant(c);
+      nb += 1;
     });
-  return semaines;
+    const libelle = maintenant.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+    return { barres, nb, libelle, total: barres.reduce((t, b) => t + b.valeur, 0) };
+  }
+
+  const nbMois = NB_MOIS[periode];
+  const mois = Array.from({ length: nbMois }, (_, i) => new Date(maintenant.getFullYear(), maintenant.getMonth() - (nbMois - 1 - i), 1));
+  const barres = mois.map((d) => ({
+    label: d.toLocaleDateString('fr-FR', { month: nbMois === 12 ? 'narrow' : 'short' }).replace('.', ''),
+    titre: d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }),
+    valeur: 0,
+  }));
+  let nb = 0;
+  payees.forEach((c) => {
+    const d = new Date(c.date_paiement);
+    const i = mois.findIndex((m) => m.getFullYear() === d.getFullYear() && m.getMonth() === d.getMonth());
+    if (i === -1) return;
+    barres[i].valeur += montant(c);
+    nb += 1;
+  });
+  const fmt = (d) => d.toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' });
+  return { barres, nb, libelle: `${fmt(mois[0])} – ${fmt(mois[nbMois - 1])}`, total: barres.reduce((t, b) => t + b.valeur, 0) };
 }
+
+const LIBELLE_TOTAL = {
+  mois: 'Revenus du mois',
+  trimestre: 'Revenus sur 3 mois',
+  semestre: 'Revenus sur 6 mois',
+  annee: 'Revenus sur 12 mois',
+};
+const LIBELLE_NB = { mois: 'ce mois-ci', trimestre: 'sur 3 mois', semestre: 'sur 6 mois', annee: 'sur 12 mois' };
 
 export default function DashboardVendeuse() {
   const navigate = useNavigate();
@@ -74,15 +119,14 @@ export default function DashboardVendeuse() {
     return { enLigne, enLocation, valeurCatalogue };
   }, [produits]);
 
-  const revenuSemaines = useMemo(() => calculerRevenuParSemaine(ventesData.commandes || []), [ventesData]);
-  const maxSemaine = Math.max(1, ...revenuSemaines);
+  const [periode, setPeriode] = useState('mois');
+  const bilan = useMemo(() => bilanPeriode(ventesData.commandes || [], periode), [ventesData, periode]);
+  const maxBarre = Math.max(1, ...bilan.barres.map((b) => b.valeur));
 
   const enLigneAnim = useCountUp(stats.enLigne);
   const enLocationAnim = useCountUp(stats.enLocation);
   const valeurAnim = useCountUp(stats.valeurCatalogue);
   const bilanNetAnim = useCountUp(ventesData.stats?.revenu_net_total || 0);
-
-  const nomMoisActuel = new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
 
   const toggleLocationStatus = async (produit) => {
     const res = await apiFetch(`/mes-produits/${produit.id}/disponibilite/`, {
@@ -160,27 +204,48 @@ export default function DashboardVendeuse() {
         })}
       </div>
 
-      <div className={`bg-white rounded-m ${SHADOW_CARD} p-6`}>
-        <div className="flex items-center justify-between mb-1">
-          <h3 className="font-serif text-lg text-ink">Bilan des revenus du mois</h3>
-          <span className="text-[11px] font-bold text-ink-soft/75 bg-sable px-3 py-1.5 rounded-full capitalize">{nomMoisActuel}</span>
-        </div>
-        <p className="text-[12.5px] text-ink-soft/75 mb-5">Vue consolidée de vos ventes et locations.</p>
-
-        <div className="grid grid-cols-[auto_1fr] gap-6 items-end">
+      <div className={`bg-white rounded-m ${SHADOW_CARD} p-5 sm:p-6`}>
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
           <div>
-            <p className="text-[11px] font-bold text-ink-soft/75 uppercase tracking-wider">Revenus du mois</p>
-            <p className="text-2xl font-serif font-bold text-ink mt-1">{formatFCFA(ventesData.stats?.revenu_net_mois)}</p>
-            <p className="text-[11px] text-ink-soft/75 mt-0.5">{ventesData.stats?.nb_ventes_mois || 0} vente{(ventesData.stats?.nb_ventes_mois || 0) > 1 ? 's' : ''} ce mois-ci</p>
+            <h3 className="font-impact font-extrabold text-lg text-ink">Bilan des revenus</h3>
+            <p className="text-[12.5px] text-ink-soft/75 mt-0.5">Vue consolidée de vos ventes et locations.</p>
           </div>
-          <div className="flex items-end gap-2.5 h-24">
-            {revenuSemaines.map((v, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
+          {/* Choix de la période : le graphique et le total suivent */}
+          <div className="flex flex-wrap gap-1 rounded-full bg-sable border border-line p-1" role="tablist" aria-label="Période du bilan">
+            {PERIODES.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                role="tab"
+                aria-selected={periode === p.id}
+                onClick={() => setPeriode(p.id)}
+                className={`px-3 py-1.5 rounded-full text-[12px] font-semibold transition-colors ${
+                  periode === p.id ? 'bg-ink text-white' : 'text-ink-soft hover:text-ink'
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <p className="text-[11.5px] font-semibold text-ink-soft/75 capitalize mb-5">{bilan.libelle}</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-5 sm:gap-6 items-end">
+          <div>
+            <p className="text-[11px] font-bold text-ink-soft/75 uppercase tracking-wider">{LIBELLE_TOTAL[periode]}</p>
+            <p className="text-2xl font-impact font-extrabold text-ink mt-1 whitespace-nowrap">{formatFCFA(bilan.total)}</p>
+            <p className="text-[11px] text-ink-soft/75 mt-0.5">
+              {bilan.nb} vente{bilan.nb > 1 ? 's' : ''} {LIBELLE_NB[periode]}
+            </p>
+          </div>
+          <div className="flex items-end gap-1.5 sm:gap-2.5 h-28" role="img" aria-label={`Revenus ${LIBELLE_NB[periode]} : ${bilan.barres.map((b) => `${b.titre || b.label} ${formatFCFA(b.valeur)}`).join(', ')}`}>
+            {bilan.barres.map((b, i) => (
+              <div key={`${periode}-${i}`} className="flex-1 min-w-0 flex flex-col items-center gap-1.5" title={`${b.titre || b.label} : ${formatFCFA(b.valeur)}`}>
                 <div
-                  className={`w-full rounded-t-s transition-all duration-700 ${v > 0 ? 'bg-orange' : 'bg-line'}`}
-                  style={{ height: `${Math.max(6, (v / maxSemaine) * 80)}px` }}
+                  className={`w-full rounded-t-[4px] transition-all duration-700 ${b.valeur > 0 ? 'bg-orange' : 'bg-line'}`}
+                  style={{ height: `${Math.max(6, (b.valeur / maxBarre) * 88)}px` }}
                 />
-                <span className="text-[10px] text-ink-soft/75 font-semibold">S{i + 1}</span>
+                <span className="text-[10px] text-ink-soft/75 font-semibold capitalize truncate max-w-full">{b.label}</span>
               </div>
             ))}
           </div>

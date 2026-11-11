@@ -4,8 +4,10 @@ import Layout from '../components/layout/Layout';
 import Reveal from '../components/ui/Reveal';
 import { apiFetch, API_BASE } from '../utils/api';
 import spreadChapitre0 from '../assets/ebook/spread_chapitre0.webp';
-import spreadChapitre5 from '../assets/ebook/spread_chapitre5.webp';
-import spreadChapitre11 from '../assets/ebook/spread_chapitre11.webp';
+// Chapitres 5 et 11 : versions floutées à la source (les pages nettes ne
+// sont jamais envoyées au navigateur) ; seul le chapitre 0 reste lisible.
+import spreadChapitre5 from '../assets/ebook/spread_chapitre5_floute.webp';
+import spreadChapitre11 from '../assets/ebook/spread_chapitre11_floute.webp';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -145,8 +147,8 @@ export default function Ebook() {
 
   const APERCUS = [
     { image: spreadChapitre0, titre: 'La vraie liste de maternité', legende: 'Deux pages consacrées aux indispensables pour maman et bébé à Dakar.' },
-    { image: spreadChapitre5, titre: "Le corps de maman après l'accouchement", legende: 'Un chapitre entier consacré à la récupération physique et émotionnelle.' },
-    { image: spreadChapitre11, titre: 'La maternité à la sénégalaise', legende: 'Les rituels transmis de génération en génération, expliqués avec leur contexte.' },
+    { image: spreadChapitre5, verrouille: true, titre: "Le corps de maman après l'accouchement", legende: 'Un chapitre entier consacré à la récupération physique et émotionnelle.' },
+    { image: spreadChapitre11, verrouille: true, titre: 'La maternité à la sénégalaise', legende: 'Les rituels transmis de génération en génération, expliqués avec leur contexte.' },
   ];
 
   useEffect(() => {
@@ -217,7 +219,7 @@ export default function Ebook() {
 
   return (
     <Layout>
-      <section className="relative overflow-hidden bg-gradient-to-br from-sable to-cream">
+      <section className="relative overflow-hidden bg-gradient-to-br from-peche to-creme">
         <div className="pointer-events-none absolute -top-24 -right-24 h-[420px] w-[420px] rounded-full bg-gradient-to-br from-teal/25 to-transparent blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -left-20 h-[360px] w-[360px] rounded-full bg-gradient-to-tr from-orange/25 to-transparent blur-3xl" />
         <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
@@ -269,7 +271,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-creme py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-14">
             <div className="flex gap-0.5 text-orange mb-5">
@@ -303,7 +305,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section id="sommaire" className="bg-sable py-20 md:py-28">
+      <section id="sommaire" className="bg-peche/60 py-20 md:py-28">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Au sommaire</p>
@@ -342,7 +344,7 @@ export default function Ebook() {
               <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">Feuilletez avant de choisir</p>
               <h2 className="font-serif text-cream text-[32px] sm:text-[42px] leading-[1.1] mb-5">Un aperçu du vrai guide</h2>
               <p className="text-cream/70 text-[15.5px] leading-relaxed">
-                Trois doubles pages du PDF original, affichées en taille réduite pour vous donner une idée du ton, de la structure et du niveau de détail.
+                Une double page du PDF original à lire en entier, et un avant-goût de deux autres chapitres, à découvrir dans le guide.
               </p>
             </Reveal>
             <div className="flex items-center gap-3 shrink-0">
@@ -366,8 +368,35 @@ export default function Ebook() {
             </div>
           </div>
 
-          <Reveal className="bg-white rounded-m shadow-2xl overflow-hidden">
-            <img loading="lazy" decoding="async" key={apercuIndex} src={APERCUS[apercuIndex].image} alt={APERCUS[apercuIndex].titre} className="w-full" />
+          <Reveal className="relative bg-white rounded-m shadow-2xl overflow-hidden">
+            <img
+              loading="lazy"
+              decoding="async"
+              key={apercuIndex}
+              src={APERCUS[apercuIndex].image}
+              alt={APERCUS[apercuIndex].verrouille ? `${APERCUS[apercuIndex].titre} (aperçu flouté)` : APERCUS[apercuIndex].titre}
+              className="w-full"
+            />
+            {APERCUS[apercuIndex].verrouille && (
+              <div className="absolute inset-0 flex items-center justify-center bg-[#3D1B36]/10 p-4">
+                <div className="bg-white/95 rounded-m shadow-xl px-6 py-5 text-center max-w-xs">
+                  <span className="mx-auto mb-3 h-11 w-11 rounded-full bg-[#3D1B36] text-white flex items-center justify-center" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                      <rect x="5" y="11" width="14" height="10" rx="2" />
+                      <path d="M8 11V8a4 4 0 018 0v3" />
+                    </svg>
+                  </span>
+                  <p className="font-impact font-extrabold text-ink text-[17px] leading-tight">À découvrir dans le guide</p>
+                  <p className="text-[13px] text-ink-soft mt-1.5">Ces pages sont réservées au guide complet.</p>
+                  <a
+                    href="#acheter"
+                    className="mt-4 inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-[#3D1B36] hover:bg-[#2c1327] text-white text-[13px] font-bold transition-colors"
+                  >
+                    Obtenir le guide
+                  </a>
+                </div>
+              </div>
+            )}
           </Reveal>
           <div className="mt-5 flex items-center justify-between flex-wrap gap-3">
             <div>
@@ -390,7 +419,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-creme py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Pourquoi ce guide ?</p>
@@ -423,7 +452,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-sable py-20 md:py-24">
+      <section className="bg-peche/60 py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <Reveal className="relative">
             {ebook.couverture ? (
@@ -452,7 +481,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-creme py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-16">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Votre chemin de lecture</p>
@@ -480,7 +509,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-sable py-20 md:py-24">
+      <section className="bg-peche/60 py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Pour qui ?</p>
@@ -501,7 +530,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-creme py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">
@@ -533,7 +562,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section id="acheter" className="relative overflow-hidden bg-sable py-20 md:py-24">
+      <section id="acheter" className="relative overflow-hidden bg-peche/60 py-20 md:py-24">
         <div className="pointer-events-none absolute -top-20 -left-16 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-teal/20 to-transparent blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-16 h-[320px] w-[320px] rounded-full bg-gradient-to-tr from-orange/20 to-transparent blur-3xl" />
         <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-14 items-start">
@@ -678,7 +707,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-creme py-20 md:py-24">
         <div className="max-w-[820px] mx-auto px-6">
           <Reveal className="mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Questions fréquentes</p>

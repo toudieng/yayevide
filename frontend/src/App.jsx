@@ -27,6 +27,8 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import VerificationCompte from './pages/auth/VerificationCompte';
 import VerifierEmail from './pages/auth/VerifierEmail';
+import MotDePasseOublie from './pages/auth/MotDePasseOublie';
+import ReinitialiserMotDePasse from './pages/auth/ReinitialiserMotDePasse';
 import DashboardVendeuse from './pages/vendeuse/DashboardVendeuse';
 import AjouterProduitPage from './pages/vendeuse/AjouterProduit';
 import MesArticles from './pages/vendeuse/MesArticles';
@@ -71,6 +73,8 @@ function App() {
           <Route path="/inscription" element={<RegisterPage />} />
           <Route path="/verification-compte" element={<VerificationCompte />} />
           <Route path="/verifier-email/:username/:token" element={<VerifierEmail />} />
+          <Route path="/mot-de-passe-oublie" element={<MotDePasseOublie />} />
+          <Route path="/reinitialiser-mot-de-passe/:uid/:token" element={<ReinitialiserMotDePasse />} />
 
           {/* Boutique / catalogue */}
           <Route path="/boutique" element={<Boutique />} />
