@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom';
 
 const VARIANTS = {
   primary:
-    'bg-clay text-cream hover:bg-clay-dark hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-10px_rgba(196,96,47,0.55)]',
+    // clay-dark : texte clair lisible (5.7:1) ; le survol se lit par l'élévation
+    'bg-clay-dark text-cream hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-10px_rgba(196,96,47,0.55)]',
   'outline-light':
     'border border-cream/55 text-cream hover:bg-white/10 hover:border-white hover:-translate-y-0.5',
   'outline-ink':
     'border border-ink text-ink hover:bg-ink hover:text-cream',
   orange:
-    'bg-orange text-white hover:bg-orange-dark hover:-translate-y-0.5',
+    'bg-orange text-ink hover:bg-orange-dark hover:-translate-y-0.5',
 };
 
 /**
@@ -28,7 +29,7 @@ export default function Button({
 }) {
   const classes = `relative inline-flex items-center gap-2.5 rounded-btn border border-transparent
     px-7 py-3.5 text-sm font-bold tracking-wide whitespace-nowrap
-    transition-all duration-200 overflow-hidden
+    transition-all duration-200 overflow-hidden disabled:opacity-60 disabled:pointer-events-none
     ${VARIANTS[variant] || VARIANTS.primary}
     ${shine ? 'btn-shine' : ''}
     ${pulse ? 'animate-pulse-glow' : ''}

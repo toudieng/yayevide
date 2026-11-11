@@ -5,6 +5,8 @@ import ShellVendeuse from '../../components/vendeuse/ShellVendeuse';
 import { useVendeuseSession } from '../../hooks/useVendeuseSession';
 import { apiFetch } from '../../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -98,9 +100,7 @@ export default function LocationsVendeuse() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -111,7 +111,7 @@ export default function LocationsVendeuse() {
         <p className="text-[13px] text-ink-soft/75">Suivez les locations en toute sécurité : les échanges passent par la modération Yaay Vidé.</p>
         <Link
           to="/vendeuse/ajouter-produit"
-          className="bg-orange hover:bg-orange-dark text-white font-bold text-sm px-5 py-2.5 rounded-btn transition-colors shrink-0 whitespace-nowrap"
+          className="bg-clay-dark hover:bg-ink text-white font-bold text-sm px-5 py-2.5 rounded-btn transition-colors shrink-0 whitespace-nowrap"
         >
           + Ajouter un article
         </Link>
@@ -171,8 +171,8 @@ export default function LocationsVendeuse() {
         </div>
 
         {commandesFiltrees.length === 0 ? (
-          <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-            <p className="text-ink-soft/75 text-sm mb-4">Aucune location dans cette catégorie pour le moment.</p>
+          <div className={`bg-white rounded-m ${SHADOW_CARD} p-14 text-center`}>
+            <EtatVide compact bordure={false} icone="boite" texte="Aucune location dans cette catégorie pour le moment." className="mb-2" />
             <Link to="/vendeuse/ajouter-produit" className="text-teal-dark font-semibold text-sm hover:underline">
               Ajouter un article à louer
             </Link>
@@ -184,7 +184,7 @@ export default function LocationsVendeuse() {
               const restants = joursRestants(c.date_fin_location);
               const enCoursLocation = ['en_cours_livraison', 'livre'].includes(c.statut);
               return (
-                <div key={c.id} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
+                <div key={c.id} className={`bg-white rounded-m ${SHADOW_CARD} p-5`}>
                   <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
                     <div className="flex items-center gap-3.5 min-w-0">
                       <div className="h-12 w-12 rounded-btn bg-line/40 overflow-hidden shrink-0">
@@ -194,7 +194,7 @@ export default function LocationsVendeuse() {
                         <div className="flex items-center gap-2 flex-wrap mb-1">
                           <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full ${st.couleur}`}>{st.label}</span>
                           {enCoursLocation && restants !== null && restants >= 0 && (
-                            <span className="text-[10.5px] font-bold text-orange">Retour dans {restants} jour{restants > 1 ? 's' : ''}</span>
+                            <span className="text-[10.5px] font-bold text-clay-dark">Retour dans {restants} jour{restants > 1 ? 's' : ''}</span>
                           )}
                         </div>
                         <p className="font-bold text-ink truncate">{c.produit_titre}</p>
@@ -261,11 +261,11 @@ export default function LocationsVendeuse() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold text-ink uppercase tracking-widest">Fonctionnalités à venir</h3>
-          <span className="text-[10px] font-bold text-orange bg-orange/10 px-2.5 py-1 rounded-full">Bientôt disponible</span>
+          <span className="text-[10px] font-bold text-clay-dark bg-orange/10 px-2.5 py-1 rounded-full">Bientôt disponible</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {FONCTIONNALITES_A_VENIR.map((f) => (
-            <div key={f.titre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
+            <div key={f.titre} className={`bg-white rounded-m ${SHADOW_CARD} p-4`}>
               <p className="text-[13px] font-bold text-ink mb-1">{f.titre}</p>
               <p className="text-[11.5px] text-ink-soft/75 leading-relaxed">{f.desc}</p>
             </div>

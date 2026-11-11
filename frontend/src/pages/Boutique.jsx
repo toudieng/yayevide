@@ -7,6 +7,7 @@ import FilterSidebar from "../components/boutique/FilterSidebar";
 import ProductCard from "../components/boutique/ProductCard";
 import Decouverte from "../components/boutique/Decouverte";
 import Reveal from "../components/ui/Reveal";
+import EtatVide from "../components/ui/EtatVide";
 import { apiFetch } from "../utils/api";
 import { useHistoriqueRecherches } from "../hooks/useHistoriqueRecherches";
 
@@ -304,7 +305,8 @@ export default function Boutique() {
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div
                     key={i}
-                    className="aspect-[3/4] rounded-m bg-line/40 animate-pulse"
+                    className="aspect-[3/4] rounded-[20px] bg-line/40 animate-pulse"
+                    aria-hidden="true"
                   />
                 ))}
               </div>
@@ -314,19 +316,20 @@ export default function Boutique() {
               // vide trompeur ici.
               null
             ) : produitsFiltres.length === 0 ? (
-              <Reveal className="text-center py-20 border border-dashed border-line rounded-m">
-                <p className="font-serif text-xl text-ink mb-2">
-                  Aucun article pour le moment
-                </p>
-                <p className="text-sm text-ink-soft/75 mb-6">
-                  Soyez la première à publier dans cette catégorie.
-                </p>
-                <a
-                  href="/vendeuse/ajouter-produit"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-cream rounded-btn text-sm font-semibold hover:bg-clay transition-colors"
-                >
-                  Publier un article
-                </a>
+              <Reveal>
+                <EtatVide
+                  icone="recherche"
+                  titre="Aucun article pour le moment"
+                  texte="Rien ici pour l'instant… Soyez la première à publier dans cette catégorie, ou revenez bientôt !"
+                  action={
+                    <a
+                      href="/vendeuse/ajouter-produit"
+                      className="inline-flex items-center gap-2 min-h-[44px] px-6 py-3 bg-clay-dark text-white rounded-full text-sm font-bold hover:bg-ink transition-colors"
+                    >
+                      Publier un article
+                    </a>
+                  }
+                />
               </Reveal>
             ) : (
               <div>
@@ -351,7 +354,7 @@ export default function Boutique() {
                       type="button"
                       onClick={() => changerPage(Math.max(1, pageCourante - 1))}
                       disabled={pageCourante === 1}
-                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal-dark transition-colors"
+                      className="min-h-[40px] px-4 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 enabled:hover:border-teal enabled:hover:text-teal-dark transition-colors"
                     >
                       Précédent
                     </button>
@@ -360,10 +363,11 @@ export default function Boutique() {
                         key={n}
                         type="button"
                         onClick={() => changerPage(n)}
-                        className={`h-9 w-9 rounded-full text-[13px] font-bold transition-colors ${
+                        aria-current={n === pageCourante ? "page" : undefined}
+                        className={`h-10 w-10 rounded-full text-[13px] font-bold transition-colors ${
                           n === pageCourante
                             ? "bg-ink text-white"
-                            : "text-ink-soft hover:bg-sable"
+                            : "text-ink-soft hover:bg-line/40"
                         }`}
                       >
                         {n}
@@ -373,7 +377,7 @@ export default function Boutique() {
                       type="button"
                       onClick={() => changerPage(Math.min(totalPages, pageCourante + 1))}
                       disabled={pageCourante === totalPages}
-                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal-dark transition-colors"
+                      className="min-h-[40px] px-4 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 enabled:hover:border-teal enabled:hover:text-teal-dark transition-colors"
                     >
                       Suivant
                     </button>

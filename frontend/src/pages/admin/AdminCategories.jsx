@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
 
 const VIDE = { nom: '', ordre: 0 };
 
@@ -84,9 +86,7 @@ export default function AdminCategories() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -99,13 +99,13 @@ export default function AdminCategories() {
 
       <button
         onClick={ouvrirCreation}
-        className="bg-orange hover:bg-orange-dark text-white px-5 py-2.5 rounded-btn font-bold text-sm transition-all shadow-sm hover:-translate-y-0.5 w-fit"
+        className="bg-clay-dark hover:bg-ink text-white px-5 py-2.5 rounded-btn font-bold text-sm transition-all shadow-sm hover:-translate-y-0.5 w-fit"
       >
         + Nouvelle catégorie
       </button>
 
       {formulaireOuvert && (
-        <form onSubmit={soumettre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-4 max-w-md">
+        <form onSubmit={soumettre} className={`bg-white rounded-m ${SHADOW_CARD} p-6 space-y-4 max-w-md`}>
           <h3 className="font-serif text-lg text-ink">{edition ? 'Modifier la catégorie' : 'Nouvelle catégorie'}</h3>
 
           <div>
@@ -162,7 +162,7 @@ export default function AdminCategories() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {categories.map((c) => (
-          <div key={c.id} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] overflow-hidden">
+          <div key={c.id} className={`bg-white rounded-m ${SHADOW_CARD} overflow-hidden`}>
             <div className="h-28 bg-line/30">
               {c.image && <img loading="lazy" decoding="async" src={c.image} alt={c.nom} className="h-full w-full object-cover" />}
             </div>

@@ -284,7 +284,7 @@ export default function Header() {
               {cartCount > 0 && (
                 <span
                   key={cartCount}
-                  className="absolute -top-1 -right-1 h-4.5 w-4.5 rounded-full bg-clay text-[10px] font-bold text-white flex items-center justify-center animate-price-pop"
+                  className="absolute -top-1 -right-1 h-4.5 w-4.5 rounded-full bg-clay-dark text-[10px] font-bold text-white flex items-center justify-center animate-price-pop"
                 >
                   {cartCount}
                 </span>
@@ -337,7 +337,7 @@ export default function Header() {
             <Link
               to="/vendeuse/ajouter-produit"
               onClick={() => setMobileOpen(false)}
-              className="inline-block bg-orange text-white text-sm font-bold px-5 py-2.5 rounded-full"
+              className="inline-block bg-clay-dark text-white text-sm font-bold px-5 py-2.5 rounded-full"
             >
               Vendre / Louer
             </Link>

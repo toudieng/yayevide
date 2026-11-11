@@ -105,7 +105,7 @@ export default function VerificationCompte() {
                 type="button"
                 onClick={handleRenvoyer}
                 disabled={renvoiEnCours || renvoye}
-                className="px-4 py-2.5 bg-orange text-white rounded-btn text-[12.5px] font-bold uppercase tracking-wide hover:bg-orange-dark transition-colors disabled:opacity-60"
+                className="px-4 py-2.5 bg-clay-dark text-white rounded-btn text-[12.5px] font-bold uppercase tracking-wide hover:bg-orange-dark transition-colors disabled:opacity-60"
               >
                 {renvoye ? 'Email envoyé ✓' : renvoiEnCours ? 'Envoi...' : "Recevoir l'email"}
               </button>

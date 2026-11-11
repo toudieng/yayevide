@@ -25,7 +25,7 @@ export default function BlogPreview() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/88 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6.5">
-              <span className="inline-block rounded-full bg-clay px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white">
+              <span className="inline-block rounded-full bg-clay-dark px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white">
                 {FEATURED.tag}
               </span>
               <h3 className="font-serif text-cream text-[23px] leading-snug mt-3.5 mb-2.5 max-w-[90%]">

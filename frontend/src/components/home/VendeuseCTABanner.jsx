@@ -10,7 +10,7 @@ const POINTS = [
   },
   {
     title: "Paiement sécurisé et garanti",
-    tone: "bg-orange/10 text-orange",
+    tone: "bg-orange/10 text-clay-dark",
     path: "M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z M3 9h18 M15 15h2",
   },
   {
@@ -63,12 +63,13 @@ export default function VendeuseCTABanner() {
         </svg>
 
         <div className="relative px-6 py-12 sm:px-12 sm:py-16 max-w-[640px]">
-          <span className="inline-flex items-center gap-1.5 bg-orange/10 text-orange border border-orange/20 text-[12px] font-bold px-4 py-2 rounded-full mb-6">
-            🎁 Transformez votre activité !
+          <span className="inline-flex items-center gap-1.5 bg-orange/10 text-clay-dark border border-orange/20 text-[12px] font-bold px-4 py-2 rounded-full mb-6">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 shrink-0" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M12 8v13M19 12v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7M7.5 8a2.5 2.5 0 010-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 010 5" /></svg>
+            Transformez votre activité !
           </span>
-          <h2 className="font-serif font-bold text-[28px] sm:text-[38px] leading-[1.2] text-ink mb-5">
+          <h2 className="font-impact font-extrabold text-[28px] sm:text-[38px] leading-[1.15] text-ink mb-5 text-balance">
             Vendez ou louez ce que vous n'utilisez plus et{" "}
-            <span className="text-orange">gagnez</span> en toute simplicité.
+            <span className="text-orange-dark">gagnez</span> en toute simplicité.
           </h2>
           <p className="text-ink-soft text-[15px] sm:text-[16px] leading-relaxed mb-8">
             Rejoignez des centaines de mamans qui font confiance à Yaay Vidé.
@@ -78,7 +79,7 @@ export default function VendeuseCTABanner() {
             {POINTS.map((p) => (
               <div
                 key={p.title}
-                className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] px-4 py-5 text-center"
+                className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] px-4 py-5 text-center"
               >
                 <span
                   className={`mx-auto h-10 w-10 rounded-full flex items-center justify-center mb-3 ${p.tone}`}
@@ -103,7 +104,7 @@ export default function VendeuseCTABanner() {
           <div className="flex flex-col sm:flex-row items-center gap-3.5">
             <Link
               to="/vendeuse/ajouter-produit"
-              className="flex items-center justify-center gap-2 h-[52px] bg-orange hover:bg-orange-dark text-white font-bold text-sm px-7 rounded-full w-full sm:w-auto transition-colors whitespace-nowrap"
+              className="flex items-center justify-center gap-2 h-[52px] bg-clay-dark hover:bg-ink text-white font-bold text-sm px-7 rounded-full w-full sm:w-auto transition-colors whitespace-nowrap"
             >
               <svg
                 viewBox="0 0 24 24"

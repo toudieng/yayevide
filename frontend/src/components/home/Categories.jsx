@@ -58,7 +58,7 @@ function CategoryCard({ cat, index }) {
         <span className="text-cream text-[14px] font-bold tracking-wide" style={{ fontFamily: 'var(--font-rounded)' }}>
           {cat.nom}
         </span>
-        <span className="bg-orange text-white text-[11px] font-bold uppercase tracking-wide px-4 py-2 rounded-full transition-transform duration-300 group-hover:scale-105" style={{ fontFamily: 'var(--font-rounded)' }}>
+        <span className="bg-clay-dark text-white text-[11px] font-bold uppercase tracking-wide px-4 py-2 rounded-full transition-transform duration-300 group-hover:scale-105" style={{ fontFamily: 'var(--font-rounded)' }}>
           Découvrir
         </span>
       </div>

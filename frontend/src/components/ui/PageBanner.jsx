@@ -24,12 +24,12 @@ export default function PageBanner({ eyebrow, title, subtitle, image, compact = 
           }}
         />
       )}
-      <Reveal className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+      <Reveal className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
         {eyebrow && (
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-clay mb-3">{eyebrow}</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-orange mb-3">{eyebrow}</p>
         )}
-        <h1 className="font-serif text-[28px] sm:text-[40px] text-cream leading-tight max-w-2xl">{title}</h1>
-        {subtitle && <p className="text-cream/75 text-[14.5px] mt-3 max-w-lg">{subtitle}</p>}
+        <h1 className="font-impact font-extrabold text-[30px] sm:text-[42px] text-cream leading-[1.1] max-w-2xl text-balance">{title}</h1>
+        {subtitle && <p className="text-cream/85 text-[14.5px] mt-3 max-w-lg">{subtitle}</p>}
       </Reveal>
     </div>
   );

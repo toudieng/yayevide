@@ -81,7 +81,7 @@ export default function Decouverte({ produits, recentes, frequentes, onEffacerHi
             <button
               type="button"
               onClick={onEffacerHistorique}
-              className="text-[11.5px] text-ink-soft/75 hover:text-clay transition-colors"
+              className="text-[11.5px] text-ink-soft/75 hover:text-clay-dark transition-colors"
             >
               Effacer
             </button>

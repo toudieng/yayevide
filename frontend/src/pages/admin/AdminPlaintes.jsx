@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -60,9 +63,7 @@ export default function AdminPlaintes() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -85,15 +86,15 @@ export default function AdminPlaintes() {
       </div>
 
       {plaintes.length === 0 ? (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-          <p className="text-ink-soft/75 text-sm">Aucune plainte dans cette catégorie.</p>
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-16 text-center`}>
+          <EtatVide compact bordure={false} icone="message" texte="Aucune plainte dans cette catégorie." />
         </div>
       ) : (
         <div className="space-y-4">
           {plaintes.map((p) => {
             const statutInfo = STATUT_INFO[p.statut] || STATUT_INFO.nouvelle;
             return (
-              <div key={p.id} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+              <div key={p.id} className={`bg-white rounded-m ${SHADOW_CARD} p-6`}>
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
                     <p className="text-sm font-bold text-ink">{p.sujet}</p>

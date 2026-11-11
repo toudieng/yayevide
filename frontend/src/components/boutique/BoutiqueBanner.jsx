@@ -17,14 +17,14 @@ export default function BoutiqueBanner({ categorieSlug }) {
         className="absolute inset-0 h-full w-full object-cover animate-kenburns"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/35 to-ink/10" />
-      <Reveal className="relative z-10 h-full flex flex-col items-start justify-end max-w-[1280px] mx-auto px-6 md:px-12 pb-9">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-clay mb-2">
+      <Reveal className="relative z-10 h-full flex flex-col items-start justify-end max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 pb-9">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-orange mb-2">
           {cat ? cat.name : 'Catalogue Yaay Vidé'}
         </p>
-        <h1 className="font-serif text-[28px] sm:text-[38px] text-cream leading-tight">
+        <h1 className="font-impact font-extrabold text-[30px] sm:text-[40px] text-cream leading-[1.1] text-balance">
           {cat ? cat.name : 'Tous les articles'}
         </h1>
-        <p className="text-cream/75 text-[14px] mt-1.5">
+        <p className="text-cream/85 text-[14px] mt-1.5">
           Découvrez notre sélection d'articles pour familles
         </p>
       </Reveal>

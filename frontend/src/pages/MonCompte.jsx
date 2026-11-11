@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { apiFetch } from '../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD } from '../utils/gradientCards';
+import SqueletteTableau from '../components/ui/SqueletteTableau';
+import EtatVide from '../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -59,7 +61,7 @@ function CommandeLigne({ c, onOuvrir }) {
     <button
       type="button"
       onClick={() => onOuvrir(c)}
-      className="w-full flex items-center gap-4 bg-white rounded-m p-4 shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] hover:-translate-y-0.5 transition-transform text-left"
+      className={`w-full flex items-center gap-4 bg-white rounded-m p-4 ${SHADOW_CARD} hover:-translate-y-0.5 transition-transform text-left`}
     >
       <div className="h-14 w-14 rounded-btn bg-line/40 overflow-hidden shrink-0">
         {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
@@ -236,9 +238,7 @@ export default function MonCompte() {
   if (chargement || !moi) {
     return (
       <Layout>
-        <div className="min-h-[50vh] flex items-center justify-center">
-          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-        </div>
+        <SqueletteTableau sansMenu />
       </Layout>
     );
   }
@@ -248,7 +248,7 @@ export default function MonCompte() {
       <div className="max-w-[1100px] mx-auto px-6 md:px-12 py-12">
         <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-10">
 
-          <aside className="md:bg-white md:rounded-m md:shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] md:p-5">
+          <aside className={`md:bg-white md:rounded-m md:${SHADOW_CARD} md:p-5`}>
             <div className="flex items-center gap-3 mb-6">
               <div className="h-11 w-11 rounded-full bg-teal text-white font-serif text-lg font-bold flex items-center justify-center shrink-0">
                 {(moi.first_name || moi.username).charAt(0).toUpperCase()}
@@ -330,7 +330,7 @@ export default function MonCompte() {
                   })}
                 </div>
 
-                <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+                <div className={`bg-white rounded-m ${SHADOW_CARD} p-6`}>
                   <div className="flex items-center justify-between mb-5">
                     <h2 className="text-sm font-bold text-ink flex items-center gap-2.5">
                       <span className="h-8 w-8 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center">
@@ -387,8 +387,8 @@ export default function MonCompte() {
                 </div>
 
                 {commandesFiltrees.length === 0 ? (
-                  <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-                    <p className="text-ink-soft/75 text-sm mb-4">Aucune commande dans cette catégorie.</p>
+                  <div className={`bg-white rounded-m ${SHADOW_CARD} p-14 text-center`}>
+                    <EtatVide compact bordure={false} icone="panier" texte="Aucune commande dans cette catégorie." className="mb-2" />
                     <Link to="/boutique" className="text-teal-dark font-semibold text-sm hover:underline">
                       Découvrir la boutique
                     </Link>
@@ -404,7 +404,7 @@ export default function MonCompte() {
             {section === 'locations' && (
               <div>
                 <h1 className="font-impact font-extrabold text-2xl text-ink mb-5">Locations</h1>
-                <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
+                <div className={`bg-white rounded-m ${SHADOW_CARD} p-14 text-center`}>
                   <p className="text-ink-soft/75 text-sm">
                     Les demandes de location se font pour l'instant directement par WhatsApp avec la vendeuse — un historique dédié arrivera bientôt ici.
                   </p>
@@ -416,8 +416,8 @@ export default function MonCompte() {
               <div>
                 <h1 className="font-impact font-extrabold text-2xl text-ink mb-5">Favoris</h1>
                 {favoris.length === 0 ? (
-                  <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-                    <p className="text-ink-soft/75 text-sm mb-4">Aucun article mis de côté pour le moment.</p>
+                  <div className={`bg-white rounded-m ${SHADOW_CARD} p-14 text-center`}>
+                    <EtatVide compact bordure={false} icone="coeur" texte="Aucun article mis de côté pour le moment." className="mb-2" />
                     <Link to="/boutique" className="text-teal-dark font-semibold text-sm hover:underline">
                       Découvrir la boutique
                     </Link>
@@ -428,7 +428,7 @@ export default function MonCompte() {
                       <Link
                         key={f.id}
                         to={`/produit/${f.produit_detail.id}`}
-                        className="flex items-center gap-3 bg-white rounded-m p-3 shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] hover:-translate-y-0.5 transition-transform"
+                        className={`flex items-center gap-3 bg-white rounded-m p-3 ${SHADOW_CARD} hover:-translate-y-0.5 transition-transform`}
                       >
                         <div className="h-12 w-12 rounded-btn bg-line/40 overflow-hidden shrink-0">
                           {f.produit_detail.image_principale && (
@@ -463,7 +463,7 @@ export default function MonCompte() {
                   </div>
                 )}
 
-                <form onSubmit={soumettrePlainte} className="bg-white rounded-m p-6 space-y-4 shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+                <form onSubmit={soumettrePlainte} className={`bg-white rounded-m p-6 space-y-4 ${SHADOW_CARD}`}>
                   <h3 className="font-serif text-lg text-ink">Déposer une plainte</h3>
 
                   <div>
@@ -516,15 +516,15 @@ export default function MonCompte() {
                 <div>
                   <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Mes plaintes ({plaintes.length})</h3>
                   {plaintes.length === 0 ? (
-                    <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-10 text-center">
-                      <p className="text-ink-soft/75 text-sm">Aucune plainte déposée pour le moment.</p>
+                    <div className={`bg-white rounded-m ${SHADOW_CARD} p-10 text-center`}>
+                      <EtatVide compact bordure={false} icone="message" texte="Aucune plainte déposée pour le moment." />
                     </div>
                   ) : (
                     <div className="space-y-3">
                       {plaintes.map((p) => {
                         const statutInfo = PLAINTE_STATUT_INFO[p.statut] || PLAINTE_STATUT_INFO.nouvelle;
                         return (
-                          <div key={p.id} className="bg-white rounded-m p-5 shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+                          <div key={p.id} className={`bg-white rounded-m p-5 ${SHADOW_CARD}`}>
                             <div className="flex items-start justify-between gap-3 mb-2">
                               <div>
                                 <p className="text-sm font-semibold text-ink">{p.sujet}</p>
@@ -555,7 +555,7 @@ export default function MonCompte() {
             {section === 'notifications' && (
               <div>
                 <h1 className="font-impact font-extrabold text-2xl text-ink mb-5">Notifications</h1>
-                <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
+                <div className={`bg-white rounded-m ${SHADOW_CARD} p-14 text-center`}>
                   <p className="text-ink-soft/75 text-sm">
                     Pas encore de notifications actives — cette fonctionnalité arrive bientôt.
                   </p>

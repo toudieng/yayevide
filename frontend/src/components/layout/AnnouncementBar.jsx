@@ -8,16 +8,16 @@ export default function AnnouncementBar() {
   return (
     <div>
       {/* Bandeau statique du haut — offre de lancement */}
-      <div className="bg-orange text-white">
+      <div className="bg-orange text-ink">
         <div className="flex flex-wrap items-center justify-center gap-2.5 px-4 py-2 text-[12.5px] font-bold text-center">
-          <span>🛍️ Offre de lancement 🎉</span>
-          <span className="opacity-60">|</span>
-          <span className="inline-flex items-center gap-1.5 bg-white/15 rounded-full px-3 py-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse-dot" />
+          <span className="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 shrink-0" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M12 8v13M19 12v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7M7.5 8a2.5 2.5 0 010-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 010 5" /></svg>Offre de lancement</span>
+          <span className="opacity-50" aria-hidden="true">|</span>
+          <span className="inline-flex items-center gap-1.5 bg-white/30 rounded-full px-3 py-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-ink animate-pulse-dot" />
             Commission à 5% pour les 100 premières vendeuses (1er article)
           </span>
-          <span className="opacity-60">|</span>
-          <span>Premières 100 vendeuses ! 🚀</span>
+          <span className="opacity-50" aria-hidden="true">|</span>
+          <span className="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 shrink-0" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" /></svg>Premières 100 vendeuses !</span>
         </div>
       </div>
 

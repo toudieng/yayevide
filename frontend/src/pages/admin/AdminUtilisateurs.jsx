@@ -5,6 +5,8 @@ import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD as SHADOW } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 const ROLES = [
   { value: '', label: 'Tous' },
@@ -103,9 +105,7 @@ export default function AdminUtilisateurs() {
 
   if (chargementSession) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -181,10 +181,10 @@ export default function AdminUtilisateurs() {
         <div className={`bg-white rounded-m ${SHADOW} overflow-hidden`}>
           {chargement ? (
             <div className="flex justify-center py-16">
-              <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
+              <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" role="status" aria-label="Chargement en cours" />
             </div>
           ) : utilisateurs.length === 0 ? (
-            <p className="text-ink-soft/75 text-sm text-center py-16">Aucun utilisateur ne correspond à ces filtres.</p>
+            <EtatVide compact bordure={false} icone="recherche" texte="Aucun utilisateur ne correspond à ces filtres." />
           ) : (
             <div className="divide-y divide-line">
               {utilisateurs.map((u) => (

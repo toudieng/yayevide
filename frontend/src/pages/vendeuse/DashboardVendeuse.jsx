@@ -5,6 +5,8 @@ import ShellVendeuse, { NavIcon } from '../../components/vendeuse/ShellVendeuse'
 import { useVendeuseSession } from '../../hooks/useVendeuseSession';
 import { apiFetch } from '../../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -95,9 +97,7 @@ export default function DashboardVendeuse() {
 
   if (chargementSession || chargementProduits) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -115,7 +115,7 @@ export default function DashboardVendeuse() {
         <div className="p-4 text-sm bg-red-50 text-red-600 rounded-btn border border-red-100">{erreur}</div>
       )}
 
-      <div className="relative overflow-hidden rounded-m p-8 text-cream shadow-xl bg-gradient-to-br from-ink to-[#2a1f1a]">
+      <div className={`relative overflow-hidden rounded-m p-6 sm:p-8 text-cream ${SHADOW_CARD} ${GRADIENT_CARDS[0].bg}`}>
         <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/5" />
         <div className="absolute right-20 bottom-0 h-32 w-32 rounded-full bg-white/5" />
         <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
@@ -125,7 +125,7 @@ export default function DashboardVendeuse() {
           </div>
           <button
             onClick={() => navigate('/vendeuse/ajouter-produit')}
-            className="bg-orange hover:bg-orange-dark text-white px-6 py-3 rounded-btn font-bold text-sm transition-all shadow-lg hover:-translate-y-0.5 whitespace-nowrap flex items-center gap-2"
+            className="bg-clay-dark hover:bg-ink text-white px-6 py-3 rounded-btn font-bold text-sm transition-all shadow-lg hover:-translate-y-0.5 whitespace-nowrap flex items-center gap-2"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="h-4 w-4">
               <path d="M12 5v14M5 12h14" />
@@ -160,7 +160,7 @@ export default function DashboardVendeuse() {
         })}
       </div>
 
-      <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+      <div className={`bg-white rounded-m ${SHADOW_CARD} p-6`}>
         <div className="flex items-center justify-between mb-1">
           <h3 className="font-serif text-lg text-ink">Bilan des revenus du mois</h3>
           <span className="text-[11px] font-bold text-ink-soft/75 bg-sable px-3 py-1.5 rounded-full capitalize">{nomMoisActuel}</span>
@@ -188,7 +188,7 @@ export default function DashboardVendeuse() {
       </div>
 
       {stats.enLocation > 0 || produits.some((p) => p.type_offre === 'location') ? (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-6`}>
           <div className="flex items-center justify-between mb-1">
             <h3 className="font-serif text-lg text-ink flex items-center gap-2">
               <span className="h-8 w-8 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center">
@@ -204,7 +204,7 @@ export default function DashboardVendeuse() {
 
           {produits.filter((p) => p.type_offre === 'location').length === 0 ? (
             <div className="bg-sable rounded-btn border border-dashed border-line p-8 text-center">
-              <p className="text-ink-soft/75 text-sm">Aucun article en location pour le moment.</p>
+              <EtatVide compact bordure={false} icone="boite" texte="Aucun article en location pour le moment." />
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -247,13 +247,13 @@ export default function DashboardVendeuse() {
         </div>
 
         {produits.length === 0 ? (
-          <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-12 text-center">
+          <div className={`bg-white rounded-m ${SHADOW_CARD} p-12 text-center`}>
             <p className="text-ink-soft/75 text-sm">
               Aucun article pour le moment. Commencez par en ajouter un !
             </p>
           </div>
         ) : (
-          <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] divide-y divide-line overflow-hidden">
+          <div className={`bg-white rounded-m ${SHADOW_CARD} divide-y divide-line overflow-hidden`}>
             {produits.slice(0, 5).map((p) => (
               <div key={p.id} className="flex items-center gap-4 p-4">
                 <div className="h-12 w-12 rounded-btn bg-line/40 overflow-hidden shrink-0">
@@ -281,7 +281,7 @@ export default function DashboardVendeuse() {
                     onClick={() => toggleLocationStatus(p)}
                     className={`text-[10.5px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-btn border transition-colors whitespace-nowrap ${
                       p.disponible
-                        ? 'border-orange text-orange hover:bg-orange hover:text-white'
+                        ? 'border-orange text-clay-dark hover:bg-clay-dark hover:text-white'
                         : 'border-teal text-teal-dark hover:bg-teal hover:text-white'
                     }`}
                   >

@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import ShellVendeuse from '../../components/vendeuse/ShellVendeuse';
 import { useVendeuseSession } from '../../hooks/useVendeuseSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -52,9 +55,7 @@ export default function CommandesVendeuse() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -71,13 +72,13 @@ export default function CommandesVendeuse() {
         </h3>
 
         {commandes.length === 0 ? (
-          <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-            <p className="text-ink-soft/75 text-sm">Aucune demande en attente pour le moment.</p>
+          <div className={`bg-white rounded-m ${SHADOW_CARD} p-16 text-center`}>
+            <EtatVide compact bordure={false} icone="boite" texte="Aucune demande en attente pour le moment." />
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {commandes.map((c) => (
-              <div key={c.id} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-4">
+              <div key={c.id} className={`bg-white rounded-m ${SHADOW_CARD} p-6 space-y-4`}>
                 <div className="flex items-start gap-3.5">
                   <div className="h-14 w-14 rounded-btn bg-line/40 overflow-hidden shrink-0">
                     {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
@@ -96,7 +97,7 @@ export default function CommandesVendeuse() {
 
                 <p className="text-[13px] text-ink-soft/75">Merci de confirmer sa disponibilité.</p>
 
-                <div className="flex items-center gap-2 text-[12px] font-semibold text-orange bg-orange/10 rounded-btn px-3 py-2 w-fit">
+                <div className="flex items-center gap-2 text-[12px] font-semibold text-clay-dark bg-orange/10 rounded-btn px-3 py-2 w-fit">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-3.5 w-3.5">
                     <circle cx="12" cy="12" r="9" />
                     <path d="M12 7v5l3 3" />

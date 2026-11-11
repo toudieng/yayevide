@@ -60,7 +60,7 @@ export default function Engagements() {
               </div>
               <h3 className="text-[14px] font-bold text-ink mb-2">{item.title}</h3>
               <p className="text-[13.5px] text-ink-soft leading-relaxed max-w-[230px]">{item.desc}</p>
-              <Link to={item.to} className="mt-3 text-[12.5px] font-bold text-orange hover:text-orange-dark transition-colors">
+              <Link to={item.to} className="mt-3 text-[12.5px] font-bold text-clay-dark hover:text-ink transition-colors">
                 {item.lien} →
               </Link>
             </div>

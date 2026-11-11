@@ -30,8 +30,8 @@
 | Texte discret | `ink-soft/75` | — | 4.9:1 | **Minimum** pour tout texte lisible |
 | Structure sombre | `night` | `#0A2B58` | 14.0:1 | Bandeaux, footer |
 | Fond | `sable` / `cream` | `#FFFFFF` | — | Toutes les surfaces |
-| CTA principal | `clay` | `#C4602F` | 4.15:1 | Fond de bouton (texte blanc ≥ 14 px gras), icônes |
-| CTA hover / texte | `clay-dark` | `#A24E25` | 5.75:1 | Hover, liens et texte clay |
+| Accent clay | `clay` | `#C4602F` | 4.15:1 | Mots-accents des grands titres, icônes, soulignés — pas de fond sous texte blanc courant |
+| CTA principal / texte | `clay-dark` | `#A24E25` | 5.75:1 | Fond des boutons principaux, prix, liens et petit texte clay |
 | Marque teal | `teal` | `#1E93AC` | 3.6:1 | Fonds, icônes, bordures, focus — **pas** de texte courant |
 | Texte teal | `teal-dark` | `#176F84` | 5.8:1 | Liens, badges, texte teal |
 | Accent orange | `orange` | `#FB8502` | 2.5:1 | Fonds décoratifs, pastilles avec texte `ink` (6.3:1) |
@@ -74,7 +74,8 @@ Sections : `py-12` mobile → `py-16`/`py-20` desktop. Écart entre cartes : `ga
 ## Component Specs
 
 ### Buttons
-- Primaire : `bg-clay text-white font-bold hover:bg-clay-dark`, hauteur ≥ 44 px, `transition-colors duration-200`.
+- Primaire : `bg-clay-dark text-white font-bold hover:bg-ink` (5.7:1), hauteur ≥ 44 px, `transition-colors duration-200`. Le `<Button variant="primary">` partagé l'applique déjà.
+- Jamais de texte blanc sur `orange` : un fond orange prend un texte `ink` (ex. badge « Occasion spéciale », bandeau d'annonce).
 - Secondaire : `border border-ink/15 text-ink hover:border-teal hover:text-teal-dark`.
 - Focus : `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay` (déjà global) — ne jamais le supprimer avec `outline-none` sans remplaçant `focus-visible:ring-2 ring-teal/40`.
 - Désactivé : `disabled:opacity-50 disabled:cursor-not-allowed`. Chargement : libellé « … en cours » + `aria-busy`.
@@ -88,7 +89,9 @@ Sections : `py-12` mobile → `py-16`/`py-20` desktop. Écart entre cartes : `ga
 - Compactes, image carrée, ~190 px de large en grille — **ne pas agrandir**.
 - Prix lisible (`ink` ou `orange-dark` gras), badges ≥ 10 px, bouton ≥ 36 px.
 
-### États
+### États (composants partagés)
+- `components/ui/EtatVide.jsx` : état vide (icône douce + titre + texte + action), `compact` / `bordure={false}` dans les blocs.
+- `components/ui/SqueletteTableau.jsx` : chargement des tableaux de bord (silhouette menu + stats + blocs, `role="status"`).
 - Chargement : squelettes `bg-line/40 animate-pulse` à la forme du contenu (pas de spinner plein écran quand une mise en page est connue).
 - Vide : icône SVG douce + phrase chaleureuse + action (lien/bouton).
 - Erreur : message clair + « Réessayer ».

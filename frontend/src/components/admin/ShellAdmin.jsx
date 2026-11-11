@@ -79,8 +79,8 @@ export default function ShellAdmin({ active, moi, titre, children }) {
 
       <main className="flex-1 flex flex-col min-w-0">
         <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line flex items-center justify-between px-8">
-          <h2 className="text-lg font-serif font-bold text-ink">
-            {titre || (<>Bonjour, <span className="text-orange">{moi?.username}</span></>)}
+          <h2 className="text-xl font-impact font-extrabold text-ink">
+            {titre || (<>Bonjour, <span className="text-orange-dark">{moi?.username}</span></>)}
           </h2>
           <div className="h-10 w-10 bg-ink rounded-full border-2 border-white shadow-sm flex items-center justify-center text-cream font-serif font-bold">
             {(moi?.username || '?').charAt(0).toUpperCase()}

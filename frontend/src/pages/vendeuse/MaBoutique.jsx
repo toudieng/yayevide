@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import ShellVendeuse from '../../components/vendeuse/ShellVendeuse';
 import { useVendeuseSession } from '../../hooks/useVendeuseSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
 
 export default function MaBoutique() {
   const { moi, chargementSession } = useVendeuseSession();
@@ -75,16 +77,14 @@ export default function MaBoutique() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
   if (!boutique) {
     return (
       <ShellVendeuse active="boutique" moi={moi} titre="Ma boutique">
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-14 text-center`}>
           <p className="text-ink-soft/75 text-sm">Aucune boutique associée à ce compte.</p>
         </div>
       </ShellVendeuse>
@@ -99,7 +99,7 @@ export default function MaBoutique() {
 
       <form onSubmit={enregistrer} className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-6">
 
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-5">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-6 space-y-5`}>
           <h3 className="font-serif text-lg text-ink">Informations de la boutique</h3>
 
           <div>
@@ -192,7 +192,7 @@ export default function MaBoutique() {
           </div>
         </div>
 
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-6`}>
           <h3 className="font-serif text-lg text-ink mb-4">Aperçu de votre boutique</h3>
           <div className="rounded-m overflow-hidden border border-line">
             <div className="relative h-24 bg-ink">
@@ -217,7 +217,7 @@ export default function MaBoutique() {
 
       </form>
 
-      <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 max-w-md">
+      <div className={`bg-white rounded-m ${SHADOW_CARD} p-6 max-w-md`}>
         <h3 className="font-serif text-lg text-ink mb-1">Notifications de commande</h3>
         <p className="text-[12.5px] text-ink-soft/75 mb-4">Comment souhaitez-vous être prévenue d'une nouvelle commande ?</p>
         <div className="grid grid-cols-2 gap-2.5">
@@ -240,7 +240,7 @@ export default function MaBoutique() {
           ))}
         </div>
         {notifPref === 'whatsapp' && (
-          <p className="text-[11px] text-orange mt-3 italic">
+          <p className="text-[11px] text-clay-dark mt-3 italic">
             L'envoi WhatsApp automatique n'est pas encore actif (API en attente) — vous continuerez à voir vos commandes sur ce tableau de bord dans tous les cas.
           </p>
         )}

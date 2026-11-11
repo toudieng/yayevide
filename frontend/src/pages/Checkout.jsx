@@ -146,7 +146,7 @@ export default function Checkout() {
     return (
       <Layout>
         <div className="min-h-[50vh] flex items-center justify-center">
-          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
+          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" role="status" aria-label="Chargement en cours" />
         </div>
       </Layout>
     );
@@ -155,7 +155,7 @@ export default function Checkout() {
   if (etape === 'confirmation') {
     return (
       <Layout>
-        <div className="max-w-[600px] mx-auto px-6 py-20">
+        <div className="max-w-[600px] mx-auto px-4 sm:px-6 py-16 sm:py-20">
           <div className="text-center mb-8">
             <div className="h-16 w-16 mx-auto mb-6 rounded-full bg-orange/10 flex items-center justify-center text-orange animate-pulse-dot">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-7 w-7">
@@ -163,7 +163,7 @@ export default function Checkout() {
                 <path d="M12 7v5l3 3" />
               </svg>
             </div>
-            <h1 className="font-serif text-2xl text-ink mb-3">Commande en cours de confirmation</h1>
+            <h1 className="font-impact font-extrabold text-[24px] sm:text-[28px] leading-tight text-ink mb-3 text-balance">Commande en cours de confirmation</h1>
             <p className="text-sm text-ink-soft/75 leading-relaxed">
               Nous vérifions la disponibilité de vos articles auprès des vendeuses. Elles disposent de{' '}
               <span className="font-bold text-ink">24 heures maximum</span> pour répondre.
@@ -179,7 +179,7 @@ export default function Checkout() {
               {commandesCreees.map((c) => (
                 <div key={c.id} className="flex items-center justify-between px-5 py-3.5">
                   <span className="text-sm text-ink font-medium truncate pr-3">{c.produit_titre}</span>
-                  <span className="flex items-center gap-1.5 text-[12px] font-bold text-orange whitespace-nowrap">
+                  <span className="flex items-center gap-1.5 text-[12px] font-bold text-clay-dark whitespace-nowrap">
                     <span className="h-1.5 w-1.5 rounded-full bg-orange animate-pulse-dot" />
                     En attente
                   </span>
@@ -190,7 +190,7 @@ export default function Checkout() {
 
           <Link
             to="/"
-            className="block text-center bg-ink text-cream rounded-btn py-3.5 text-sm font-bold uppercase tracking-wide hover:bg-clay transition-colors"
+            className="block text-center bg-ink text-cream rounded-btn py-3.5 text-sm font-bold uppercase tracking-wide hover:bg-clay-dark transition-colors"
           >
             Retour à l'accueil
           </Link>
@@ -203,18 +203,18 @@ export default function Checkout() {
 
   return (
     <Layout>
-      <div className="max-w-[900px] mx-auto px-6 md:px-12 py-12">
+      <div className="max-w-[900px] mx-auto px-4 sm:px-6 md:px-12 py-8 sm:py-12">
 
-        <div className="flex items-center gap-3 mb-10 text-[12.5px] font-bold uppercase tracking-wide">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-8 sm:mb-10 text-[12px] sm:text-[12.5px] font-bold uppercase tracking-wide">
           {['Adresse', 'Paiement'].map((label, i) => {
             const actif = (i === 0 && etape === 'adresse') || (i === 1 && etape === 'paiement');
             const complete = i === 0 && etape === 'paiement';
             return (
               <div key={label} className="flex items-center gap-3">
-                {i > 0 && <span className="w-8 h-px bg-line" />}
+                {i > 0 && <span className="w-4 sm:w-8 h-px bg-line" aria-hidden="true" />}
                 <span className={`flex items-center gap-2 ${actif ? 'text-ink' : complete ? 'text-teal-dark' : 'text-ink-soft/75'}`}>
                   <span className={`h-6 w-6 rounded-full flex items-center justify-center text-[11px] ${
-                    actif ? 'bg-ink text-cream' : complete ? 'bg-teal text-white' : 'bg-line text-ink-soft/75'
+                    actif ? 'bg-ink text-cream' : complete ? 'bg-teal-dark text-white' : 'bg-line text-ink-soft/75'
                   }`}>
                     {complete ? '✓' : i + 1}
                   </span>
@@ -226,15 +226,15 @@ export default function Checkout() {
         </div>
 
         {erreur && (
-          <div className="p-4 mb-6 text-sm bg-red-50 text-red-600 rounded-btn border border-red-100">{erreur}</div>
+          <div className="p-4 mb-6 text-sm bg-red-50 text-red-700 rounded-btn border border-red-100">{erreur}</div>
         )}
 
-        <div className="grid md:grid-cols-[1fr_320px] gap-10">
+        <div className="grid md:grid-cols-[1fr_320px] gap-8 md:gap-10">
 
           <div>
             {etape === 'adresse' && (
-              <form onSubmit={validerAdresse} className="bg-cream border border-line rounded-m p-7 space-y-5">
-                <h2 className="font-serif text-xl text-ink mb-1">Adresse de livraison</h2>
+              <form onSubmit={validerAdresse} className="bg-cream border border-line rounded-m p-5 sm:p-7 space-y-5">
+                <h2 className="font-impact font-extrabold text-xl text-ink mb-1">Adresse de livraison</h2>
                 <p className="text-[12.5px] text-ink-soft/75 mb-5">
                   {form.adresse ? 'Modifiez si besoin, ou continuez avec cette adresse.' : 'Renseignez où vous souhaitez être livrée.'}
                 </p>
@@ -245,7 +245,7 @@ export default function Checkout() {
                     <input
                       type="text" required value={form.prenom}
                       onChange={(e) => setForm({ ...form, prenom: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
+                      className="w-full px-4 py-3 bg-white border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal"
                     />
                   </div>
                   <div>
@@ -253,7 +253,7 @@ export default function Checkout() {
                     <input
                       type="text" required value={form.nom}
                       onChange={(e) => setForm({ ...form, nom: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
+                      className="w-full px-4 py-3 bg-white border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal"
                     />
                   </div>
                 </div>
@@ -264,7 +264,7 @@ export default function Checkout() {
                     type="text" required value={form.adresse}
                     onChange={(e) => setForm({ ...form, adresse: e.target.value })}
                     placeholder="Quartier, rue, point de repère..."
-                    className="w-full px-4 py-3 bg-white border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
+                    className="w-full px-4 py-3 bg-white border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal"
                   />
                 </div>
 
@@ -276,7 +276,7 @@ export default function Checkout() {
                     type="text" value={form.complement}
                     onChange={(e) => setForm({ ...form, complement: e.target.value })}
                     placeholder="Bâtiment, étage, indications..."
-                    className="w-full px-4 py-3 bg-white border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
+                    className="w-full px-4 py-3 bg-white border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal"
                   />
                 </div>
 
@@ -285,7 +285,7 @@ export default function Checkout() {
                   <select
                     required value={form.zone}
                     onChange={(e) => setForm({ ...form, zone: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
+                    className="w-full px-4 py-3 bg-white border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal"
                   >
                     <option value="">Sélectionnez votre zone</option>
                     {zones.map((z) => (
@@ -305,7 +305,7 @@ export default function Checkout() {
                   </Link>
                   <button
                     type="submit"
-                    className="flex-1 bg-ink text-cream rounded-full py-3 text-sm font-bold hover:bg-clay transition-colors"
+                    className="flex-1 bg-ink text-cream rounded-full py-3 text-sm font-bold hover:bg-clay-dark transition-colors"
                   >
                     Enregistrer l'adresse et continuer
                   </button>
@@ -314,8 +314,8 @@ export default function Checkout() {
             )}
 
             {etape === 'paiement' && (
-              <div className="bg-cream border border-line rounded-m p-7 space-y-5">
-                <h2 className="font-serif text-xl text-ink mb-1">Moyen de paiement à la livraison</h2>
+              <div className="bg-cream border border-line rounded-m p-5 sm:p-7 space-y-5">
+                <h2 className="font-impact font-extrabold text-xl text-ink mb-1">Moyen de paiement à la livraison</h2>
                 <p className="text-[12.5px] text-ink-soft/75 mb-5">
                   Vous ne payez rien maintenant — choisissez comment vous réglerez le livreur à la remise.
                 </p>
@@ -352,7 +352,7 @@ export default function Checkout() {
                     type="button"
                     onClick={passerCommande}
                     disabled={envoiEnCours}
-                    className="flex-1 bg-ink text-cream rounded-full py-3 text-sm font-bold hover:bg-clay transition-colors disabled:opacity-60"
+                    className="flex-1 bg-ink text-cream rounded-full py-3 text-sm font-bold hover:bg-clay-dark transition-colors disabled:opacity-60"
                   >
                     {envoiEnCours ? 'Envoi en cours...' : 'Commander'}
                   </button>
@@ -361,8 +361,8 @@ export default function Checkout() {
             )}
           </div>
 
-          <div className="bg-sable border border-line rounded-m p-6 h-fit space-y-4">
-            <h3 className="font-serif text-lg text-ink">Récapitulatif</h3>
+          <div className="bg-sable border border-line rounded-m p-5 sm:p-6 h-fit space-y-4 shadow-[0_10px_30px_-18px_rgba(27,36,48,0.25)]">
+            <h2 className="font-impact font-extrabold text-lg text-ink">Récapitulatif</h2>
             <div className="divide-y divide-line">
               {items.map((item) => (
                 <div key={item.id} className="flex justify-between py-2.5 text-[13px]">

@@ -4,6 +4,8 @@ import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import ShellVendeuse from '../../components/vendeuse/ShellVendeuse';
 import { useVendeuseSession } from '../../hooks/useVendeuseSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
 
 const TAILLES_PAR_CATEGORIE = {
   'Maman & Maternité': ['XS', 'S', 'M', 'L', 'XL', 'XXL', '35', '36', '37', '38', '39', '40', '41', '42'],
@@ -107,16 +109,14 @@ export default function ModifierProduit() {
 
   if (chargementSession || chargement || !formData) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
   if (!produit) {
     return (
       <ShellVendeuse active="articles" moi={moi} titre="Modifier l'article">
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-10 text-center">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-10 text-center`}>
           <p className="text-ink-soft/75 text-sm mb-4">{erreur || 'Article introuvable.'}</p>
           <Link to="/vendeuse/mes-articles" className="text-teal-dark font-semibold text-sm hover:underline">
             Retour à mes articles
@@ -142,7 +142,7 @@ export default function ModifierProduit() {
       )}
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-5">
+        <div className={`lg:col-span-2 bg-white rounded-m ${SHADOW_CARD} p-6 space-y-5`}>
           <div className="flex gap-4">
             <div className="h-20 w-20 rounded-btn bg-line/40 overflow-hidden shrink-0">
               {produit.image_principale && <img loading="lazy" decoding="async" src={produit.image_principale} alt="" className="h-full w-full object-cover" />}
@@ -248,7 +248,7 @@ export default function ModifierProduit() {
           </label>
         </div>
 
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-5 h-fit">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-6 space-y-5 h-fit`}>
           <div>
             <label className="block text-[12.5px] font-bold text-ink mb-1.5">
               {isLocation ? 'Prix de location / jour (FCFA)' : 'Votre prix de vente (FCFA)'}
@@ -283,7 +283,7 @@ export default function ModifierProduit() {
           <button
             type="submit"
             disabled={envoiEnCours}
-            className="w-full bg-orange hover:bg-orange-dark text-white font-bold text-sm py-3 rounded-full transition-colors disabled:opacity-50"
+            className="w-full bg-clay-dark hover:bg-ink text-white font-bold text-sm py-3 rounded-full transition-colors disabled:opacity-50"
           >
             {envoiEnCours ? 'Enregistrement...' : 'Enregistrer les modifications'}
           </button>

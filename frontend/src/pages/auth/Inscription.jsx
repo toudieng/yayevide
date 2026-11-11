@@ -17,7 +17,7 @@ function ChampMotDePasse({ label, name, value, onChange, placeholder }) {
           required
           value={value}
           onChange={onChange}
-          className="w-full px-4 py-3 pr-11 bg-cream border border-line rounded-xl focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/15 focus:bg-white text-sm transition-all"
+          className="w-full px-4 py-3 pr-11 bg-cream border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/15 focus:bg-white transition-all"
           placeholder={placeholder}
         />
         <button
@@ -165,8 +165,8 @@ export default function Inscription({ role, onRoleChange }) {
             onClick={() => onRoleChange("vendeuse")}
             className={`pb-1 transition-all duration-200 uppercase text-xs font-bold tracking-widest cursor-pointer ${
               role === "vendeuse"
-                ? "text-orange border-b-2 border-orange"
-                : "text-ink-soft/75 hover:text-orange hover:border-b-2 hover:border-orange/40"
+                ? "text-clay-dark border-b-2 border-orange"
+                : "text-ink-soft/75 hover:text-clay-dark hover:border-b-2 hover:border-orange/40"
             }`}
           >
             Vendeuse
@@ -175,7 +175,7 @@ export default function Inscription({ role, onRoleChange }) {
       </div>
 
       {erreur && (
-        <div className="mb-4 p-3 text-xs bg-red-50 text-red-600 rounded-xl border border-red-100 text-center font-medium">
+        <div className="mb-4 p-3 text-[13px] bg-red-50 text-red-700 rounded-btn border border-red-100 text-center font-medium">
           {erreur}
         </div>
       )}
@@ -191,7 +191,7 @@ export default function Inscription({ role, onRoleChange }) {
             required
             value={formData.username}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-cream border border-line rounded-xl focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/15 focus:bg-white text-sm transition-all"
+            className="w-full px-4 py-3 bg-cream border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/15 focus:bg-white transition-all"
             placeholder="Ex: Aminata Diop"
           />
         </div>
@@ -206,7 +206,7 @@ export default function Inscription({ role, onRoleChange }) {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-cream border border-line rounded-xl focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/15 focus:bg-white text-sm transition-all text-ink"
+            className="w-full px-4 py-3 bg-cream border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/15 focus:bg-white transition-all text-ink"
             placeholder="Ex: aminata@example.com"
           />
         </div>
@@ -221,7 +221,7 @@ export default function Inscription({ role, onRoleChange }) {
             required
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-cream border border-line rounded-xl focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/15 focus:bg-white text-sm transition-all"
+            className="w-full px-4 py-3 bg-cream border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/15 focus:bg-white transition-all"
             placeholder="Ex: 77XXXXXXX"
           />
         </div>
@@ -237,7 +237,7 @@ export default function Inscription({ role, onRoleChange }) {
               required={role === "vendeuse"}
               value={formData.shopName}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-cream border border-line rounded-xl focus:outline-none focus:border-orange focus:ring-4 focus:ring-orange/15 focus:bg-white text-sm transition-all"
+              className="w-full px-4 py-3 bg-cream border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-orange focus:ring-4 focus:ring-orange/15 focus:bg-white transition-all"
               placeholder="Ex: Les Trésors de Bébé"
             />
           </div>
@@ -252,7 +252,7 @@ export default function Inscription({ role, onRoleChange }) {
               name="zoneBoutique"
               value={formData.zoneBoutique}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-cream border border-line rounded-xl focus:outline-none focus:border-orange focus:ring-4 focus:ring-orange/15 focus:bg-white text-sm transition-all"
+              className="w-full px-4 py-3 bg-cream border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-orange focus:ring-4 focus:ring-orange/15 focus:bg-white transition-all"
             >
               <option value="">Non précisé</option>
               {zones.map((z) => (
@@ -276,7 +276,8 @@ export default function Inscription({ role, onRoleChange }) {
                   key={opt.value}
                   type="button"
                   onClick={() => setFormData({ ...formData, notificationPreference: opt.value })}
-                  className={`px-4 py-3 rounded-xl text-sm font-semibold border-2 transition-all ${
+                  aria-pressed={formData.notificationPreference === opt.value}
+                  className={`px-4 py-3 rounded-btn text-sm font-semibold border-2 transition-all ${
                     formData.notificationPreference === opt.value
                       ? "border-orange bg-orange/5 text-ink"
                       : "border-line text-ink-soft/75 hover:border-ink/30"
@@ -307,8 +308,8 @@ export default function Inscription({ role, onRoleChange }) {
 
         <button
           type="submit"
-          className={`w-full text-white font-medium py-3.5 rounded-xl text-sm transition-all shadow-md tracking-wide mt-6 ${
-            role === "vendeuse" ? "bg-orange hover:bg-orange-dark" : "bg-teal hover:bg-teal-dark"
+          className={`w-full min-h-[48px] text-white font-bold py-3.5 rounded-btn text-sm transition-all shadow-md tracking-wide mt-6 ${
+            role === "vendeuse" ? "bg-clay-dark hover:bg-ink" : "bg-teal-dark hover:bg-ink"
           }`}
         >
           S'inscrire en tant que {role}

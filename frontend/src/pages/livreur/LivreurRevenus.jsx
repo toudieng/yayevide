@@ -4,6 +4,8 @@ import ShellLivreur from '../../components/livreur/ShellLivreur';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD as SHADOW } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -36,9 +38,7 @@ export default function LivreurRevenus() {
 
   if (chargementSession || chargement || !stats) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -128,7 +128,7 @@ export default function LivreurRevenus() {
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Historique des revenus</h3>
         {livraisons.length === 0 ? (
           <div className={`bg-white rounded-m ${SHADOW} p-16 text-center`}>
-            <p className="text-ink-soft/75 text-sm">Aucune livraison effectuée pour le moment.</p>
+            <EtatVide compact bordure={false} icone="camion" texte="Aucune livraison effectuée pour le moment." />
           </div>
         ) : (
           <div className={`bg-white rounded-m ${SHADOW} overflow-hidden`}>

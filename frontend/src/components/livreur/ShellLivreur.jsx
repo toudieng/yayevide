@@ -68,7 +68,7 @@ export default function ShellLivreur({ active, moi, titre, children }) {
               <LivreurIcon id={item.id} />
               <span className="flex-1 text-left">{item.label}</span>
               {item.id === 'livraisons' && nbNotifs > 0 && (
-                <span className="h-5 min-w-5 px-1 rounded-full bg-orange text-white text-[10.5px] font-bold flex items-center justify-center">
+                <span className="h-5 min-w-5 px-1 rounded-full bg-clay-dark text-white text-[10.5px] font-bold flex items-center justify-center">
                   {nbNotifs}
                 </span>
               )}
@@ -89,8 +89,8 @@ export default function ShellLivreur({ active, moi, titre, children }) {
 
       <main className="flex-1 flex flex-col min-w-0 bg-white">
         <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line flex items-center justify-between px-8">
-          <h2 className="text-lg font-serif font-bold text-ink">
-            {titre || (<>Bonjour, <span className="text-orange">{moi?.username}</span></>)}
+          <h2 className="text-xl font-impact font-extrabold text-ink">
+            {titre || (<>Bonjour, <span className="text-orange-dark">{moi?.username}</span></>)}
           </h2>
           <div className="flex items-center gap-3">
             <button
@@ -99,7 +99,7 @@ export default function ShellLivreur({ active, moi, titre, children }) {
             >
               <LivreurIcon id="notifications" />
               {nbNotifs > 0 && (
-                <span className="absolute -top-1 -right-1 h-4.5 w-4.5 rounded-full bg-orange text-white text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 h-4.5 w-4.5 rounded-full bg-clay-dark text-white text-[10px] font-bold flex items-center justify-center">
                   {nbNotifs}
                 </span>
               )}

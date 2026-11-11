@@ -3,6 +3,9 @@ import { useEffect, useMemo, useState } from 'react';
 import ShellLivreur from '../../components/livreur/ShellLivreur';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -29,7 +32,7 @@ const ONGLETS = [
   { id: 'annulee', label: 'Annulée', test: (c) => ['annule', 'indisponible'].includes(c.statut) },
 ];
 
-const SHADOW = 'shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]';
+const SHADOW = `${SHADOW_CARD}`;
 
 export default function LivreurMesLivraisons() {
   const { moi, chargementSession } = useSession('livreur');
@@ -113,9 +116,7 @@ export default function LivreurMesLivraisons() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -194,7 +195,7 @@ export default function LivreurMesLivraisons() {
       <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-6">
         <div className={`bg-white rounded-m ${SHADOW} overflow-hidden`}>
           {commandesFiltrees.length === 0 ? (
-            <p className="text-ink-soft/75 text-sm text-center py-16">Aucune livraison dans cette catégorie.</p>
+            <EtatVide compact bordure={false} icone="camion" texte="Aucune livraison dans cette catégorie." />
           ) : (
             <div className="divide-y divide-line">
               {commandesFiltrees.map((c) => {

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import ShellVendeuse from '../../components/vendeuse/ShellVendeuse';
 import { useVendeuseSession } from '../../hooks/useVendeuseSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
 
 const ONGLETS = [
   { id: 'tous', label: 'Tous' },
@@ -85,9 +87,7 @@ export default function MesArticles() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -119,14 +119,14 @@ export default function MesArticles() {
 
         <button
           onClick={() => navigate('/vendeuse/ajouter-produit')}
-          className="bg-orange hover:bg-orange-dark text-white px-5 py-2.5 rounded-btn font-bold text-sm transition-all shadow-sm hover:-translate-y-0.5"
+          className="bg-clay-dark hover:bg-ink text-white px-5 py-2.5 rounded-btn font-bold text-sm transition-all shadow-sm hover:-translate-y-0.5"
         >
           + Ajouter un article
         </button>
       </div>
 
       {produitsFiltres.length === 0 ? (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-16 text-center`}>
           <p className="text-ink-soft/75 text-sm">
             {onglet === 'tous'
               ? 'Aucun article pour le moment. Commencez par en ajouter un !'
@@ -138,7 +138,7 @@ export default function MesArticles() {
           {produitsFiltres.map((p) => (
             <div
               key={p.id}
-              className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] hover:-translate-y-0.5 transition-transform flex flex-col"
+              className={`bg-white rounded-m ${SHADOW_CARD} hover:-translate-y-0.5 transition-transform flex flex-col`}
             >
               <div className="h-40 bg-line/30 relative">
                 {p.image_principale ? (
@@ -222,7 +222,7 @@ export default function MesArticles() {
       )}
 
       {produits.length > 0 && conseilVisible && (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5 flex items-start gap-4 relative">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-5 flex items-start gap-4 relative`}>
           <span className="h-11 w-11 rounded-full bg-orange/10 text-orange flex items-center justify-center shrink-0">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5"><path d="M12 2l2.4 6.6L21 9l-5.2 4.3L17.4 21 12 17l-5.4 4 1.6-7.7L3 9l6.6-.4z" /></svg>
           </span>

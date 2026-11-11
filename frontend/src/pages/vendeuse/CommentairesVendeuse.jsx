@@ -3,6 +3,9 @@ import { useEffect, useMemo, useState } from 'react';
 import ShellVendeuse from '../../components/vendeuse/ShellVendeuse';
 import { useVendeuseSession } from '../../hooks/useVendeuseSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -63,9 +66,7 @@ export default function CommentairesVendeuse() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -73,19 +74,19 @@ export default function CommentairesVendeuse() {
     <ShellVendeuse active="commentaires" moi={moi} titre="Commentaires">
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-        <div className="bg-white border-l-4 border-l-orange rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
+        <div className={`bg-white border-l-4 border-l-orange rounded-m ${SHADOW_CARD} p-4`}>
           <p className="text-2xl font-serif font-bold text-ink">{noteMoyenne}</p>
           <p className="text-[11.5px] text-ink-soft/75 uppercase tracking-wide font-bold mt-0.5">Note moyenne</p>
         </div>
-        <div className="bg-white border-l-4 border-l-teal rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
+        <div className={`bg-white border-l-4 border-l-teal rounded-m ${SHADOW_CARD} p-4`}>
           <p className="text-2xl font-serif font-bold text-ink">{avis.length}</p>
           <p className="text-[11.5px] text-ink-soft/75 uppercase tracking-wide font-bold mt-0.5">Avis reçus</p>
         </div>
-        <div className="bg-white border-l-4 border-l-orange rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
+        <div className={`bg-white border-l-4 border-l-orange rounded-m ${SHADOW_CARD} p-4`}>
           <p className="text-2xl font-serif font-bold text-ink">{aRepondre}</p>
           <p className="text-[11.5px] text-ink-soft/75 uppercase tracking-wide font-bold mt-0.5">À répondre</p>
         </div>
-        <div className="bg-white border-l-4 border-l-teal rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
+        <div className={`bg-white border-l-4 border-l-teal rounded-m ${SHADOW_CARD} p-4`}>
           <p className="text-2xl font-serif font-bold text-ink">{avis.length > 0 ? Math.round(((avis.length - aRepondre) / avis.length) * 100) : 0}%</p>
           <p className="text-[11.5px] text-ink-soft/75 uppercase tracking-wide font-bold mt-0.5">Taux de réponse</p>
         </div>
@@ -111,13 +112,13 @@ export default function CommentairesVendeuse() {
       </div>
 
       {avisFiltres.length === 0 ? (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-          <p className="text-ink-soft/75 text-sm">Aucun avis dans cette catégorie pour le moment.</p>
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-14 text-center`}>
+          <EtatVide compact bordure={false} icone="message" texte="Aucun avis dans cette catégorie pour le moment." />
         </div>
       ) : (
         <div className="space-y-4">
           {avisFiltres.map((a) => (
-            <div key={a.id} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
+            <div key={a.id} className={`bg-white rounded-m ${SHADOW_CARD} p-5`}>
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2.5">
                   <div className="h-9 w-9 rounded-full bg-teal/15 text-teal-dark font-bold text-[13px] flex items-center justify-center shrink-0">

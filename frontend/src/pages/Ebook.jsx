@@ -198,7 +198,7 @@ export default function Ebook() {
     return (
       <Layout>
         <div className="min-h-[60vh] flex items-center justify-center">
-          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
+          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" role="status" aria-label="Chargement en cours" />
         </div>
       </Layout>
     );
@@ -229,7 +229,7 @@ export default function Ebook() {
             <h1 className="font-serif italic text-[#3D1B36] text-[52px] sm:text-[68px] leading-[0.95] mb-6">
               {ebook.titre}
             </h1>
-            <p className="text-orange font-bold text-[22px] mb-6">De maman à maman, à la dakaroise.</p>
+            <p className="text-orange-dark font-bold text-[22px] mb-6">De maman à maman, à la dakaroise.</p>
             <p className="text-ink-soft text-[16px] leading-relaxed max-w-md mb-9">{ebook.description}</p>
             <div className="flex flex-wrap gap-3.5 mb-9">
               <a href="#acheter" className="inline-flex items-center gap-2 bg-[#3D1B36] hover:bg-[#2c1327] text-white px-7 py-3.5 rounded-full text-sm font-bold transition-colors">
@@ -289,7 +289,7 @@ export default function Ebook() {
               { titre: 'Repères santé responsables', desc: "Le guide indique quand demander l'avis d'un médecin, d'une sage-femme ou d'un pédiatre.", icone: 'bouclier' },
               { titre: 'Pensé depuis Dakar', desc: 'Les réalités locales, la famille et le quotidien dakarois ne sont pas laissés de côté.', icone: 'pin' },
             ].map((c) => (
-              <Reveal key={c.titre} className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+              <Reveal key={c.titre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
                 <span className="h-10 w-10 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center mb-4">
                   {c.icone === 'coche' && <CheckIcon className="h-5 w-5" />}
                   {c.icone === 'bouclier' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 01-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 011-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 011.52 0C14.51 3.81 17 5 19 5a1 1 0 011 1z" /><path d="m9 12 2 2 4-4" /></svg>}
@@ -317,9 +317,9 @@ export default function Ebook() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {CHAPITRES.map((c) => (
-              <Reveal key={c.n} className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+              <Reveal key={c.n} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
                 <div className="flex items-start justify-between mb-8">
-                  <span className="font-serif text-2xl font-bold text-orange">{c.n}</span>
+                  <span className="font-serif text-2xl font-bold text-orange-dark">{c.n}</span>
                   <span className="h-8 w-8 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
                       <path d={ICONES[c.icone]} />
@@ -366,7 +366,7 @@ export default function Ebook() {
             </div>
           </div>
 
-          <Reveal className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+          <Reveal className="bg-white rounded-m shadow-2xl overflow-hidden">
             <img loading="lazy" decoding="async" key={apercuIndex} src={APERCUS[apercuIndex].image} alt={APERCUS[apercuIndex].titre} className="w-full" />
           </Reveal>
           <div className="mt-5 flex items-center justify-between flex-wrap gap-3">
@@ -398,7 +398,7 @@ export default function Ebook() {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Reveal className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-8">
+            <Reveal className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-8">
               <p className="text-[11px] font-bold uppercase tracking-wide text-ink-soft/75 mb-3">Guides généralistes</p>
               <h3 className="font-serif text-xl text-ink mb-5">{COMPARAISON.generaliste.titre}</h3>
               <ul className="space-y-3">
@@ -407,7 +407,7 @@ export default function Ebook() {
                 ))}
               </ul>
             </Reveal>
-            <Reveal className="bg-[#3D1B36] rounded-2xl shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)] p-8">
+            <Reveal className="bg-[#3D1B36] rounded-m shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)] p-8">
               <p className="text-[11px] font-bold uppercase tracking-wide text-orange mb-3">Guide Yaay to Yaay</p>
               <h3 className="font-serif text-xl text-cream mb-5">{COMPARAISON.yaay.titre}</h3>
               <ul className="space-y-3">
@@ -427,9 +427,9 @@ export default function Ebook() {
         <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <Reveal className="relative">
             {ebook.couverture ? (
-              <img loading="lazy" decoding="async" src={ebook.couverture} alt="" className="w-full rounded-2xl shadow-xl" />
+              <img loading="lazy" decoding="async" src={ebook.couverture} alt="" className="w-full rounded-m shadow-xl" />
             ) : (
-              <div className="w-full aspect-[4/3] rounded-2xl bg-cream shadow-xl flex items-center justify-center text-ink-soft/30 text-sm">
+              <div className="w-full aspect-[4/3] rounded-m bg-cream shadow-xl flex items-center justify-center text-ink-soft/30 text-sm">
                 Photo à venir
               </div>
             )}
@@ -489,7 +489,7 @@ export default function Ebook() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {AUDIENCES.map((a) => (
-              <Reveal key={a.titre} className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+              <Reveal key={a.titre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
                 <span className="h-11 w-11 rounded-full bg-orange/15 text-orange flex items-center justify-center mb-4">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5"><path d={ICONES[a.icone]} /></svg>
                 </span>
@@ -517,7 +517,7 @@ export default function Ebook() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {OUTILS.map((o) => (
-              <Reveal key={o.titre} className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
+              <Reveal key={o.titre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
                 <div className="flex items-start gap-2.5">
                   <span className="h-6 w-6 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center shrink-0 mt-0.5">
                     <CheckIcon className="h-3 w-3" />
@@ -559,7 +559,7 @@ export default function Ebook() {
               </span>
             </div>
 
-            <div className="flex items-start gap-3 bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
+            <div className="flex items-start gap-3 bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6 text-teal shrink-0"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 01-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 011-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 011.52 0C14.51 3.81 17 5 19 5a1 1 0 011 1z" /><path d="m9 12 2 2 4-4" /></svg>
               <div>
                 <p className="text-[13.5px] font-bold text-ink">Achat sécurisé</p>
@@ -568,7 +568,7 @@ export default function Ebook() {
             </div>
           </Reveal>
 
-          <Reveal className="bg-white rounded-2xl p-7 shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)]">
+          <Reveal className="bg-white rounded-m p-7 shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)]">
             {ebook.couverture ? (
               <img loading="lazy" decoding="async" src={ebook.couverture} alt="" className="w-full aspect-[3/2] object-cover rounded-xl mb-5" />
             ) : (
@@ -688,7 +688,7 @@ export default function Ebook() {
 
           <div className="space-y-3">
             {FAQ.map((f, i) => (
-              <Reveal key={f.q} className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] overflow-hidden">
+              <Reveal key={f.q} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] overflow-hidden">
                 <button
                   type="button"
                   onClick={() => setFaqOuvert(faqOuvert === i ? -1 : i)}

@@ -5,6 +5,7 @@ import ShellLivreur from '../../components/livreur/ShellLivreur';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD as SHADOW } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
 
 function formatDate(iso) {
   if (!iso) return '—';
@@ -110,9 +111,7 @@ export default function LivreurProfil() {
 
   if (chargementSession || chargement || !profil) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -125,7 +124,7 @@ export default function LivreurProfil() {
 
       <div className={`${GRADIENT_CARDS[0].bg} rounded-m ${SHADOW} p-6 flex items-center justify-between gap-4 flex-wrap`}>
         <div className="flex items-center gap-4">
-          <div className="h-16 w-16 rounded-2xl bg-white/10 text-cream font-serif text-2xl font-bold flex items-center justify-center shrink-0">
+          <div className="h-16 w-16 rounded-m bg-white/10 text-cream font-serif text-2xl font-bold flex items-center justify-center shrink-0">
             {(profil.first_name || profil.username || '?').charAt(0).toUpperCase()}
           </div>
           <div>

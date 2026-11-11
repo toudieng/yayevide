@@ -3,6 +3,9 @@ import { useEffect, useMemo, useState } from 'react';
 import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -65,9 +68,7 @@ export default function AdminProduits() {
 
   if (chargementSession) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -91,14 +92,14 @@ export default function AdminProduits() {
 
       {chargement ? (
         <div className="flex justify-center py-16">
-          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
+          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" role="status" aria-label="Chargement en cours" />
         </div>
       ) : produitsFiltres.length === 0 ? (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-          <p className="text-ink-soft/75 text-sm">Aucun article ne correspond.</p>
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-16 text-center`}>
+          <EtatVide compact bordure={false} icone="recherche" texte="Aucun article ne correspond." />
         </div>
       ) : (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] divide-y divide-line overflow-hidden">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} divide-y divide-line overflow-hidden`}>
           {produitsFiltres.map((p) => (
             <div key={p.id} className="flex items-center gap-4 p-4 flex-wrap md:flex-nowrap">
               <div className="h-11 w-11 rounded-btn bg-line/40 overflow-hidden shrink-0">
@@ -122,7 +123,7 @@ export default function AdminProduits() {
                   onClick={() => toggleDisponibilite(p)}
                   className={`text-[11px] font-bold uppercase tracking-wide px-3 py-2 rounded-btn border transition-colors disabled:opacity-50 whitespace-nowrap ${
                     p.disponible
-                      ? 'border-orange text-orange hover:bg-orange hover:text-white'
+                      ? 'border-orange text-clay-dark hover:bg-clay-dark hover:text-white'
                       : 'border-teal text-teal-dark hover:bg-teal hover:text-white'
                   }`}
                 >

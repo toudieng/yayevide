@@ -70,7 +70,7 @@ export default function Contact() {
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-ink text-cream rounded-btn py-3.5 text-sm font-bold uppercase tracking-wide hover:bg-clay hover:-translate-y-0.5 transition-all"
+                    className="w-full bg-ink text-cream rounded-btn py-3.5 text-sm font-bold uppercase tracking-wide hover:bg-clay-dark hover:-translate-y-0.5 transition-all"
                   >
                     Envoyer le message
                   </button>

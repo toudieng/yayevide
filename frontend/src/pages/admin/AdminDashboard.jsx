@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import ShellAdmin, { AdminIcon } from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -30,9 +32,7 @@ export default function AdminDashboard() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -121,19 +121,19 @@ export default function AdminDashboard() {
       <div>
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Vue d'ensemble</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+          <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
             <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">GMV total</div>
             <div className="text-2xl font-serif font-bold mt-1 text-ink">{formatFCFA(stats?.gmv_total)}</div>
           </div>
-          <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+          <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
             <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Commission totale</div>
             <div className="text-2xl font-serif font-bold mt-1 text-teal-dark">{formatFCFA(stats?.commission_totale)}</div>
           </div>
-          <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+          <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
             <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">GMV (ce mois)</div>
             <div className="text-2xl font-serif font-bold mt-1 text-ink">{formatFCFA(stats?.gmv_mois)}</div>
           </div>
-          <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+          <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
             <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Commission (ce mois)</div>
             <div className="text-2xl font-serif font-bold mt-1 text-teal-dark">{formatFCFA(stats?.commission_mois)}</div>
           </div>
@@ -141,19 +141,19 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+        <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
           <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Commandes (ce mois)</div>
           <div className="text-2xl font-serif font-bold mt-1 text-ink">{stats?.nb_commandes_mois ?? 0}</div>
         </div>
-        <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+        <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
           <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Commandes en attente</div>
-          <div className="text-2xl font-serif font-bold mt-1 text-orange">{stats?.nb_commandes_en_attente ?? 0}</div>
+          <div className="text-2xl font-serif font-bold mt-1 text-orange-dark">{stats?.nb_commandes_en_attente ?? 0}</div>
         </div>
-        <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+        <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
           <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Boutiques actives</div>
           <div className="text-2xl font-serif font-bold mt-1 text-ink">{stats?.nb_boutiques ?? 0}</div>
         </div>
-        <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+        <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
           <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Articles en ligne</div>
           <div className="text-2xl font-serif font-bold mt-1 text-ink">{stats?.nb_produits_en_ligne ?? 0}</div>
         </div>

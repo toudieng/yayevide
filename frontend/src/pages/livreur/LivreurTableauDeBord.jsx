@@ -5,6 +5,8 @@ import ShellLivreur from '../../components/livreur/ShellLivreur';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -59,9 +61,7 @@ export default function LivreurTableauDeBord() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -120,7 +120,7 @@ export default function LivreurTableauDeBord() {
       <div className={`bg-white rounded-m ${SHADOW_CARD} p-6`}>
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-5">Activités récentes</h3>
         {activitesRecentes.length === 0 ? (
-          <p className="text-ink-soft/75 text-sm text-center py-6">Aucune activité pour le moment.</p>
+          <EtatVide compact bordure={false} icone="camion" texte="Aucune activité pour le moment." />
         ) : (
           <div className="space-y-4">
             {activitesRecentes.map((e, i) => (

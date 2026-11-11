@@ -27,7 +27,7 @@ export default function BlogArticle() {
         <img src={article.image} alt="" className="absolute inset-0 h-full w-full object-cover animate-kenburns" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/15" />
         <Reveal className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <span className={`inline-block rounded-full bg-clay px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white mb-4`}>
+          <span className={`inline-block rounded-full bg-clay-dark px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white mb-4`}>
             {article.tag}
           </span>
           <h1 className="font-serif text-[26px] sm:text-[36px] text-cream leading-tight max-w-2xl">{article.title}</h1>

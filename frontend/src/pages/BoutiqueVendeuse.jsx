@@ -132,7 +132,7 @@ export default function BoutiqueVendeuse() {
     return (
       <Layout>
         <div className="min-h-[50vh] flex items-center justify-center">
-          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
+          <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" role="status" aria-label="Chargement en cours" />
         </div>
       </Layout>
     );

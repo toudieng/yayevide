@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import ShellLivreur from '../../components/livreur/ShellLivreur';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -36,9 +39,7 @@ export default function LivreurHistorique() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -50,22 +51,22 @@ export default function LivreurHistorique() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+        <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
           <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Livraisons (ce mois)</div>
           <div className="text-2xl font-serif font-bold mt-1 text-ink">{stats?.nb_livraisons_mois ?? 0}</div>
         </div>
-        <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
+        <div className={`bg-white p-6 rounded-m ${SHADOW_CARD}`}>
           <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Livraisons au total</div>
           <div className="text-2xl font-serif font-bold mt-1 text-ink">{stats?.nb_livraisons_total ?? 0}</div>
         </div>
       </div>
 
       {commandes.length === 0 ? (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-          <p className="text-ink-soft/75 text-sm">Aucune livraison effectuée pour le moment.</p>
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-16 text-center`}>
+          <EtatVide compact bordure={false} icone="camion" texte="Aucune livraison effectuée pour le moment." />
         </div>
       ) : (
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] divide-y divide-line overflow-hidden">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} divide-y divide-line overflow-hidden`}>
           {commandes.map((c) => (
             <div key={c.id} className="flex items-center gap-4 p-4 flex-wrap md:flex-nowrap">
               <div className="h-11 w-11 rounded-btn bg-line/40 overflow-hidden shrink-0">

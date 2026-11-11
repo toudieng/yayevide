@@ -88,7 +88,7 @@ export default function Hero3DShowcase({ trackRef }) {
           <img src={CARD_FRONT_IMAGE} alt="Article pour bébé mis en ligne sur Yaay Vidé" className="h-36 w-full object-cover" />
           <div className="p-3.5">
             <p className="text-[13px] font-semibold text-ink truncate">Ensemble pyjama bébé</p>
-            <p className="text-[13px] font-bold text-clay mt-0.5">4 800 FCFA</p>
+            <p className="text-[13px] font-bold text-clay-dark mt-0.5">4 800 FCFA</p>
           </div>
         </div>
 

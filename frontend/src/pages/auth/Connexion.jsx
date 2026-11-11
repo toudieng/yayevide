@@ -56,7 +56,7 @@ export default function Connexion({ onLoginSuccess }) {
       </div>
 
       {erreur && (
-        <div className="mb-5 p-4 text-xs bg-red-50 text-red-600 rounded-xl border border-red-100 text-center font-medium">
+        <div className="mb-5 p-4 text-[13px] bg-red-50 text-red-700 rounded-btn border border-red-100 text-center font-medium">
           {erreur}
         </div>
       )}
@@ -73,7 +73,7 @@ export default function Connexion({ onLoginSuccess }) {
             required
             value={credentials.username}
             onChange={handleChange}
-            className="w-full px-4 py-3.5 bg-sable border border-line rounded-xl focus:outline-none focus:border-orange focus:ring-4 focus:ring-orange/15 focus:bg-white text-sm shadow-sm transition-all text-ink"
+            className="w-full px-4 py-3.5 bg-sable border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-orange focus:ring-4 focus:ring-orange/15 focus:bg-white shadow-sm transition-all text-ink"
             placeholder="Ex: 77XXXXXXX"
           />
         </div>
@@ -91,7 +91,7 @@ export default function Connexion({ onLoginSuccess }) {
               required
               value={credentials.password}
               onChange={handleChange}
-              className="w-full px-4 py-3.5 pr-11 bg-sable border border-line rounded-xl focus:outline-none focus:border-orange focus:ring-4 focus:ring-orange/15 focus:bg-white text-sm shadow-sm transition-all text-ink"
+              className="w-full px-4 py-3.5 pr-11 bg-sable border border-line rounded-btn text-[16px] sm:text-sm focus:outline-none focus:border-orange focus:ring-4 focus:ring-orange/15 focus:bg-white shadow-sm transition-all text-ink"
               placeholder="••••••••"
             />
             <button
@@ -126,14 +126,14 @@ export default function Connexion({ onLoginSuccess }) {
               Se souvenir de moi
             </label>
           </div>
-          <a href="#" className="text-xs text-ink-soft/75 hover:text-orange underline underline-offset-2 font-medium">
+          <a href="#" className="text-xs text-ink-soft/75 hover:text-clay-dark underline underline-offset-2 font-medium">
             Mot de passe perdu ?
           </a>
         </div>
 
         <button
           type="submit"
-          className="w-full bg-orange hover:bg-orange-dark text-white font-medium py-4 rounded-xl text-sm transition-all shadow-md tracking-wide mt-4"
+          className="w-full min-h-[48px] bg-clay-dark hover:bg-ink text-white font-bold py-4 rounded-btn text-sm transition-all shadow-md tracking-wide mt-4"
         >
           Se connecter
         </button>

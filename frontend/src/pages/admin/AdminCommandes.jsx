@@ -5,6 +5,8 @@ import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD as SHADOW } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 const STATUTS = [
   { value: '', label: 'Tous' },
@@ -151,9 +153,7 @@ export default function AdminCommandes() {
 
   if (chargementSession) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -200,11 +200,11 @@ export default function AdminCommandes() {
 
           {chargementActivites ? (
             <div className="flex justify-center py-16">
-              <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
+              <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" role="status" aria-label="Chargement en cours" />
             </div>
           ) : evenementsFiltres.length === 0 ? (
             <div className={`bg-white rounded-m ${SHADOW} p-16 text-center`}>
-              <p className="text-ink-soft/75 text-sm">Aucune activité pour le moment.</p>
+              <EtatVide compact bordure={false} icone="boite" texte="Aucune activité pour le moment." />
             </div>
           ) : (
             <div className={`bg-white rounded-m ${SHADOW} p-6`}>
@@ -288,10 +288,10 @@ export default function AdminCommandes() {
         <div className={`bg-white rounded-m ${SHADOW} overflow-hidden`}>
           {chargement ? (
             <div className="flex justify-center py-16">
-              <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
+              <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" role="status" aria-label="Chargement en cours" />
             </div>
           ) : commandes.length === 0 ? (
-            <p className="text-ink-soft/75 text-sm text-center py-16">Aucune commande ne correspond à ces filtres.</p>
+            <EtatVide compact bordure={false} icone="boite" texte="Aucune commande ne correspond à ces filtres." />
           ) : (
             <div className="divide-y divide-line">
               {commandes.map((c) => (

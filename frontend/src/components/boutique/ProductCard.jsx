@@ -11,9 +11,10 @@ const ETAT_LABELS = {
 };
 
 const ETAT_BADGE = {
-  neuf: "bg-green-500",
-  excellent: "bg-yellow-500",
-  bon: "bg-orange",
+  // Fonds assez foncés pour un texte blanc lisible (contraste AA)
+  neuf: "bg-green-700",
+  excellent: "bg-teal-dark",
+  bon: "bg-clay-dark",
 };
 
 function formatFCFA(value) {
@@ -145,32 +146,32 @@ export default function ProductCard({ produit, index = 0 }) {
         )}
 
         {/* Haut-gauche : état du produit, puis bonnes affaires / occasion spéciale */}
-        <div className="absolute top-2 left-2 flex flex-col items-start gap-1.5">
+        <div className="absolute top-2 left-2 right-12 flex flex-col items-start gap-1.5">
           <span
-            className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || "bg-orange"}`}
+            className={`px-1.5 py-0.5 max-w-full leading-tight rounded-[10px] text-[10px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || "bg-clay-dark"}`}
           >
             {ETAT_LABELS[produit.etat] || "Bon état"}
           </span>
           {produit.bonne_affaire && (
-            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide text-white bg-clay shadow-sm">
-              💰 Bonne affaire
+            <span className="max-w-full leading-tight px-1.5 py-0.5 rounded-[10px] text-[10px] font-bold uppercase tracking-wide text-white bg-clay-dark shadow-sm">
+              Bonne affaire
             </span>
           )}
           {estOccasionSpeciale && (
-            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide text-white bg-orange shadow-sm">
-              🎉 Occasion spéciale
+            <span className="max-w-full leading-tight px-1.5 py-0.5 rounded-[10px] text-[10px] font-bold uppercase tracking-wide text-ink bg-orange shadow-sm">
+              Occasion spéciale
             </span>
           )}
         </div>
 
         {/* Haut-droite : favoris uniquement */}
-        <div className="absolute top-2.5 right-2.5">
+        <div className="absolute top-2 right-2">
           <button
             type="button"
             onClick={toggleFavori}
             disabled={favoriEnCours}
             aria-label={favori ? "Retirer des favoris" : "Ajouter aux favoris"}
-            className="h-8 w-8 rounded-full bg-white/95 shadow-sm flex items-center justify-center hover:scale-110 transition-transform disabled:opacity-50"
+            className="h-9 w-9 rounded-full bg-white/95 shadow-sm flex items-center justify-center hover:scale-110 transition-transform disabled:opacity-50"
           >
             <svg
               viewBox="0 0 24 24"
@@ -185,9 +186,10 @@ export default function ProductCard({ produit, index = 0 }) {
         </div>
 
         {/* Bas-gauche : uniquement le nombre de vues */}
-        <span className="absolute bottom-2.5 left-2.5 flex items-center gap-1 bg-black/55 text-white text-[10.5px] font-semibold px-2 py-1 rounded-full">
-          <EyeIcon className="h-3 w-3" />
+        <span className="absolute bottom-2.5 left-2.5 flex items-center gap-1 bg-ink/70 text-white text-[10.5px] font-semibold px-2 py-1 rounded-full">
+          <EyeIcon className="h-3 w-3" aria-hidden="true" />
           {produit.nb_vues ?? 0}
+          <span className="sr-only"> vues</span>
         </span>
         {produit.taille && (
           <span className="absolute bottom-2.5 right-2.5 bg-white/95 text-ink text-[10.5px] font-bold px-2 py-1 rounded-full shadow-sm">
@@ -197,7 +199,7 @@ export default function ProductCard({ produit, index = 0 }) {
       </div>
 
       <div className="px-3.5 pt-3 pb-3.5 flex flex-col flex-1">
-        <span className="self-start text-[10px] font-bold uppercase tracking-wide text-teal-dark bg-teal/10 px-2 py-0.5 rounded-full mb-1.5">
+        <span className="self-start text-[10px] font-bold uppercase tracking-wide text-teal-dark bg-teal/10 px-2 py-0.5 rounded-full mb-1.5 max-w-full truncate">
           {produit.categorie_racine_nom || produit.categorie_nom || "Yaay Vidé"}
         </span>
 
@@ -205,7 +207,7 @@ export default function ProductCard({ produit, index = 0 }) {
           {produit.titre}
         </h3>
 
-        <p className="font-sans font-bold text-orange text-[15px] sm:text-[17px] mb-2">
+        <p className="font-sans font-bold text-clay-dark text-[15px] sm:text-[17px] mb-2">
           {formatFCFA(produit.prix_final_public)}
           {isLocation && (
             <span className="text-ink-soft/75 font-medium text-[11px]">
@@ -217,7 +219,7 @@ export default function ProductCard({ produit, index = 0 }) {
 
         <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 mb-2">
           {produit.boutique_zone_nom && (
-            <span className="flex items-center gap-1 text-[10.5px] text-ink-soft/75">
+            <span className="flex items-center gap-1 text-[11px] text-ink-soft/75">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -232,7 +234,7 @@ export default function ProductCard({ produit, index = 0 }) {
             </span>
           )}
           {produit.date_ajout && (
-            <span className="flex items-center gap-1 text-[10.5px] text-ink-soft/75">
+            <span className="flex items-center gap-1 text-[11px] text-ink-soft/75">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -258,12 +260,12 @@ export default function ProductCard({ produit, index = 0 }) {
         <button
           type="button"
           onClick={handleCta}
-          className={`mt-auto w-full rounded-full py-2 text-[11.5px] font-bold uppercase tracking-wide transition-colors ${
+          className={`mt-auto w-full min-h-[38px] rounded-full py-2 text-[11.5px] font-bold uppercase tracking-wide transition-colors ${
             ajoute
-              ? "bg-teal text-white"
+              ? "bg-teal-dark text-white"
               : isLocation
-                ? "bg-ink text-cream group-hover:bg-teal"
-                : "bg-orange text-white group-hover:bg-orange-dark"
+                ? "bg-ink text-cream group-hover:bg-teal-dark"
+                : "bg-clay-dark text-white group-hover:bg-ink"
           }`}
         >
           {ajoute

@@ -5,6 +5,8 @@ import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
 import { GRADIENT_CARDS, SHADOW_CARD as SHADOW } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -65,9 +67,7 @@ export default function AdminPerformance() {
 
   if (chargementSession || chargement || !data) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -131,7 +131,7 @@ export default function AdminPerformance() {
               <p className="text-[10.5px] text-ink-soft/75">{rep.ventes?.pct_total ?? 0}% du total</p>
             </div>
             <div>
-              <p className="text-[10.5px] font-bold text-orange uppercase tracking-wide mb-1">Valeur des locations</p>
+              <p className="text-[10.5px] font-bold text-clay-dark uppercase tracking-wide mb-1">Valeur des locations</p>
               <p className="text-lg font-serif font-bold text-ink">{formatFCFA(rep.locations?.montant)}</p>
               <p className="text-[10.5px] text-ink-soft/75">{rep.locations?.pct_total ?? 0}% du total</p>
             </div>
@@ -147,7 +147,7 @@ export default function AdminPerformance() {
       <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6">
         <div className={`bg-white rounded-m ${SHADOW} p-6`}>
           <h3 className="font-serif text-lg text-ink mb-1 flex items-center gap-2">
-            <span className="h-7 w-7 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center text-sm">📦</span>
+            <span className="h-7 w-7 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z" /><path d="M3 8v8l9 5 9-5V8M12 13v8" /></svg></span>
             Activité de la plateforme
           </h3>
           <p className="text-[12.5px] text-ink-soft/75 mb-5">Volume et cycle des transactions.</p>
@@ -178,7 +178,7 @@ export default function AdminPerformance() {
 
         <div className={`${GRADIENT_CARDS[0].bg} rounded-m ${SHADOW} p-6`}>
           <h3 className={`font-serif text-lg mb-1 flex items-center gap-2 ${GRADIENT_CARDS[0].text}`}>
-            <span className="h-7 w-7 rounded-full bg-white/10 flex items-center justify-center text-sm">👥</span>
+            <span className="h-7 w-7 rounded-full bg-white/10 flex items-center justify-center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0113 0M16 4.5a3.5 3.5 0 010 7M21.5 20a6.5 6.5 0 00-4-6" /></svg></span>
             Communauté
           </h3>
           <p className={`text-[12.5px] mb-5 ${GRADIENT_CARDS[0].label}`}>Base active de la plateforme.</p>
@@ -207,7 +207,7 @@ export default function AdminPerformance() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-6">
         <div className={`${GRADIENT_CARDS[2].bg} rounded-m ${SHADOW} p-6`}>
           <h3 className="font-serif text-lg text-ink mb-1 flex items-center gap-2">
-            <span className="h-7 w-7 rounded-full bg-orange/15 text-orange flex items-center justify-center text-sm">👁️</span>
+            <span className="h-7 w-7 rounded-full bg-orange/15 text-clay-dark flex items-center justify-center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg></span>
             Engagement
           </h3>
           <p className="text-[12.5px] text-ink-soft/75 mb-5">Intérêt → conversion, cumulé depuis le lancement.</p>
@@ -227,7 +227,7 @@ export default function AdminPerformance() {
 
           {eng.categorie_plus_consultee && (
             <div className="pt-4 border-t border-orange/15">
-              <p className="text-[10.5px] font-bold text-orange uppercase tracking-wide mb-1">Catégorie la plus consultée</p>
+              <p className="text-[10.5px] font-bold text-clay-dark uppercase tracking-wide mb-1">Catégorie la plus consultée</p>
               <p className="text-sm font-bold text-ink">{eng.categorie_plus_consultee.nom}</p>
               <p className="text-[11px] text-ink-soft/75">{eng.categorie_plus_consultee.nb_vues?.toLocaleString('fr-FR')} vues</p>
             </div>
@@ -292,7 +292,7 @@ export default function AdminPerformance() {
           <h3 className="font-serif text-lg text-ink mb-1">Top vendeuses</h3>
           <p className="text-[12.5px] text-ink-soft/75 mb-5">Classées par revenu net généré.</p>
           {data.top_vendeuses.length === 0 ? (
-            <p className="text-ink-soft/75 text-sm text-center py-8">Aucune vente pour le moment.</p>
+            <EtatVide compact bordure={false} icone="boite" texte="Aucune vente pour le moment." />
           ) : (
             <div className="space-y-3">
               {data.top_vendeuses.map((vd, i) => (
@@ -320,7 +320,7 @@ export default function AdminPerformance() {
           <h3 className="font-serif text-lg text-ink mb-1">Ventes par catégorie</h3>
           <p className="text-[12.5px] text-ink-soft/75 mb-5">Répartition du chiffre d'affaires.</p>
           {data.ventes_par_categorie.length === 0 ? (
-            <p className="text-ink-soft/75 text-sm text-center py-8">Aucune vente pour le moment.</p>
+            <EtatVide compact bordure={false} icone="boite" texte="Aucune vente pour le moment." />
           ) : (
             <div className="space-y-3.5">
               {data.ventes_par_categorie.map((c) => (

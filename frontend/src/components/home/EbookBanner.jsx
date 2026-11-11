@@ -43,7 +43,7 @@ export default function EbookBanner() {
         </p>
       </div>
       <div className="flex flex-col items-center gap-2 shrink-0">
-        <span className="bg-orange group-hover:bg-orange-dark text-white font-bold text-sm px-6 py-3 rounded-full transition-colors whitespace-nowrap">
+        <span className="bg-clay-dark group-hover:bg-ink text-white font-bold text-sm px-6 py-3 rounded-full transition-colors whitespace-nowrap">
           Découvrir notre e-book
         </span>
         <span className="text-cream/60 text-[12.5px]">{formatFCFA(ebook.prix)}</span>

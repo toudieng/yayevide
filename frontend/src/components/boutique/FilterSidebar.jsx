@@ -19,7 +19,7 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
           <button
             type="button"
             onClick={() => set({ categorie: '' })}
-            className={`flex items-center justify-between text-left px-1 py-1.5 text-[13.5px] rounded-btn transition-colors ${
+            className={`flex items-center justify-between text-left px-1 py-2 text-[13.5px] rounded-btn transition-colors ${
               !filters.categorie ? 'text-teal-dark font-semibold' : 'text-ink-soft hover:text-ink'
             }`}
           >
@@ -31,7 +31,7 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
               key={cat.slug}
               type="button"
               onClick={() => set({ categorie: cat.slug })}
-              className={`flex items-center justify-between text-left px-1 py-1.5 text-[13.5px] rounded-btn transition-colors ${
+              className={`flex items-center justify-between text-left px-1 py-2 text-[13.5px] rounded-btn transition-colors ${
                 filters.categorie === cat.slug ? 'text-teal-dark font-semibold' : 'text-ink-soft hover:text-ink'
               }`}
             >
@@ -82,7 +82,7 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
                     : filters.etats.filter((v) => v !== e.value);
                   set({ etats: next });
                 }}
-                className="h-3.5 w-3.5 accent-teal"
+                className="h-4 w-4 accent-teal"
               />
               {e.label}
             </label>
@@ -100,7 +100,7 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
             placeholder="Min"
             value={filters.prixMin}
             onChange={(e) => set({ prixMin: e.target.value })}
-            className="w-full px-3 py-2 bg-cream border border-line rounded-btn text-[13px] focus:outline-none focus:border-teal"
+            className="w-full px-3 py-2 bg-cream border border-line rounded-btn text-[16px] sm:text-[13px] focus:outline-none focus:border-teal"
           />
           <span className="text-ink-soft/75 text-xs">—</span>
           <input
@@ -109,7 +109,7 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
             placeholder="Max"
             value={filters.prixMax}
             onChange={(e) => set({ prixMax: e.target.value })}
-            className="w-full px-3 py-2 bg-cream border border-line rounded-btn text-[13px] focus:outline-none focus:border-teal"
+            className="w-full px-3 py-2 bg-cream border border-line rounded-btn text-[16px] sm:text-[13px] focus:outline-none focus:border-teal"
           />
         </div>
       </div>
@@ -117,7 +117,7 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
       <button
         type="button"
         onClick={onReset}
-        className="text-[12.5px] font-semibold text-clay hover:underline"
+        className="text-[12.5px] font-semibold text-clay-dark hover:underline"
       >
         Réinitialiser les filtres
       </button>

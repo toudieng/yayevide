@@ -32,7 +32,7 @@ export default function VerifierEmail() {
         <div className="h-1.5 bg-gradient-to-r from-teal via-clay to-orange" />
         <div className="p-10">
           {statut === 'chargement' && (
-            <div className="h-9 w-9 mx-auto rounded-full border-2 border-line border-t-teal animate-spin" />
+            <div className="h-9 w-9 mx-auto rounded-full border-2 border-line border-t-teal animate-spin" role="status" aria-label="Chargement en cours" />
           )}
 
           {statut === 'succes' && (
@@ -44,7 +44,7 @@ export default function VerifierEmail() {
               </div>
               <h1 className="font-serif text-2xl text-ink mb-2">Compte vérifié !</h1>
               <p className="text-sm text-ink-soft/75 mb-8">{message}</p>
-              <Link to="/connexion" className="inline-flex items-center gap-2 px-7 py-3.5 bg-ink text-cream rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-clay transition-colors">
+              <Link to="/connexion" className="inline-flex items-center gap-2 px-7 py-3.5 bg-ink text-cream rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-clay-dark transition-colors">
                 Se connecter
               </Link>
             </>

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import ShellVendeuse from "../../components/vendeuse/ShellVendeuse";
 import { useVendeuseSession } from "../../hooks/useVendeuseSession";
 import { apiFetch } from "../../utils/api";
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
 
 const STEPS = ["Informations", "Photos", "Tarifs et disponibilités"];
 
@@ -228,9 +230,7 @@ export default function AjouterProduit() {
 
   if (chargementSession) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -317,7 +317,7 @@ export default function AjouterProduit() {
         onSubmit={handleSubmit}
         className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 items-start"
       >
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-6">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-6 space-y-6`}>
           {step === 1 && (
             <div className="space-y-5">
               <h3 className="font-serif text-lg text-ink">
@@ -713,7 +713,7 @@ export default function AjouterProduit() {
               <button
                 type="submit"
                 disabled={envoiEnCours}
-                className="bg-orange hover:bg-orange-dark text-white px-8 py-3 rounded-btn font-bold text-sm transition-colors disabled:opacity-60"
+                className="bg-clay-dark hover:bg-ink text-white px-8 py-3 rounded-btn font-bold text-sm transition-colors disabled:opacity-60"
               >
                 {envoiEnCours
                   ? "Publication..."
@@ -723,7 +723,7 @@ export default function AjouterProduit() {
           </div>
         </div>
 
-        <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 sticky top-6">
+        <div className={`bg-white rounded-m ${SHADOW_CARD} p-6 sticky top-6`}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-serif text-base text-ink">
               Résumé de l'annonce

@@ -19,7 +19,7 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
           <p className="text-cream/70 text-[17px] leading-relaxed max-w-md mb-9">{subtitle}</p>
           <a
             href="#etapes"
-            className="inline-flex items-center gap-2 self-start bg-orange hover:bg-orange-dark text-white px-7 py-4 rounded-full text-[15px] font-bold transition-colors"
+            className="inline-flex items-center gap-2 self-start bg-clay-dark hover:bg-ink text-white px-7 py-4 rounded-full text-[15px] font-bold transition-colors"
           >
             Découvrir les {steps.length} étapes
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="h-4 w-4">
@@ -92,7 +92,7 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
                     )}
 
                     {step.tip && (
-                      <div className={`rounded-2xl p-5 flex items-start gap-3.5 ${
+                      <div className={`rounded-m p-5 flex items-start gap-3.5 ${
                         accent === 'teal' ? 'bg-teal/8' : 'bg-orange/8'
                       }`}>
                         <span className={`h-9 w-9 rounded-full flex items-center justify-center shrink-0 ${
@@ -165,7 +165,7 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
               <p className="text-sm text-ink-soft/75 mb-7">{cta.subtitle}</p>
               <Link
                 to={cta.to}
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-orange text-white rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-orange-dark transition-colors"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-clay-dark text-white rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-orange-dark transition-colors"
               >
                 {cta.label}
               </Link>

@@ -14,9 +14,10 @@ const ETAT_LABELS = {
 };
 
 const ETAT_BADGE = {
-  neuf: "bg-green-500",
-  excellent: "bg-yellow-500",
-  bon: "bg-orange",
+  // Fonds assez foncés pour un texte blanc lisible (contraste AA)
+  neuf: "bg-green-700",
+  excellent: "bg-teal-dark",
+  bon: "bg-clay-dark",
 };
 
 function formatFCFA(value) {
@@ -154,12 +155,30 @@ export default function ProduitDetail() {
   if (chargement) {
     return (
       <Layout>
-        <div className="max-w-[1280px] mx-auto px-6 md:px-12 py-16 grid md:grid-cols-2 gap-12">
-          <div className="aspect-square rounded-m bg-line/40 animate-pulse" />
+        <div
+          className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 py-10 md:py-16 grid md:grid-cols-2 gap-8 md:gap-12"
+          aria-busy="true"
+          aria-label="Chargement de l'article"
+        >
+          <div>
+            <div className="aspect-square rounded-m bg-line/40 animate-pulse mb-4" />
+            <div className="flex gap-3">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="h-16 w-16 rounded-btn bg-line/40 animate-pulse" />
+              ))}
+            </div>
+          </div>
           <div className="space-y-4">
-            <div className="h-4 w-24 bg-line/40 rounded animate-pulse" />
-            <div className="h-8 w-3/4 bg-line/40 rounded animate-pulse" />
-            <div className="h-6 w-32 bg-line/40 rounded animate-pulse" />
+            <div className="h-3 w-24 bg-line/50 rounded-full animate-pulse" />
+            <div className="h-8 w-3/4 bg-line/50 rounded animate-pulse" />
+            <div className="h-4 w-1/2 bg-line/40 rounded animate-pulse" />
+            <div className="h-10 w-40 bg-line/50 rounded animate-pulse mt-6" />
+            <div className="h-14 w-full bg-line/40 rounded-btn animate-pulse mt-6" />
+            <div className="grid grid-cols-3 gap-2.5 pt-2">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="h-20 rounded-btn bg-line/30 animate-pulse" />
+              ))}
+            </div>
           </div>
         </div>
       </Layout>
@@ -169,8 +188,8 @@ export default function ProduitDetail() {
   if (erreur || !produit) {
     return (
       <Layout>
-        <div className="max-w-[1280px] mx-auto px-6 md:px-12 py-24 text-center">
-          <p className="font-serif text-2xl text-ink mb-3">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 py-24 text-center">
+          <p className="font-impact font-extrabold text-2xl text-ink mb-3">
             {erreur || "Article introuvable"}
           </p>
           <Link
@@ -186,11 +205,11 @@ export default function ProduitDetail() {
 
   return (
     <Layout>
-      <div className="max-w-[1280px] mx-auto px-6 md:px-12 pt-7 text-[12.5px] text-ink-soft/75 flex items-center gap-2">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 pt-7 text-[12.5px] text-ink-soft/75 flex items-center gap-2">
         <Link to="/" className="hover:text-ink transition-colors">
           Découvrir
         </Link>
-        <span>/</span>
+        <span aria-hidden="true">/</span>
         <Link
           to={`/boutique?categorie=${produit.categorie_slug || ""}`}
           className="hover:text-ink transition-colors"
@@ -199,7 +218,7 @@ export default function ProduitDetail() {
         </Link>
       </div>
 
-      <Reveal className="max-w-[1280px] mx-auto px-6 md:px-12 py-9 grid md:grid-cols-2 gap-12">
+      <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 py-7 md:py-9 grid md:grid-cols-2 gap-8 md:gap-12">
         <div>
           <div className="relative aspect-square rounded-m overflow-hidden border border-line bg-line/30 mb-4">
             {gallery.length > 0 ? (
@@ -227,17 +246,17 @@ export default function ProduitDetail() {
 
             <div className="absolute top-4 left-4 flex flex-col gap-2 items-start">
               {isLocation && (
-                <span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide bg-teal text-white shadow-sm">
+                <span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide bg-ink text-white shadow-sm">
                   À louer
                 </span>
               )}
               <span
-                className={`px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || "bg-orange"}`}
+                className={`px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || "bg-clay-dark"}`}
               >
                 {ETAT_LABELS[produit.etat] || "Bon état"}
               </span>
               {estBonneAffaire && (
-                <span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide bg-red-500 text-white shadow-sm">
+                <span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide bg-red-600 text-white shadow-sm">
                   Bonne affaire
                 </span>
               )}
@@ -271,6 +290,8 @@ export default function ProduitDetail() {
                   key={i}
                   type="button"
                   onClick={() => setActiveImg(i)}
+                  aria-label={`Voir la photo ${i + 1}`}
+                  aria-pressed={activeImg === i}
                   className={`h-16 w-16 rounded-btn overflow-hidden border-2 transition-colors ${
                     activeImg === i
                       ? "border-teal"
@@ -292,7 +313,7 @@ export default function ProduitDetail() {
           <p className="text-[11px] font-semibold uppercase tracking-wide text-teal-dark mb-2">
             {produit.categorie_nom || "Yaay Vidé"}
           </p>
-          <h1 className="font-serif text-[28px] sm:text-[32px] leading-tight text-ink mb-3">
+          <h1 className="font-serif font-semibold text-[26px] sm:text-[32px] leading-tight text-ink mb-3 text-balance">
             {produit.titre}
           </h1>
 
@@ -376,7 +397,7 @@ export default function ProduitDetail() {
 
           {!isLocation ? (
             <>
-              <p className="font-serif text-3xl font-bold text-ink mb-1">
+              <p className="font-impact font-extrabold text-3xl text-ink mb-1">
                 {formatFCFA(produit.prix_final_public)}
               </p>
               <p className="text-[12.5px] text-ink-soft/75 mb-6">
@@ -391,8 +412,8 @@ export default function ProduitDetail() {
                 }}
                 className={`w-full flex items-center justify-center gap-2.5 rounded-btn py-4 text-sm font-bold uppercase tracking-wide transition-all hover:-translate-y-0.5 ${
                   ajoute
-                    ? "bg-teal text-white"
-                    : "bg-orange text-white hover:bg-orange-dark"
+                    ? "bg-teal-dark text-white"
+                    : "bg-clay-dark text-white hover:bg-ink"
                 }`}
               >
                 {ajoute ? (
@@ -456,7 +477,7 @@ export default function ProduitDetail() {
             </>
           ) : (
             <>
-              <p className="font-serif text-3xl font-bold text-ink mb-1">
+              <p className="font-impact font-extrabold text-3xl text-ink mb-1">
                 {formatFCFA(produit.prix_final_public)}
                 <span className="text-ink-soft/75 font-sans font-normal text-base">
                   {" "}
@@ -469,7 +490,7 @@ export default function ProduitDetail() {
               </p>
 
               <div className="bg-sable border border-line rounded-m p-6 space-y-5">
-                <h3 className="font-serif text-lg text-ink">
+                <h3 className="font-impact font-extrabold text-lg text-ink">
                   Location du produit
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -482,7 +503,7 @@ export default function ProduitDetail() {
                       value={dateDebut}
                       min={todayISO()}
                       onChange={(e) => setDateDebut(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-cream border border-line rounded-btn text-[13px] focus:outline-none focus:border-teal transition-colors"
+                      className="w-full px-3.5 py-2.5 bg-cream border border-line rounded-btn text-[16px] sm:text-[13px] focus:outline-none focus:border-teal transition-colors"
                     />
                   </div>
                   <div>
@@ -494,7 +515,7 @@ export default function ProduitDetail() {
                       value={dateFin}
                       min={dateDebut}
                       onChange={(e) => setDateFin(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-cream border border-line rounded-btn text-[13px] focus:outline-none focus:border-teal transition-colors"
+                      className="w-full px-3.5 py-2.5 bg-cream border border-line rounded-btn text-[16px] sm:text-[13px] focus:outline-none focus:border-teal transition-colors"
                     />
                   </div>
                 </div>
@@ -537,7 +558,7 @@ export default function ProduitDetail() {
                     })
                   }
                   disabled={!calcul}
-                  className="w-full flex items-center justify-center gap-2.5 bg-teal text-white rounded-btn py-3.5 text-sm font-bold uppercase tracking-wide hover:bg-teal-dark hover:-translate-y-0.5 transition-all disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2.5 bg-teal-dark text-white rounded-btn py-3.5 text-sm font-bold uppercase tracking-wide hover:bg-ink hover:-translate-y-0.5 transition-all disabled:opacity-50"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -582,7 +603,7 @@ export default function ProduitDetail() {
                   {produit.boutique_nom}
                 </p>
                 {produit.boutique_note_moyenne > 0 && (
-                  <p className="text-[12.5px] text-orange mt-0.5">
+                  <p className="text-[12.5px] text-clay-dark mt-0.5">
                     ★ {produit.boutique_note_moyenne}{" "}
                     <span className="text-ink-soft/75">
                       ({produit.boutique_nb_avis} avis)
@@ -642,7 +663,7 @@ export default function ProduitDetail() {
                 <p className="text-[11.5px] font-bold text-ink leading-snug">
                   {b.label}
                 </p>
-                <p className="text-[10.5px] text-ink-soft/75 leading-snug">
+                <p className="text-[11px] text-ink-soft/75 leading-snug">
                   {b.desc}
                 </p>
               </div>
@@ -718,13 +739,13 @@ export default function ProduitDetail() {
 
       {autresArticles.length > 0 && (
         <div className="bg-sable py-14">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-12">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-wide text-teal-dark mb-1.5">
                   Chez {produit.boutique_nom}
                 </p>
-                <h2 className="font-serif text-2xl text-ink">
+                <h2 className="font-impact font-extrabold text-[24px] sm:text-[28px] leading-tight text-ink">
                   D'autres articles à découvrir
                 </h2>
               </div>
@@ -757,12 +778,12 @@ export default function ProduitDetail() {
 
       {produitsSimilaires.length > 0 && (
         <div className="bg-white py-14">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-12">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12">
             <div className="mb-6">
               <p className="text-[11px] font-bold uppercase tracking-wide text-teal-dark mb-1.5">
                 Vous pourriez aussi aimer
               </p>
-              <h2 className="font-serif text-2xl text-ink">
+              <h2 className="font-impact font-extrabold text-[24px] sm:text-[28px] leading-tight text-ink">
                 Produits similaires
               </h2>
             </div>

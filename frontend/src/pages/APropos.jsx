@@ -19,13 +19,13 @@ export default function APropos() {
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <Reveal>
             <p className="text-[15px] text-ink-soft leading-relaxed mb-4">
-              Je suis <span className="text-clay font-semibold">la tata</span>. Celle qu'on appelle à chaque naissance.
+              Je suis <span className="text-clay-dark font-semibold">la tata</span>. Celle qu'on appelle à chaque naissance.
               Celle qui cherche les plus jolis habits, les objets pratiques mais doux, les petites attentions choisies
               avec soin.
             </p>
             <p className="text-[15px] text-ink-soft leading-relaxed">
               Celle qui, à chaque arrivée d'un bébé, ressent cette joie pure mêlée d'un devoir d'amour : celui de{' '}
-              <span className="text-clay font-semibold">transmettre, protéger, célébrer la vie</span>.
+              <span className="text-clay-dark font-semibold">transmettre, protéger, célébrer la vie</span>.
             </p>
           </Reveal>
           <Reveal className="rounded-m overflow-hidden border border-line aspect-[4/5]">
@@ -58,7 +58,7 @@ export default function APropos() {
             sororité. Où chaque article vendu raconte une histoire d'amour maternel.
           </p>
           <div className="bg-ink text-cream rounded-m p-8 max-w-xl mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-clay font-bold mb-3">Pourquoi le nom « Yaay Vidé » ?</p>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-clay-dark font-bold mb-3">Pourquoi le nom « Yaay Vidé » ?</p>
             <p className="text-[14.5px] text-cream/80 leading-relaxed">
               Inspirée du mot wolof <span className="italic text-cream">« Yaay »</span> (maman) et de l'expression
               <span className="italic text-cream"> « vidé »</span> (vendre ou liquider en seconde main), Yaay Vidé est
@@ -77,7 +77,7 @@ export default function APropos() {
             doux et puissant, où l'on élève les enfants ensemble, avec du beau, du bon, du sens.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link to="/inscription" className="px-7 py-3.5 bg-clay text-white rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-clay-dark transition-colors">
+            <Link to="/inscription" className="px-7 py-3.5 bg-clay-dark text-white rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-ink transition-colors">
               Rejoindre la communauté
             </Link>
             <Link to="/boutique" className="px-7 py-3.5 border border-cream/50 text-cream rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-cream/10 transition-colors">

@@ -1,6 +1,7 @@
 // frontend/src/components/layout/CartDrawer.jsx
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import EtatVide from '../ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -19,13 +20,14 @@ export default function CartDrawer() {
       />
 
       <aside
-        className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-sable z-[95] shadow-2xl flex flex-col transition-transform duration-300 ease-out ${
-          drawerOuvert ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-sable z-[95] flex flex-col transition-[transform,visibility] duration-300 ease-out ${
+          // fermé : ni ombre qui dépasse sur la page, ni éléments atteignables au clavier
+          drawerOuvert ? 'translate-x-0 visible shadow-2xl' : 'translate-x-full invisible shadow-none'
         }`}
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-line">
-          <h2 className="font-serif text-lg text-ink flex items-center gap-2">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5 text-teal">
+          <h2 className="font-impact font-extrabold text-lg text-ink flex items-center gap-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5 text-teal-dark" aria-hidden="true">
               <path d="M3 4h2l2.4 12.2A2 2 0 0 0 9.4 18H18a2 2 0 0 0 2-1.6L21.5 8H6" />
               <circle cx="9.5" cy="21" r="1.2" />
               <circle cx="17.5" cy="21" r="1.2" />
@@ -36,7 +38,7 @@ export default function CartDrawer() {
             type="button"
             onClick={fermerDrawer}
             aria-label="Fermer"
-            className="h-8 w-8 rounded-full flex items-center justify-center text-ink-soft/75 hover:bg-line/50 hover:text-ink transition-colors"
+            className="h-10 w-10 rounded-full flex items-center justify-center text-ink-soft/75 hover:bg-line/50 hover:text-ink transition-colors"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
               <path d="M6 6l12 12M18 6L6 18" />
@@ -46,8 +48,14 @@ export default function CartDrawer() {
 
         {items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
-            <p className="text-sm text-ink-soft/75 mb-4">Votre panier est vide.</p>
-            <button onClick={fermerDrawer} className="text-teal-dark font-semibold text-sm hover:underline">
+            <EtatVide
+              compact
+              icone="panier"
+              titre="Votre panier est vide"
+              texte="Ajoutez vos coups de cœur, ils vous attendront ici."
+              className="w-full mb-4"
+            />
+            <button onClick={fermerDrawer} className="text-teal-dark font-semibold text-sm py-2 hover:underline">
               Continuer mes achats
             </button>
           </div>
@@ -76,7 +84,8 @@ export default function CartDrawer() {
                           <button
                             type="button"
                             onClick={() => updateQuantite(item.cleId, item.quantite - 1)}
-                            className="h-6 w-6 flex items-center justify-center text-ink-soft/75 hover:text-ink"
+                            aria-label="Diminuer la quantité"
+                            className="h-8 w-8 flex items-center justify-center text-ink-soft/75 hover:text-ink"
                           >
                             −
                           </button>
@@ -84,7 +93,8 @@ export default function CartDrawer() {
                           <button
                             type="button"
                             onClick={() => updateQuantite(item.cleId, item.quantite + 1)}
-                            className="h-6 w-6 flex items-center justify-center text-ink-soft/75 hover:text-ink"
+                            aria-label="Augmenter la quantité"
+                            className="h-8 w-8 flex items-center justify-center text-ink-soft/75 hover:text-ink"
                           >
                             +
                           </button>
@@ -97,7 +107,7 @@ export default function CartDrawer() {
                     type="button"
                     onClick={() => removeItem(item.cleId)}
                     aria-label="Retirer"
-                    className="text-ink-soft/75 hover:text-red-500 transition-colors self-start"
+                    className="h-9 w-9 -mt-2 -mr-2 flex items-center justify-center rounded-full text-ink-soft/75 hover:text-red-600 hover:bg-red-50 transition-colors self-start"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
                       <path d="M6 6l12 12M18 6L6 18" />
@@ -122,7 +132,7 @@ export default function CartDrawer() {
               <Link
                 to="/checkout"
                 onClick={fermerDrawer}
-                className="block text-center bg-orange hover:bg-orange-dark text-white font-bold py-3.5 rounded-full text-sm transition-colors"
+                className="block text-center bg-clay-dark hover:bg-ink text-white font-bold py-3.5 rounded-full text-sm transition-colors"
               >
                 Commander
               </Link>

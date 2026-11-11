@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { SHADOW_CARD } from '../../utils/gradientCards';
+import SqueletteTableau from '../../components/ui/SqueletteTableau';
+import EtatVide from '../../components/ui/EtatVide';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -97,9 +100,7 @@ export default function AdminEbook() {
 
   if (chargementSession || chargement) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
-      </div>
+      <SqueletteTableau />
     );
   }
 
@@ -112,14 +113,14 @@ export default function AdminEbook() {
       {!edition && (
         <button
           onClick={nouveauEbook}
-          className="bg-orange hover:bg-orange-dark text-white px-5 py-2.5 rounded-btn font-bold text-sm transition-all shadow-sm hover:-translate-y-0.5 w-fit"
+          className="bg-clay-dark hover:bg-ink text-white px-5 py-2.5 rounded-btn font-bold text-sm transition-all shadow-sm hover:-translate-y-0.5 w-fit"
         >
           + Nouvel e-book
         </button>
       )}
 
       {edition && (
-        <form onSubmit={soumettre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-4 max-w-lg">
+        <form onSubmit={soumettre} className={`bg-white rounded-m ${SHADOW_CARD} p-6 space-y-4 max-w-lg`}>
           <h3 className="font-serif text-lg text-ink">{edition === 'nouveau' ? 'Nouvel e-book' : "Modifier l'e-book"}</h3>
 
           <div>
@@ -201,11 +202,11 @@ export default function AdminEbook() {
       <div>
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">E-books</h3>
         {ebooks.length === 0 ? (
-          <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-            <p className="text-ink-soft/75 text-sm">Aucun e-book pour le moment.</p>
+          <div className={`bg-white rounded-m ${SHADOW_CARD} p-16 text-center`}>
+            <EtatVide compact bordure={false} icone="boite" texte="Aucun e-book pour le moment." />
           </div>
         ) : (
-          <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] divide-y divide-line overflow-hidden">
+          <div className={`bg-white rounded-m ${SHADOW_CARD} divide-y divide-line overflow-hidden`}>
             {ebooks.map((eb) => (
               <div key={eb.id} className="flex items-center gap-4 p-4 flex-wrap md:flex-nowrap">
                 <div className="h-14 w-11 rounded-btn bg-line/40 overflow-hidden shrink-0">
@@ -235,11 +236,11 @@ export default function AdminEbook() {
       <div>
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Achats ({achats.length})</h3>
         {achats.length === 0 ? (
-          <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-12 text-center">
-            <p className="text-ink-soft/75 text-sm">Aucun achat pour le moment.</p>
+          <div className={`bg-white rounded-m ${SHADOW_CARD} p-12 text-center`}>
+            <EtatVide compact bordure={false} icone="boite" texte="Aucun achat pour le moment." />
           </div>
         ) : (
-          <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] divide-y divide-line overflow-hidden">
+          <div className={`bg-white rounded-m ${SHADOW_CARD} divide-y divide-line overflow-hidden`}>
             {achats.map((a) => (
               <div key={a.id} className="flex items-center gap-4 p-4 flex-wrap md:flex-nowrap">
                 <div className="flex-1 min-w-[180px]">
