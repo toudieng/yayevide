@@ -91,7 +91,7 @@ export default function ProductCard({ produit, index = 0 }) {
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ animationDelay: `${Math.min(index, 8) * 60}ms`, height: "100%" }}
-      className="group flex flex-col h-full rounded-[18px] bg-white overflow-hidden shadow-[0_6px_18px_-8px_rgba(27,36,48,0.22)] transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-14px_rgba(27,36,48,0.32)] animate-card-in"
+      className="group @container flex flex-col h-full rounded-[18px] bg-white overflow-hidden shadow-[0_6px_18px_-8px_rgba(27,36,48,0.22)] transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-14px_rgba(27,36,48,0.32)] animate-card-in"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-line/40 shrink-0">
         {image ? (
@@ -163,7 +163,13 @@ export default function ProductCard({ produit, index = 0 }) {
           </h3>
           <p className="shrink-0 font-sans font-bold text-ink text-[13.5px] sm:text-[14.5px] whitespace-nowrap">
             {formatFCFA(produit.prix_final_public)}
-            {isLocation && <span className="text-ink-soft/75 font-medium text-[11px]"> / jour</span>}
+            {isLocation && (
+              <span className="text-ink-soft/75 font-medium text-[11px]">
+                {/* carte étroite : « /j » pour laisser la place au titre */}
+                <span className="@min-[230px]:hidden">/j</span>
+                <span className="hidden @min-[230px]:inline"> / jour</span>
+              </span>
+            )}
           </p>
         </div>
 

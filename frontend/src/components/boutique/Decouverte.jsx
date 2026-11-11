@@ -1,19 +1,79 @@
 // frontend/src/components/boutique/Decouverte.jsx
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ProductCard from './ProductCard';
 import { apiFetch } from '../../utils/api';
 
-function RangeeProduits({ titre, sousTitre, produits }) {
-  if (!produits || produits.length === 0) return null;
+function Fleche({ direction, onClick, disabled }) {
   return (
-    <div className="mb-10">
-      <div className="mb-3.5">
-        <h3 className="font-impact font-extrabold text-lg text-ink">{titre}</h3>
-        {sousTitre && <p className="text-[12.5px] text-ink-soft/75 mt-0.5">{sousTitre}</p>}
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={direction < 0 ? 'Articles précédents' : 'Articles suivants'}
+      className="h-9 w-9 rounded-full border border-line bg-white flex items-center justify-center text-ink enabled:hover:border-teal enabled:hover:text-teal-dark disabled:opacity-35 transition-colors"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
+        <path d={direction < 0 ? 'M15 6l-6 6 6 6' : 'M9 6l6 6-6 6'} />
+      </svg>
+    </button>
+  );
+}
+
+function RangeeProduits({ titre, sousTitre, produits }) {
+  const rangeeRef = useRef(null);
+  const [bords, setBords] = useState({ debut: true, fin: true });
+
+  // Active / grise les flèches selon la position du défilement
+  const majBords = () => {
+    const el = rangeeRef.current;
+    if (!el) return;
+    setBords({
+      debut: el.scrollLeft <= 2,
+      fin: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2,
+    });
+  };
+
+  useEffect(() => {
+    majBords();
+    window.addEventListener('resize', majBords);
+    return () => window.removeEventListener('resize', majBords);
+  }, [produits]);
+
+  const defiler = (direction) => {
+    const el = rangeeRef.current;
+    if (el) el.scrollBy({ left: direction * el.clientWidth, behavior: 'smooth' });
+  };
+
+  if (!produits || produits.length === 0) return null;
+  const defilable = !(bords.debut && bords.fin);
+
+  return (
+    <div className="mb-10 @container">
+      <div className="mb-3.5 flex items-end justify-between gap-4">
+        <div className="min-w-0">
+          <h3 className="font-impact font-extrabold text-lg text-ink">{titre}</h3>
+          {sousTitre && <p className="text-[12.5px] text-ink-soft/75 mt-0.5">{sousTitre}</p>}
+        </div>
+        {defilable && (
+          <div className="hidden sm:flex items-center gap-2 shrink-0">
+            <Fleche direction={-1} onClick={() => defiler(-1)} disabled={bords.debut} />
+            <Fleche direction={1} onClick={() => defiler(1)} disabled={bords.fin} />
+          </div>
+        )}
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-1 px-1 no-scrollbar">
+      {/* Largeur calculée sur la place réellement disponible (requête de
+          conteneur) : 3 ou 4 cartes tiennent pile, jamais de carte coupée au
+          bord ; sur mobile, la suivante dépasse un peu pour inviter à glisser. */}
+      <div
+        ref={rangeeRef}
+        onScroll={majBords}
+        className="flex gap-4 overflow-x-auto pt-1 pb-3 snap-x snap-mandatory -mx-1 px-1 no-scrollbar"
+      >
         {produits.map((p, i) => (
-          <div key={p.id} className="flex-1 min-w-[160px] sm:min-w-[220px] max-w-[300px] shrink-0 snap-start">
+          <div
+            key={p.id}
+            className="w-[160px] @min-[540px]:w-[calc((100%-2rem)/3)] @min-[800px]:w-[calc((100%-3rem)/4)] shrink-0 snap-start"
+          >
             <ProductCard produit={p} index={i} />
           </div>
         ))}
