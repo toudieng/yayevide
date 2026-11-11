@@ -7,6 +7,7 @@ import { apiFetch } from '../../utils/api';
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Tableau de bord', path: '/livreur' },
   { id: 'livraisons', label: 'Mes livraisons', path: '/livreur/mes-livraisons' },
+  { id: 'retours', label: 'Retours de location', path: '/livreur/retours' },
   { id: 'historique', label: 'Historique', path: '/livreur/historique' },
   { id: 'revenus', label: 'Mes revenus', path: '/livreur/revenus' },
   { id: 'notifications', label: 'Notifications', path: '/livreur/notifications' },
@@ -16,6 +17,7 @@ const NAV_ITEMS = [
 const ICONS = {
   dashboard: <path d="M4 4h7v7H4V4zm9 0h7v4h-7V4zm0 7h7v9h-7v-9zM4 14h7v6H4v-6z" />,
   livraisons: <path d="M3 7h13v9H3zM16 10h3l2 3v3h-5zM6 20a2 2 0 100-4 2 2 0 000 4zM17 20a2 2 0 100-4 2 2 0 000 4z" />,
+  retours: <path d="M9 14L4 9l5-5M4 9h11a5 5 0 010 10h-3" />,
   historique: <path d="M3 3v5h5M3.05 13a9 9 0 106.3-8.6M12 7v5l3 3" />,
   revenus: <path d="M3 17l5-5 4 4 7-7M14 9h5v5" />,
   notifications: <path d="M6 9a6 6 0 1 1 12 0v5l2 3H4l2-3V9zM10 20a2 2 0 0 0 4 0" />,

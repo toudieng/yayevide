@@ -80,6 +80,12 @@ from .support_api import (
     SupportAdminListeView, SupportAdminEnAttenteView, SupportAdminFilView,
 )
 
+from .location_api import (
+    ReservationsProduitView, ContrePropositionView, ReponsePropositionView, AnnulerDemandeLocationView,
+    DemanderProlongationView, RepondreProlongationView, RetoursLivreurView, RetourLivreurActionView,
+    PlanifierRetourAdminView, CloturerLocationAdminView,
+)
+
 urlpatterns = [
     path('inscription/', InscriptionVendeurView.as_view(), name='inscription'),
     path('connexion/', ConnexionView.as_view(), name='api_connexion'),
@@ -154,6 +160,18 @@ urlpatterns = [
     path('admin/ebook/', EbookAdminView.as_view(), name='api_admin_ebook'),
     path('admin/ebook/<int:pk>/', EbookAdminDetailView.as_view(), name='api_admin_ebook_detail'),
     path('admin/ebook-achats/', AchatsEbookAdminView.as_view(), name='api_admin_ebook_achats'),
+
+    # Location : parcours complet sur le site
+    path('produits/<int:pk>/reservations/', ReservationsProduitView.as_view(), name='api_reservations_produit'),
+    path('locations/<int:pk>/contre-proposition/', ContrePropositionView.as_view(), name='api_location_contre_proposition'),
+    path('locations/<int:pk>/reponse-proposition/', ReponsePropositionView.as_view(), name='api_location_reponse_proposition'),
+    path('locations/<int:pk>/annuler/', AnnulerDemandeLocationView.as_view(), name='api_location_annuler'),
+    path('locations/<int:pk>/prolongation/', DemanderProlongationView.as_view(), name='api_location_prolongation'),
+    path('locations/<int:pk>/prolongation/reponse/', RepondreProlongationView.as_view(), name='api_location_prolongation_reponse'),
+    path('livreur/retours/', RetoursLivreurView.as_view(), name='api_livreur_retours'),
+    path('livreur/retours/<int:pk>/', RetourLivreurActionView.as_view(), name='api_livreur_retour_action'),
+    path('admin/locations/<int:pk>/planifier-retour/', PlanifierRetourAdminView.as_view(), name='api_admin_location_retour'),
+    path('admin/locations/<int:pk>/cloturer/', CloturerLocationAdminView.as_view(), name='api_admin_location_cloturer'),
 
     # Espace « Une question ? » (utilisatrice <-> équipe)
     path('support/', MonFilSupportView.as_view(), name='api_support'),

@@ -1,5 +1,6 @@
 // frontend/src/pages/vendeuse/CommandesVendeuse.jsx
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import ShellVendeuse from '../../components/vendeuse/ShellVendeuse';
 import { useVendeuseSession } from '../../hooks/useVendeuseSession';
 import { apiFetch } from '../../utils/api';
@@ -110,7 +111,7 @@ export default function CommandesVendeuse() {
                     type="button"
                     disabled={enCours === c.id}
                     onClick={() => repondre(c, true)}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-teal hover:bg-teal-dark text-white font-bold text-[12.5px] uppercase tracking-wide py-3 rounded-btn transition-colors disabled:opacity-50"
+                    className="flex-1 flex items-center justify-center gap-1.5 bg-teal-dark hover:bg-ink text-white font-bold text-[12.5px] uppercase tracking-wide py-3 rounded-btn transition-colors disabled:opacity-50"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
                       <path d="M5 12l4.5 4.5L19 7" />
@@ -129,6 +130,11 @@ export default function CommandesVendeuse() {
                     Plus disponible
                   </button>
                 </div>
+                {c.produit_type_offre === 'location' && (
+                  <Link to="/vendeuse/locations" className="block text-center text-[12.5px] font-semibold text-ink underline underline-offset-2 hover:text-clay-dark py-1">
+                    Les dates ne vous arrangent pas ? Proposez-en d'autres
+                  </Link>
+                )}
               </div>
             ))}
           </div>

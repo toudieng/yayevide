@@ -21,9 +21,9 @@ const STEPS = [
   {
     title: 'Gestion de la demande de location',
     tag: 'Vérification',
-    description: "Une locataire potentielle vous contacte directement par WhatsApp depuis la fiche de l'article pour convenir des dates et de la durée. Vous restez seule décisionnaire d'accepter ou de refuser la demande, selon vos disponibilités.",
+    description: "Les demandes arrivent dans votre espace vendeuse, rubrique Locations, avec les dates souhaitées. Vous avez 24 h pour accepter, refuser, ou proposer d'autres dates qui vous arrangent : la locataire accepte ou refuse, et si elle refuse, l'article redevient disponible. Pendant la location, vous répondez aussi aux demandes de prolongation.",
     image: imgDemande,
-    points: ['Contact direct via WhatsApp', 'Dates et durée à convenir', 'Vous restez décisionnaire', 'Aucun engagement automatique'],
+    points: ['Demandes reçues dans votre espace', "Accepter, refuser ou proposer d'autres dates", 'Prolongations à valider', 'Dates déjà réservées bloquées'],
     tip: {
       title: 'Répondez rapidement',
       description: "Une réponse sous quelques heures rassure la locataire et augmente vos chances de conclure la location.",
@@ -43,9 +43,9 @@ const STEPS = [
   {
     title: 'Réception de vos gains',
     tag: 'Paiement',
-    description: "Le règlement (Wave, Orange Money ou espèces) est encaissé au moment précis de la livraison chez la locataire. Votre part vous est ensuite reversée, commission déduite, selon la fréquence de retrait que vous avez choisie.",
+    description: "Le règlement (Wave, Orange Money, Mixx by Yas ou espèces) est encaissé au moment précis de la livraison chez la locataire. Votre part vous est ensuite reversée, commission déduite, selon la fréquence de retrait que vous avez choisie.",
     image: imgGains,
-    points: ['Paiement encaissé à la livraison', 'Wave, Orange Money ou espèces', 'Commission déduite automatiquement', 'Retrait selon votre fréquence'],
+    points: ['Paiement encaissé à la livraison', 'Wave, Orange Money, Mixx by Yas ou espèces', 'Commission déduite automatiquement', 'Retrait selon votre fréquence'],
     tip: {
       title: 'Suivez vos gains en temps réel',
       description: "Le tableau de bord vendeuse affiche le détail de chaque location payée.",
@@ -54,7 +54,7 @@ const STEPS = [
   {
     title: 'Retour, inspection et finalisation',
     tag: 'Restitution',
-    description: "En fin de location, l'article est récupéré chez la locataire puis inspecté par notre équipe. S'il est rendu en bon état, la caution est intégralement remboursée à la locataire et votre article vous est restitué rapidement.",
+    description: "En fin de location, un livreur récupère l'article chez la locataire et l'apporte chez Yaay Vidé, où notre équipe le contrôle. La caution est ensuite rendue à la locataire (en totalité, ou en partie avec un motif en cas de dommage), et votre article vous est restitué. Les jours de prolongation éventuels sont encaissés au retour et ajoutés à vos gains.",
     image: imgRetour,
     points: ['Récupération chez la locataire', 'Inspection systématique', 'Caution remboursée si conforme', 'Article restitué rapidement'],
     tip: {

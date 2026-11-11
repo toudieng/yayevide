@@ -380,10 +380,16 @@ class Commande(models.Model):
     # directement au livreur, à la remise.
     STATUT_CHOICES = (
         ('en_attente_confirmation', 'En attente de confirmation vendeuse'),
+        # Location : la vendeuse propose d'autres dates, la locataire accepte ou refuse
+        ('contre_proposition', 'Nouvelles dates proposées par la vendeuse'),
         ('confirme', 'Confirmé par la vendeuse'),
         ('indisponible', 'Indisponible (annulé par la vendeuse)'),
         ('en_cours_livraison', 'En cours de livraison'),
         ('livre', 'Livré'),
+        # Location : retour organisé par Yaay Vidé (livreur -> dépôt -> contrôle)
+        ('retour_a_collecter', 'Location : retour à récupérer'),
+        ('retour_en_cours', 'Location : article récupéré, en route vers Yaay Vidé'),
+        ('retour_controle', 'Location : contrôle de l\'article chez Yaay Vidé'),
         ('terminee', 'Location terminée (article rendu)'),
         ('annule', 'Annulé'),
     )
@@ -448,6 +454,32 @@ class Commande(models.Model):
     date_fin_location = models.DateField(null=True, blank=True)
     caution_demandee = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     caution_remboursee = models.BooleanField(default=False)
+    # Contre-proposition de dates par la vendeuse (statut 'contre_proposition')
+    date_debut_proposee = models.DateField(null=True, blank=True)
+    date_fin_proposee = models.DateField(null=True, blank=True)
+    # Prolongation demandée par la locataire pendant la location
+    PROLONGATION_CHOICES = (
+        ('', 'Aucune'),
+        ('demandee', 'Demandée'),
+        ('acceptee', 'Acceptée'),
+        ('refusee', 'Refusée'),
+    )
+    prolongation_statut = models.CharField(max_length=10, choices=PROLONGATION_CHOICES, blank=True, default='')
+    prolongation_date_fin = models.DateField(null=True, blank=True)
+    jours_prolongation = models.PositiveSmallIntegerField(default=0)
+    # Montant des jours ajoutés, encaissé par le livreur lors du retour
+    supplement_prolongation = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    supplement_paye = models.BooleanField(default=False)
+    # Retour : livreur qui récupère l'article chez la locataire
+    livreur_retour = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True,
+        limit_choices_to={'role': 'livreur'}, related_name='retours_location',
+    )
+    # Caution : contrôlée et rendue par l'équipe (Wave / Orange Money / espèces)
+    caution_retenue = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    motif_retenue = models.TextField(blank=True)
+    caution_traitee_le = models.DateTimeField(null=True, blank=True)
+    rappel_fin_envoye = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if self.pk is None and self.date_limite_confirmation is None:
@@ -507,6 +539,10 @@ class Commande(models.Model):
         self.date_paiement = timezone.now()
         self.save()
 
+        # Une location ne retire pas l'article du catalogue : il revient après
+        # le retour, et ses dates déjà réservées sont bloquées par ailleurs.
+        if self.date_debut_location and self.date_fin_location:
+            return
         produit = self.produit
         produit.quantite_disponible = max(0, produit.quantite_disponible - self.quantite)
         if produit.quantite_disponible == 0:

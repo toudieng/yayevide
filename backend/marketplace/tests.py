@@ -152,3 +152,149 @@ class SupportTests(TestCase):
         self.client.force_authenticate(self.acheteuse)
         self.assertEqual(self.client.post('/api/support/', {'texte': ' '}, format='json').status_code, 400)
         self.assertEqual(self.client.post('/api/support/', {'texte': 'a' * 2001}, format='json').status_code, 400)
+
+
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
+class LocationTests(TestCase):
+    """Parcours complet d'une location, sans WhatsApp."""
+
+    def setUp(self):
+        from datetime import timedelta
+        from django.utils import timezone
+        from .models import Boutique, Produit
+        self.j = lambda n: (timezone.localdate() + timedelta(days=n)).isoformat()
+        self.vendeuse = User.objects.create_user(
+            username='fatou', password='Mdp!Vendeuse2026', phone_number='770000010', role='vendeur',
+            is_whatsapp_verified=True, email='fatou@example.com',
+        )
+        boutique = Boutique.objects.create(vendeur=self.vendeuse, nom_boutique='Chez Fatou')
+        # Caution laissée vide : ne doit plus faire planter la commande
+        self.produit = Produit.objects.create(
+            boutique=boutique, titre='Lit parapluie', description='Bon état', type_offre='location', prix_vendeur=1000,
+        )
+        self.locataire = User.objects.create_user(
+            username='awa', password='Mdp!Locataire2026', phone_number='770000011', email='awa@example.com',
+        )
+        self.autre = User.objects.create_user(
+            username='kine', password='Mdp!Autre2026', phone_number='770000012', email='kine@example.com',
+        )
+        self.livreur = User.objects.create_user(
+            username='modou', password='Mdp!Livreur2026', phone_number='770000013', role='livreur', zone_livreur='zone1',
+        )
+        self.equipe = User.objects.create_user(
+            username='equipe', password='Mdp!Equipe2026', phone_number='770000014', role='admin',
+        )
+        self.client = APIClient()
+
+    def louer(self, user, debut, fin):
+        self.client.force_authenticate(user)
+        return self.client.post('/api/commandes/', {
+            'items': [{'produit_id': self.produit.pk, 'date_debut': debut, 'date_fin': fin}],
+            'adresse_livraison': 'Rue 10', 'zone_livraison': 'zone1', 'mode_paiement_choisi': 'wave',
+        }, format='json')
+
+    def test_reservation_sans_caution_et_dates_bloquees(self):
+        reponse = self.louer(self.locataire, self.j(5), self.j(10))
+        self.assertEqual(reponse.status_code, 201)
+        commande = reponse.data['commandes'][0]
+        self.assertEqual(commande['caution_demandee'], '0')
+        # Les dates apparaissent comme prises, et une autre locataire est refusée dessus
+        reservations = self.client.get(f'/api/produits/{self.produit.pk}/reservations/').data
+        self.assertEqual(len(reservations), 1)
+        refus = self.louer(self.autre, self.j(8), self.j(12))
+        self.assertEqual(refus.status_code, 400)
+        self.assertIn('déjà réservées', refus.data['general'])
+        # En dehors de la période : accepté
+        self.assertEqual(self.louer(self.autre, self.j(12), self.j(14)).status_code, 201)
+
+    def test_contre_proposition_acceptee(self):
+        cid = self.louer(self.locataire, self.j(5), self.j(10)).data['commandes'][0]['id']
+        self.client.force_authenticate(self.vendeuse)
+        reponse = self.client.post(f'/api/locations/{cid}/contre-proposition/', {'date_debut': self.j(5), 'date_fin': self.j(8)}, format='json')
+        self.assertEqual(reponse.status_code, 200)
+        self.assertEqual(reponse.data['statut'], 'contre_proposition')
+        self.assertTrue(any('Nouvelles dates' in m.subject for m in mail.outbox))
+        # Une autre personne ne peut pas répondre à la place de la locataire
+        self.client.force_authenticate(self.autre)
+        self.assertEqual(self.client.post(f'/api/locations/{cid}/reponse-proposition/', {'accepter': True}, format='json').status_code, 404)
+        self.client.force_authenticate(self.locataire)
+        reponse = self.client.post(f'/api/locations/{cid}/reponse-proposition/', {'accepter': True}, format='json')
+        self.assertEqual(reponse.data['statut'], 'confirme')
+        self.assertEqual(reponse.data['date_fin_location'], self.j(8))
+        self.assertEqual(reponse.data['nb_jours_location'], 3)
+        self.assertEqual(reponse.data['prix_total_paye'], str(self.produit.prix_final_public * 3))
+
+    def test_contre_proposition_refusee_libere_les_dates(self):
+        cid = self.louer(self.locataire, self.j(5), self.j(10)).data['commandes'][0]['id']
+        self.client.force_authenticate(self.vendeuse)
+        self.client.post(f'/api/locations/{cid}/contre-proposition/', {'date_debut': self.j(6), 'date_fin': self.j(8)}, format='json')
+        self.client.force_authenticate(self.locataire)
+        reponse = self.client.post(f'/api/locations/{cid}/reponse-proposition/', {'accepter': False}, format='json')
+        self.assertEqual(reponse.data['statut'], 'annule')
+        self.assertEqual(self.client.get(f'/api/produits/{self.produit.pk}/reservations/').data, [])
+
+    def livrer(self, cid):
+        from .models import Commande
+        commande = Commande.objects.get(pk=cid)
+        commande.confirmer_disponibilite()
+        commande.marquer_livree()
+        return commande
+
+    def test_prolongation_retour_et_caution(self):
+        from .models import Commande
+        from .location_api import traitement_quotidien
+        self.produit.caution = 5000
+        self.produit.save()
+        cid = self.louer(self.locataire, self.j(1), self.j(3)).data['commandes'][0]['id']
+        self.livrer(cid)
+        self.produit.refresh_from_db()
+        self.assertTrue(self.produit.disponible)  # la location ne vide plus le stock
+
+        # Prolongation demandée puis acceptée : +2 jours à payer au retour
+        self.client.force_authenticate(self.locataire)
+        self.assertEqual(self.client.post(f'/api/locations/{cid}/prolongation/', {'date_fin': self.j(5)}, format='json').status_code, 200)
+        self.client.force_authenticate(self.vendeuse)
+        reponse = self.client.post(f'/api/locations/{cid}/prolongation/reponse/', {'accepter': True}, format='json')
+        self.assertEqual(reponse.data['date_fin_location'], self.j(5))
+        self.assertEqual(reponse.data['supplement_prolongation'], str(self.produit.prix_final_public * 2))
+
+        # Tâche quotidienne le jour de la fin : retour à récupérer
+        from datetime import date
+        traitement_quotidien(date.fromisoformat(self.j(5)))
+        self.assertEqual(Commande.objects.get(pk=cid).statut, 'retour_a_collecter')
+
+        # Livreur : prendre -> récupérer (supplément encaissé) -> déposer
+        self.client.force_authenticate(self.livreur)
+        self.assertEqual(len(self.client.get('/api/livreur/retours/').data['disponibles']), 1)
+        for action in ('prendre', 'recupere', 'depose'):
+            self.assertEqual(self.client.patch(f'/api/livreur/retours/{cid}/', {'action': action}, format='json').status_code, 200)
+        commande = Commande.objects.get(pk=cid)
+        self.assertEqual(commande.statut, 'retour_controle')
+        self.assertTrue(commande.supplement_paye)
+
+        # Équipe : retenue sans motif refusée, puis clôture avec motif
+        self.client.force_authenticate(self.equipe)
+        url = f'/api/admin/locations/{cid}/cloturer/'
+        self.assertEqual(self.client.post(url, {'caution_retenue': 1000}, format='json').status_code, 400)
+        self.assertEqual(self.client.post(url, {'caution_retenue': 9000, 'motif_retenue': 'x'}, format='json').status_code, 400)
+        reponse = self.client.post(url, {'caution_retenue': 1000, 'motif_retenue': 'Tache sur le matelas'}, format='json')
+        self.assertEqual(reponse.status_code, 200)
+        self.assertEqual(reponse.data['statut'], 'terminee')
+        self.assertTrue(any('Tache sur le matelas' in m.body for m in mail.outbox))
+
+    def test_la_vendeuse_ne_cloture_plus_elle_meme(self):
+        cid = self.louer(self.locataire, self.j(1), self.j(3)).data['commandes'][0]['id']
+        self.livrer(cid)
+        self.client.force_authenticate(self.vendeuse)
+        self.assertEqual(self.client.patch(f'/api/commandes/{cid}/marquer-retournee/').status_code, 400)
+
+    def test_rappel_la_veille(self):
+        from datetime import date
+        from .location_api import traitement_quotidien
+        cid = self.louer(self.locataire, self.j(1), self.j(3)).data['commandes'][0]['id']
+        self.livrer(cid)
+        mail.outbox.clear()
+        nb_rappels, _ = traitement_quotidien(date.fromisoformat(self.j(2)))
+        self.assertEqual(nb_rappels, 1)
+        self.assertIn('se termine demain', mail.outbox[0].subject)
+        self.assertEqual(traitement_quotidien(date.fromisoformat(self.j(2)))[0], 0)  # pas de doublon

@@ -6,6 +6,7 @@ import Reveal from "../components/ui/Reveal";
 import ProductCard from "../components/boutique/ProductCard";
 import { useCart } from "../context/CartContext";
 import { apiFetch } from "../utils/api";
+import { ajouterJoursISO, dansJoursISO, formatJour } from "../utils/dates";
 
 const ETAT_LABELS = {
   neuf: "Neuf avec étiquette",
@@ -16,10 +17,6 @@ const ETAT_LABELS = {
 function formatFCFA(value) {
   if (value === null || value === undefined || Number.isNaN(value)) return "—";
   return Math.round(Number(value)).toLocaleString("fr-FR") + " FCFA";
-}
-
-function todayISO() {
-  return new Date().toISOString().slice(0, 10);
 }
 
 function joursDepuis(dateISO) {
@@ -49,8 +46,11 @@ export default function ProduitDetail() {
   const [favoriEnCours, setFavoriEnCours] = useState(false);
   const [lienCopie, setLienCopie] = useState(false);
 
-  const [dateDebut, setDateDebut] = useState(todayISO());
-  const [dateFin, setDateFin] = useState(todayISO());
+  // Par défaut : à partir de demain, pour 3 jours (le jour même n'est pas
+  // réservable, il faut le temps de confirmer et de livrer)
+  const [dateDebut, setDateDebut] = useState(dansJoursISO(1));
+  const [dateFin, setDateFin] = useState(dansJoursISO(4));
+  const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- se redéclenche à chaque changement de produit (id), pas seulement au montage
@@ -89,6 +89,24 @@ export default function ProduitDetail() {
   }, [produit?.categorie_slug, produit?.id]);
 
   const isLocation = produit?.type_offre === "location";
+
+  // Dates déjà réservées (location) : affichées et bloquées
+  useEffect(() => {
+    if (produit?.type_offre !== "location") return undefined;
+    let annule = false;
+    apiFetch(`/produits/${produit.id}/reservations/`)
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data) => !annule && setReservations(data))
+      .catch(() => {});
+    return () => {
+      annule = true;
+    };
+  }, [produit?.id, produit?.type_offre]);
+
+  const conflitDates = useMemo(
+    () => reservations.find((r) => dateDebut <= r.fin && r.debut <= dateFin) || null,
+    [reservations, dateDebut, dateFin],
+  );
   const estBonneAffaire = produit?.bonne_affaire;
 
   const gallery = useMemo(() => {
@@ -99,20 +117,14 @@ export default function ProduitDetail() {
     return list;
   }, [produit]);
 
+  // Même calcul que le serveur : prix par jour (commission incluse) × jours
   const calcul = useMemo(() => {
-    if (!isLocation || !produit) return null;
-    const debut = new Date(dateDebut);
-    const fin = new Date(dateFin);
-    const jours = Math.max(
-      1,
-      Math.round((fin - debut) / (1000 * 60 * 60 * 24)) || 1,
-    );
-    const prixBase = Number(produit.prix_vendeur) * jours;
-    const tauxCommission = produit.est_article_lancement ? 0.05 : 0.1;
-    const commission = prixBase * tauxCommission;
-    const total = prixBase + commission;
+    if (!isLocation || !produit || !dateDebut || !dateFin) return null;
+    const jours = Math.round((new Date(dateFin) - new Date(dateDebut)) / 86400000);
+    if (jours < 1) return null;
+    const prixJour = Number(produit.prix_final_public);
     const caution = Number(produit.caution) || 0;
-    return { jours, prixBase, commission, tauxCommission, total, caution };
+    return { jours, prixJour, total: prixJour * jours, caution };
   }, [isLocation, produit, dateDebut, dateFin]);
 
   useEffect(() => {
@@ -494,8 +506,11 @@ export default function ProduitDetail() {
                     <input
                       type="date"
                       value={dateDebut}
-                      min={todayISO()}
-                      onChange={(e) => setDateDebut(e.target.value)}
+                      min={dansJoursISO(1)}
+                      onChange={(e) => {
+                        setDateDebut(e.target.value);
+                        if (dateFin <= e.target.value) setDateFin(ajouterJoursISO(e.target.value, 1));
+                      }}
                       className="w-full px-3.5 py-2.5 bg-cream border border-line rounded-btn text-[16px] sm:text-[13px] focus:outline-none focus:border-teal transition-colors"
                     />
                   </div>
@@ -506,12 +521,31 @@ export default function ProduitDetail() {
                     <input
                       type="date"
                       value={dateFin}
-                      min={dateDebut}
+                      min={ajouterJoursISO(dateDebut, 1)}
                       onChange={(e) => setDateFin(e.target.value)}
                       className="w-full px-3.5 py-2.5 bg-cream border border-line rounded-btn text-[16px] sm:text-[13px] focus:outline-none focus:border-teal transition-colors"
                     />
                   </div>
                 </div>
+
+                {reservations.length > 0 && (
+                  <div className="rounded-btn bg-white border border-line p-3">
+                    <p className="text-[11px] font-bold text-ink uppercase tracking-wider mb-1.5">Déjà réservé</p>
+                    <ul className="flex flex-wrap gap-1.5">
+                      {reservations.map((r) => (
+                        <li key={`${r.debut}-${r.fin}`} className="text-[12px] font-semibold text-ink bg-sable border border-line rounded-full px-2.5 py-1">
+                          du {formatJour(r.debut)} au {formatJour(r.fin)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {conflitDates && (
+                  <p className="text-[13px] text-red-700 bg-red-50 border border-red-100 rounded-btn px-3 py-2" role="alert">
+                    L'article est déjà loué du {formatJour(conflitDates.debut)} au {formatJour(conflitDates.fin)} : choisissez d'autres dates.
+                  </p>
+                )}
 
                 {calcul && (
                   <div
@@ -519,16 +553,9 @@ export default function ProduitDetail() {
                   >
                     <div className="flex justify-between text-[13px] text-ink-soft/75">
                       <span>
-                        Prix base ({calcul.jours} jour
-                        {calcul.jours > 1 ? "s" : ""})
+                        {calcul.jours} jour{calcul.jours > 1 ? "s" : ""} × {formatFCFA(calcul.prixJour)}
                       </span>
-                      <span>{formatFCFA(calcul.prixBase)}</span>
-                    </div>
-                    <div className="flex justify-between text-[13px] text-ink-soft/75">
-                      <span>
-                        Commission ({Math.round(calcul.tauxCommission * 100)}%)
-                      </span>
-                      <span>{formatFCFA(calcul.commission)}</span>
+                      <span>{formatFCFA(calcul.total)}</span>
                     </div>
                     <div className="flex justify-between text-[15px] font-bold text-ink pt-2 border-t border-line">
                       <span>Total</span>
@@ -550,7 +577,7 @@ export default function ProduitDetail() {
                       nbJours: calcul?.jours,
                     })
                   }
-                  disabled={!calcul}
+                  disabled={!calcul || Boolean(conflitDates)}
                   className="w-full flex items-center justify-center gap-2.5 bg-teal-dark text-white rounded-btn py-3.5 text-sm font-bold uppercase tracking-wide hover:bg-ink hover:-translate-y-0.5 transition-all disabled:opacity-50"
                 >
                   <svg
@@ -565,8 +592,8 @@ export default function ProduitDetail() {
                   Ajouter la location au panier
                 </button>
                 <p className="text-[11px] text-ink-soft/75 text-center -mt-2">
-                  Paiement uniquement à la livraison — la vendeuse confirme la
-                  disponibilité sous 24h.
+                  Paiement uniquement à la livraison. La vendeuse confirme sous 24 h
+                  ou vous propose d'autres dates. À la fin, Yaay Vidé récupère l'article.
                 </p>
               </div>
             </>

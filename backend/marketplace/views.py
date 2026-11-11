@@ -16,6 +16,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from .models import User, Produit, Categorie, Commande, Boutique, AvisVendeur, Favori, Plainte, ZONES_LIVRAISON, ZONES_LIVRAISON_CHOICES, calculer_frais_livraison
 from .services.notifications import notifier_nouvelle_commande
+from .location_api import valider_dates, notifier as notifier_location, formater as formater_date
 from rest_framework.permissions import IsAuthenticated
 from .serializers import (
     InscriptionVendeurSerializer,
@@ -304,6 +305,7 @@ class PasserCommandeView(APIView):
             return Response({"mode_paiement_choisi": "Choisissez un mode de paiement valide."}, status=status.HTTP_400_BAD_REQUEST)
 
         commandes_creees = []
+        erreurs_location = []
         for item in items:
             try:
                 produit = Produit.objects.get(pk=item.get('produit_id'), disponible=True)
@@ -315,9 +317,14 @@ class PasserCommandeView(APIView):
             if produit.type_offre == 'location':
                 date_debut = parse_date(item.get('date_debut') or '')
                 date_fin = parse_date(item.get('date_fin') or '')
-                if not date_debut or not date_fin or date_fin <= date_debut:
-                    continue  # dates invalides, on ignore cette ligne plutôt que de planter toute la commande
+                # Dates invalides ou déjà réservées : on écarte cette ligne et
+                # on explique pourquoi si plus rien ne peut être commandé.
+                erreur_dates = valider_dates(produit, date_debut, date_fin)
+                if erreur_dates:
+                    erreurs_location.append(f"« {produit.titre} » : {erreur_dates}")
+                    continue
                 nb_jours = (date_fin - date_debut).days
+                caution = produit.caution or 0  # caution facultative à la publication
                 commande = Commande.objects.create(
                     acheteur=request.user,
                     produit=produit,
@@ -326,11 +333,11 @@ class PasserCommandeView(APIView):
                     zone_livraison=zone,
                     complement_adresse=complement,
                     mode_paiement_choisi=mode_paiement,
-                    prix_total_paye=produit.prix_final_public * nb_jours + produit.caution,
+                    prix_total_paye=produit.prix_final_public * nb_jours + caution,
                     frais_livraison=frais_livraison,
                     date_debut_location=date_debut,
                     date_fin_location=date_fin,
-                    caution_demandee=produit.caution,
+                    caution_demandee=caution,
                 )
             else:
                 quantite = max(1, int(item.get('quantite', 1)))
@@ -348,7 +355,8 @@ class PasserCommandeView(APIView):
             commandes_creees.append(commande)
 
         if not commandes_creees:
-            return Response({"general": "Aucun des articles du panier n'est plus disponible."}, status=status.HTTP_400_BAD_REQUEST)
+            message = " ".join(erreurs_location) or "Aucun des articles du panier n'est plus disponible."
+            return Response({"general": message}, status=status.HTTP_400_BAD_REQUEST)
 
         for commande in commandes_creees:
             notifier_nouvelle_commande(commande)
@@ -365,6 +373,7 @@ class PasserCommandeView(APIView):
 
         return Response({
             "message": "Commande envoyée aux vendeuses pour confirmation.",
+            "articles_ecartes": erreurs_location,
             "commandes": CommandeSerializer(commandes_creees, many=True, context={'request': request}).data,
             "total_produits": total_produits,
             "total_livraison": total_livraison,
@@ -461,6 +470,21 @@ class ConfirmerDisponibiliteView(APIView):
         else:
             return Response({"disponible": "Ce champ doit être true ou false."}, status=status.HTTP_400_BAD_REQUEST)
 
+        if commande.produit.type_offre == 'location':
+            if commande.statut == 'confirme':
+                notifier_location(
+                    commande.acheteur,
+                    f"Location confirmée : « {commande.produit.titre} »",
+                    f"La vendeuse confirme votre location du {formater_date(commande.date_debut_location)} "
+                    f"au {formater_date(commande.date_fin_location)}. Yaay Vidé organise la livraison.",
+                )
+            elif commande.statut == 'indisponible':
+                notifier_location(
+                    commande.acheteur,
+                    f"Location non disponible : « {commande.produit.titre} »",
+                    "La vendeuse ne peut malheureusement pas louer cet article. Rien ne vous a été facturé.",
+                )
+
         return Response(CommandeSerializer(commande, context={'request': request}).data, status=status.HTTP_200_OK)
 
 
@@ -477,9 +501,12 @@ class MarquerLocationRetourneeView(APIView):
         except (Commande.DoesNotExist, AttributeError):
             return Response({"general": "Location introuvable."}, status=status.HTTP_404_NOT_FOUND)
 
-        commande.statut = 'terminee'
-        commande.save(update_fields=['statut'])
-        return Response(CommandeSerializer(commande, context={'request': request}).data, status=status.HTTP_200_OK)
+        # Le retour passe désormais par Yaay Vidé (livreur -> dépôt -> contrôle
+        # -> caution) : la vendeuse ne clôture plus la location elle-même.
+        return Response(
+            {"general": "Le retour est organisé par Yaay Vidé : l'article est récupéré, contrôlé puis la location est clôturée par l'équipe."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 def envoyer_email_verification(user):

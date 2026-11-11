@@ -5,6 +5,7 @@ import Layout from '../components/layout/Layout';
 import { apiFetch } from '../utils/api';
 import { LIBELLES_PAIEMENT } from '../utils/paiement';
 import { useCompteur } from '../hooks/useFilMessages';
+import LocationLocataire from '../components/location/LocationLocataire';
 import { GRADIENT_CARDS, SHADOW_CARD } from '../utils/gradientCards';
 import SqueletteTableau from '../components/ui/SqueletteTableau';
 import EtatVide from '../components/ui/EtatVide';
@@ -22,12 +23,17 @@ function formatDateHeure(iso) {
 }
 
 const STATUT_INFO = {
-  en_attente_confirmation: { label: 'En attente', couleur: 'bg-orange/10 text-orange', point: 'bg-orange' },
+  en_attente_confirmation: { label: 'En attente', couleur: 'bg-orange/15 text-clay-dark', point: 'bg-orange' },
   confirme: { label: 'Confirmée', couleur: 'bg-teal/10 text-teal-dark', point: 'bg-teal' },
   indisponible: { label: 'Indisponible', couleur: 'bg-red-50 text-red-500', point: 'bg-red-400' },
   en_cours_livraison: { label: 'En cours de livraison', couleur: 'bg-teal/10 text-teal-dark', point: 'bg-teal' },
   livre: { label: 'Livrée', couleur: 'bg-green-50 text-green-600', point: 'bg-green-500' },
   annule: { label: 'Annulée', couleur: 'bg-line text-ink-soft/75', point: 'bg-ink-soft/40' },
+  contre_proposition: { label: 'Dates proposées', couleur: 'bg-orange/15 text-clay-dark', point: 'bg-orange' },
+  retour_a_collecter: { label: 'Retour à récupérer', couleur: 'bg-teal/10 text-teal-dark', point: 'bg-teal' },
+  retour_en_cours: { label: 'Retour en cours', couleur: 'bg-teal/10 text-teal-dark', point: 'bg-teal' },
+  retour_controle: { label: 'Contrôle en cours', couleur: 'bg-teal/10 text-teal-dark', point: 'bg-teal' },
+  terminee: { label: 'Location terminée', couleur: 'bg-line text-ink', point: 'bg-ink-soft/60' },
 };
 
 const FILTRES_STATUT = [
@@ -154,11 +160,13 @@ function CommandeDetailModal({ c, onFermer }) {
 
 export default function MonCompte() {
   const nbReponses = useCompteur('/support/non-lus/');
+  const [commandes, setCommandes] = useState([]);
+  // Locations (parcours complet sur le site, cf. LocationLocataire)
+  const locations = useMemo(() => commandes.filter((c) => c.produit_type_offre === 'location'), [commandes]);
   const navigate = useNavigate();
   const [moi, setMoi] = useState(null);
   const [section, setSection] = useState('resume');
   const [filtreStatut, setFiltreStatut] = useState('tous');
-  const [commandes, setCommandes] = useState([]);
   const [favoris, setFavoris] = useState([]);
   const [plaintes, setPlaintes] = useState([]);
   const [chargement, setChargement] = useState(true);
@@ -423,11 +431,32 @@ export default function MonCompte() {
             {section === 'locations' && (
               <div>
                 <h1 className="font-impact font-extrabold text-2xl text-ink mb-5">Locations</h1>
-                <div className={`bg-white rounded-m ${SHADOW_CARD} p-14 text-center`}>
-                  <p className="text-ink-soft/75 text-sm">
-                    Les demandes de location se font pour l'instant directement par WhatsApp avec la vendeuse — un historique dédié arrivera bientôt ici.
-                  </p>
-                </div>
+                {locations.length === 0 ? (
+                  <div className={`bg-white rounded-m ${SHADOW_CARD}`}>
+                    <EtatVide
+                      compact
+                      bordure={false}
+                      icone="boite"
+                      titre="Aucune location pour le moment"
+                      texte="Poussette, lit parapluie, siège auto… Louez ce dont vous avez besoin, le temps qu'il vous faut."
+                      action={
+                        <Link to="/boutique" className="inline-flex items-center min-h-[44px] px-5 rounded-full bg-clay-dark text-white text-sm font-bold hover:bg-ink transition-colors">
+                          Voir les articles à louer
+                        </Link>
+                      }
+                    />
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {locations.map((c) => (
+                      <LocationLocataire
+                        key={c.id}
+                        c={c}
+                        onMaj={(maj) => setCommandes((liste) => liste.map((x) => (x.id === maj.id ? { ...x, ...maj } : x)))}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 

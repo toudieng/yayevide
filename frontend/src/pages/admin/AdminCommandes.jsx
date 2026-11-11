@@ -1,6 +1,7 @@
 // frontend/src/pages/admin/AdminCommandes.jsx
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import GestionLocationAdmin from '../../components/location/GestionLocationAdmin';
 import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
@@ -14,19 +15,27 @@ const STATUTS = [
   { value: 'en_attente_confirmation', label: 'En attente' },
   { value: 'confirme', label: 'Confirmé' },
   { value: 'en_cours_livraison', label: 'En cours' },
-  { value: 'livre', label: 'Livré' },
-  { value: 'terminee', label: 'Terminée' },
+  { value: 'contre_proposition', label: 'Dates proposées' },
+  { value: 'livre', label: 'Livré / location en cours' },
+  { value: 'retour_a_collecter', label: 'Retour à récupérer' },
+  { value: 'retour_en_cours', label: 'Retour en cours' },
+  { value: 'retour_controle', label: 'Contrôle de retour' },
+  { value: 'terminee', label: 'Location terminée' },
   { value: 'indisponible', label: 'Indisponible' },
   { value: 'annule', label: 'Annulé' },
 ];
 
 const STATUT_STYLE = {
-  en_attente_confirmation: 'bg-orange/10 text-orange',
+  en_attente_confirmation: 'bg-orange/15 text-clay-dark',
   confirme: 'bg-teal/10 text-teal-dark',
   indisponible: 'bg-red-50 text-red-500',
   en_cours_livraison: 'bg-clay/10 text-clay',
   livre: 'bg-teal text-white',
-  terminee: 'bg-line text-ink-soft/75',
+  terminee: 'bg-line text-ink',
+  contre_proposition: 'bg-orange/15 text-clay-dark',
+  retour_a_collecter: 'bg-teal/10 text-teal-dark',
+  retour_en_cours: 'bg-teal/10 text-teal-dark',
+  retour_controle: 'bg-orange/15 text-clay-dark',
   annule: 'bg-red-50 text-red-500',
 };
 
@@ -374,6 +383,18 @@ export default function AdminCommandes() {
                   </select>
                 </div>
               </div>
+
+              {selectionnee.produit_type_offre === 'location' && (
+                <GestionLocationAdmin
+                  key={selectionnee.id}
+                  c={selectionnee}
+                  livreurs={livreurs}
+                  onMaj={(maj) => {
+                    setCommandes((prev) => prev.map((x) => (x.id === maj.id ? maj : x)));
+                    setSelectionnee(maj);
+                  }}
+                />
+              )}
 
               <div className="pt-4 border-t border-line mt-4">
                 <p className="text-[11px] font-bold text-ink-soft/75 uppercase tracking-wide mb-2">Chronologie</p>

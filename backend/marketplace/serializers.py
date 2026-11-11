@@ -308,6 +308,8 @@ class CommandeSerializer(serializers.ModelSerializer):
     acheteur_nom = serializers.CharField(source='acheteur.username', read_only=True)
     zone_livraison_nom = serializers.SerializerMethodField()
     nb_jours_location = serializers.ReadOnlyField()
+    produit_prix_jour = serializers.IntegerField(source='produit.prix_final_public', read_only=True)
+    produit_taille = serializers.CharField(source='produit.taille', read_only=True)
 
     class Meta:
         model = Commande
@@ -318,6 +320,9 @@ class CommandeSerializer(serializers.ModelSerializer):
             'statut', 'date_limite_confirmation', 'statut_paiement', 'date_paiement', 'reference_paiement',
             'prix_total_paye', 'commission_plateforme', 'montant_net_vendeuse', 'part_livreur',
             'date_debut_location', 'date_fin_location', 'nb_jours_location', 'caution_demandee', 'caution_remboursee',
+            'date_debut_proposee', 'date_fin_proposee', 'prolongation_statut', 'prolongation_date_fin',
+            'jours_prolongation', 'supplement_prolongation', 'supplement_paye', 'livreur_retour',
+            'caution_retenue', 'motif_retenue', 'caution_traitee_le', 'produit_prix_jour', 'produit_taille',
             'date_commande',
         ]
         read_only_fields = fields
@@ -424,9 +429,11 @@ class CommandeAdminSerializer(CommandeSerializer):
     acheteur_username = serializers.CharField(source='acheteur.username', read_only=True)
     acheteur_telephone = serializers.CharField(source='acheteur.phone_number', read_only=True)
     livreur_nom = serializers.CharField(source='livreur.username', read_only=True)
+    livreur_retour_nom = serializers.CharField(source='livreur_retour.username', read_only=True)
+    boutique_telephone = serializers.CharField(source='produit.boutique.vendeur.phone_number', read_only=True)
 
     class Meta(CommandeSerializer.Meta):
-        fields = CommandeSerializer.Meta.fields + ['acheteur_username', 'acheteur_telephone', 'livreur', 'livreur_nom']
+        fields = CommandeSerializer.Meta.fields + ['acheteur_username', 'acheteur_telephone', 'livreur', 'livreur_nom', 'livreur_retour_nom', 'boutique_telephone']
         read_only_fields = [f for f in fields if f != 'livreur']
 
 

@@ -21,9 +21,9 @@ const STEPS = [
   {
     title: 'Réservation des dates et de la durée',
     tag: 'Réservation',
-    description: "Choisissez vos dates de début et de fin. La plateforme calcule automatiquement le coût total (prix par jour + caution) avant que vous contactiez la vendeuse via WhatsApp.",
+    description: "Choisissez vos dates de début et de fin : les dates déjà réservées sont indiquées. La plateforme calcule le coût total (prix par jour + caution), puis vous envoyez votre demande. La vendeuse confirme sous 24 h, ou vous propose d'autres dates que vous acceptez ou refusez en un clic depuis votre compte.",
     image: imgDates,
-    points: ['Dates de début et de fin flexibles', 'Calcul automatique du coût total', 'Caution affichée séparément', 'Contact direct avec la propriétaire'],
+    points: ['Dates déjà réservées indiquées', 'Calcul automatique du coût total', 'Réponse de la vendeuse sous 24 h', "D'autres dates proposées ? Vous décidez"],
     tip: {
       title: 'Réservez à l\'avance',
       description: "Les articles populaires (poussettes, lits voyage) partent vite — anticipez vos dates.",
@@ -32,9 +32,9 @@ const STEPS = [
   {
     title: 'Paiement et dépôt de caution',
     tag: 'Paiement',
-    description: "Un récapitulatif clair présente le coût de la location et la caution (non débitée à l'avance, remboursée après retour). Le règlement se fait à la remise, via Wave, Orange Money ou espèces.",
+    description: "Un récapitulatif clair présente le coût de la location et la caution (non débitée à l'avance, remboursée après retour). Le règlement se fait à la remise, via Wave, Orange Money, Mixx by Yas ou espèces.",
     image: imgPaiement,
-    points: ['Récapitulatif clair avant paiement', "Caution non débitée à l'avance", 'Wave, Orange Money ou espèces', 'Règlement à la remise uniquement'],
+    points: ['Récapitulatif clair avant paiement', "Caution non débitée à l'avance", 'Wave, Orange Money, Mixx by Yas ou espèces', 'Règlement à la remise uniquement'],
     tip: {
       title: 'La caution vous est acquise',
       description: "Elle n'est jamais prélevée avant la remise de l'article, et remboursée intégralement s'il revient en bon état.",
@@ -54,9 +54,9 @@ const STEPS = [
   {
     title: 'Retour et remboursement de la caution',
     tag: 'Retour',
-    description: "Un livreur récupère l'article chez vous en fin de location. Après inspection, si tout est conforme, la caution est intégralement remboursée.",
+    description: "Besoin de plus de temps ? Demandez une prolongation depuis votre compte, la vendeuse l'accepte ou la refuse. La veille de la fin, vous recevez un rappel ; un livreur Yaay Vidé récupère ensuite l'article chez vous. Après contrôle chez Yaay Vidé, l'équipe vous rend votre caution (Wave, Orange Money, Mixx by Yas ou espèces). En cas de retenue, le motif vous est toujours expliqué.",
     image: imgRetour,
-    points: ['Récupération à domicile en fin de location', 'Inspection systématique', 'Remboursement intégral si conforme', 'Délai de remboursement rapide'],
+    points: ['Prolongation possible depuis votre compte', 'Rappel la veille de la fin', 'Récupération à domicile', 'Caution rendue après contrôle'],
     tip: {
       title: "Rendez l'article comme reçu",
       description: "Nettoyez et vérifiez que tous les accessoires sont présents avant le retour.",

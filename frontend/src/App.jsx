@@ -54,6 +54,7 @@ import LivreurHistorique from './pages/livreur/LivreurHistorique';
 import LivreurRevenus from './pages/livreur/LivreurRevenus';
 import LivreurNotifications from './pages/livreur/LivreurNotifications';
 import LivreurProfil from './pages/livreur/LivreurProfil';
+import LivreurRetours from './pages/livreur/LivreurRetours';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -133,6 +134,7 @@ function App() {
           {/* Espace livreur */}
           <Route path="/livreur" element={<LivreurTableauDeBord />} />
           <Route path="/livreur/mes-livraisons" element={<LivreurMesLivraisons />} />
+          <Route path="/livreur/retours" element={<LivreurRetours />} />
           <Route path="/livreur/historique" element={<LivreurHistorique />} />
           <Route path="/livreur/revenus" element={<LivreurRevenus />} />
           <Route path="/livreur/notifications" element={<LivreurNotifications />} />
