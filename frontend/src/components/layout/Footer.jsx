@@ -145,10 +145,13 @@ export default function Footer() {
           <span>
             © 2026 Yaay Vidé. Tous droits réservés. Fait avec ♥ par{" "}
             <a
-              href="mailto:asdieng.elc@outlook.com"
-              className="hover:text-ink transition-colors"
+              href="https://myportfolio-topaz-pi-81.vercel.app/fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold underline-offset-2 hover:text-white hover:underline transition-colors"
             >
               Astou DIENG
+              <span className="sr-only"> (portfolio, nouvel onglet)</span>
             </a>{" "}
             au Sénégal.
           </span>
