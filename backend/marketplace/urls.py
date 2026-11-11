@@ -75,6 +75,11 @@ from .ebook_api import (
     TelechargerEbookView,
 )
 
+from .support_api import (
+    MonFilSupportView, SupportNonLusView, ElementsJoignablesView,
+    SupportAdminListeView, SupportAdminEnAttenteView, SupportAdminFilView,
+)
+
 urlpatterns = [
     path('inscription/', InscriptionVendeurView.as_view(), name='inscription'),
     path('connexion/', ConnexionView.as_view(), name='api_connexion'),
@@ -149,4 +154,12 @@ urlpatterns = [
     path('admin/ebook/', EbookAdminView.as_view(), name='api_admin_ebook'),
     path('admin/ebook/<int:pk>/', EbookAdminDetailView.as_view(), name='api_admin_ebook_detail'),
     path('admin/ebook-achats/', AchatsEbookAdminView.as_view(), name='api_admin_ebook_achats'),
+
+    # Espace « Une question ? » (utilisatrice <-> équipe)
+    path('support/', MonFilSupportView.as_view(), name='api_support'),
+    path('support/non-lus/', SupportNonLusView.as_view(), name='api_support_non_lus'),
+    path('support/elements-joignables/', ElementsJoignablesView.as_view(), name='api_support_joignables'),
+    path('admin/support/', SupportAdminListeView.as_view(), name='api_admin_support'),
+    path('admin/support/en-attente/', SupportAdminEnAttenteView.as_view(), name='api_admin_support_en_attente'),
+    path('admin/support/<int:pk>/', SupportAdminFilView.as_view(), name='api_admin_support_fil'),
 ]

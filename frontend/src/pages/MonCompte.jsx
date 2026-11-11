@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { apiFetch } from '../utils/api';
 import { LIBELLES_PAIEMENT } from '../utils/paiement';
+import { useCompteur } from '../hooks/useFilMessages';
 import { GRADIENT_CARDS, SHADOW_CARD } from '../utils/gradientCards';
 import SqueletteTableau from '../components/ui/SqueletteTableau';
 import EtatVide from '../components/ui/EtatVide';
@@ -152,6 +153,7 @@ function CommandeDetailModal({ c, onFermer }) {
 }
 
 export default function MonCompte() {
+  const nbReponses = useCompteur('/support/non-lus/');
   const navigate = useNavigate();
   const [moi, setMoi] = useState(null);
   const [section, setSection] = useState('resume');
@@ -276,6 +278,22 @@ export default function MonCompte() {
                   {s.label}
                 </button>
               ))}
+              {/* Discussion avec l'équipe Yaay Vidé */}
+              <Link
+                to="/aide"
+                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-btn text-[13.5px] font-semibold text-ink-soft/75 hover:bg-cream hover:text-ink transition-colors"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="h-4 w-4 shrink-0" aria-hidden="true">
+                  <path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12zM9.5 9.5a2.5 2.5 0 114 2c-.9.5-1.5 1-1.5 2M12 16.5h.01" />
+                </svg>
+                <span className="flex-1">Une question ?</span>
+                {nbReponses > 0 && (
+                  <span className="h-5 min-w-5 px-1 rounded-full bg-teal-dark text-white text-[10.5px] font-bold flex items-center justify-center">
+                    {nbReponses}
+                    <span className="sr-only"> réponse{nbReponses > 1 ? 's' : ''} non lue{nbReponses > 1 ? 's' : ''}</span>
+                  </span>
+                )}
+              </Link>
             </nav>
 
             <button

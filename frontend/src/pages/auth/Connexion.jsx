@@ -27,7 +27,10 @@ export default function Connexion({ onLoginSuccess }) {
 
       if (response.ok) {
         onLoginSuccess(data);
-        if (data.role === 'vendeur') {
+        // Retour vers « Une question ? » quand on y était envoyé, quel que soit le rôle
+        if (location.state?.from === '/aide') {
+          navigate('/aide');
+        } else if (data.role === 'vendeur') {
           navigate('/dashboard');
         } else if (data.role === 'admin') {
           navigate('/admin');

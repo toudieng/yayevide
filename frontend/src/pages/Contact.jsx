@@ -1,5 +1,6 @@
 // frontend/src/pages/Contact.jsx
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import PageBanner from '../components/ui/PageBanner';
 import Reveal from '../components/ui/Reveal';
@@ -26,6 +27,27 @@ export default function Contact() {
       <PageBanner eyebrow="Restons en contact" title="Une question ? Nous sommes là." subtitle="Notre équipe vous répond rapidement, par WhatsApp ou par email." compact />
 
       <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-16">
+        {/* Avec un compte : discussion suivie directement sur le site */}
+        <Link
+          to="/aide"
+          className="mb-10 flex flex-col sm:flex-row sm:items-center gap-4 rounded-m bg-peche/70 border border-orange/20 p-5 sm:p-6 hover:border-clay transition-colors"
+        >
+          <span className="h-12 w-12 shrink-0 rounded-full bg-teal-dark text-white flex items-center justify-center" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+              <path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12zM9.5 9.5a2.5 2.5 0 114 2c-.9.5-1.5 1-1.5 2M12 16.5h.01" />
+            </svg>
+          </span>
+          <span className="flex-1">
+            <span className="block font-impact font-extrabold text-[18px] text-ink">Vous avez un compte Yaay Vidé ?</span>
+            <span className="block text-[14px] text-ink-soft mt-0.5">
+              Posez votre question directement depuis le site : vous gardez tout l'historique et vous pouvez joindre une commande.
+            </span>
+          </span>
+          <span className="self-start sm:self-center inline-flex items-center min-h-[44px] px-5 rounded-full bg-clay-dark text-white text-sm font-bold">
+            Écrire à l'équipe
+          </span>
+        </Link>
+
         <div className="grid md:grid-cols-[1fr_320px] gap-10">
 
           {/* FORMULAIRE */}

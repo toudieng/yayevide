@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../ui/Logo';
 import { apiFetch } from '../../utils/api';
+import { useCompteur } from '../../hooks/useFilMessages';
 
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Tableau de bord', path: '/dashboard' },
@@ -13,6 +14,7 @@ const NAV_ITEMS = [
   { id: 'locations', label: 'Locations', path: '/vendeuse/locations' },
   { id: 'commentaires', label: 'Commentaires', path: '/vendeuse/commentaires' },
   { id: 'boutique', label: 'Ma boutique', path: '/vendeuse/boutique' },
+  { id: 'aide', label: 'Une question ?', path: '/aide' },
 ];
 
 const ICONS = {
@@ -24,6 +26,7 @@ const ICONS = {
   locations: <path d="M3 4h18v13H3zM8 21h8M12 17v4" />,
   commentaires: <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />,
   boutique: <path d="M3 10l1.5-6h15L21 10M3 10v9a1 1 0 001 1h16a1 1 0 001-1v-9M3 10h18M9 14h6v6H9z" />,
+  aide: <path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12zM9.5 9.5a2.5 2.5 0 114 2c-.9.5-1.5 1-1.5 2M12 16.5h.01" />,
   bell: <path d="M6 9a6 6 0 1 1 12 0v5l2 3H4l2-3V9zM10 20a2 2 0 0 0 4 0" />,
   logout: <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />,
 };
@@ -61,6 +64,9 @@ export default function ShellVendeuse({ active, moi, titre, children }) {
     return () => clearInterval(interval);
   }, []);
 
+  // Réponses de l'équipe non lues (« Une question ? »)
+  const nbReponses = useCompteur('/support/non-lus/');
+
   const handleLogout = async () => {
     await apiFetch('/deconnexion/', { method: 'POST' }).catch(() => {});
     navigate('/connexion');
@@ -91,6 +97,12 @@ export default function ShellVendeuse({ active, moi, titre, children }) {
             >
               <NavIcon id={item.id} />
               <span className="flex-1 text-left">{item.label}</span>
+              {item.id === 'aide' && nbReponses > 0 && (
+                <span className="h-5 min-w-5 px-1 rounded-full bg-teal-dark text-white text-[10.5px] font-bold flex items-center justify-center">
+                  {nbReponses}
+                  <span className="sr-only"> réponse{nbReponses > 1 ? 's' : ''} non lue{nbReponses > 1 ? 's' : ''}</span>
+                </span>
+              )}
               {item.id === 'commandes' && nbEnAttente > 0 && (
                 <span className="h-5 min-w-5 px-1 rounded-full bg-clay-dark text-white text-[10.5px] font-bold flex items-center justify-center">
                   {nbEnAttente}

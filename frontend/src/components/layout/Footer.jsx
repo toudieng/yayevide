@@ -29,6 +29,7 @@ const COLUMNS = [
         to: "/comment-mettre-en-location",
       },
       { label: "FAQ", to: "/faq-centre-daide" },
+      { label: "Une question ? Écrivez-nous", to: "/aide" },
       { label: "Contact", to: "/contact" },
     ],
   },

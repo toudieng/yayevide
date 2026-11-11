@@ -661,3 +661,46 @@ class AvisVendeur(models.Model):
 
     def __str__(self):
         return f"Avis {self.note}/5 pour {self.boutique.nom_boutique}"
+
+# ==========================================
+# ESPACE « UNE QUESTION ? » (utilisatrice <-> équipe Yaay Vidé)
+# ==========================================
+class FilSupport(models.Model):
+    """
+    Un seul fil de discussion par utilisatrice, avec l'équipe Yaay Vidé
+    (aucun échange direct entre acheteuses et vendeuses).
+    """
+    utilisateur = models.OneToOneField(User, on_delete=models.CASCADE, related_name='fil_support')
+    cree_le = models.DateTimeField(auto_now_add=True)
+    dernier_message_le = models.DateTimeField(auto_now_add=True, db_index=True)
+    # Vrai tant que le dernier message vient de l'utilisatrice (sans réponse)
+    en_attente_equipe = models.BooleanField(default=False, db_index=True)
+    # Anti-spam des e-mails « l'équipe vous a répondu »
+    dernier_email_le = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Fil « Une question ? »"
+        verbose_name_plural = "Fils « Une question ? »"
+        ordering = ['-en_attente_equipe', '-dernier_message_le']
+
+    def __str__(self):
+        return f"Questions de {self.utilisateur}"
+
+
+class MessageSupport(models.Model):
+    fil = models.ForeignKey(FilSupport, on_delete=models.CASCADE, related_name='messages')
+    auteur = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='messages_support')
+    de_l_equipe = models.BooleanField(default=False)
+    texte = models.TextField(max_length=2000)
+    # Élément joint pour donner le contexte de la question
+    produit = models.ForeignKey(Produit, on_delete=models.SET_NULL, null=True, blank=True, related_name='+')
+    commande = models.ForeignKey(Commande, on_delete=models.SET_NULL, null=True, blank=True, related_name='+')
+    envoye_le = models.DateTimeField(auto_now_add=True, db_index=True)
+    # Lu par l'autre côté (l'équipe pour un message de l'utilisatrice, et inversement)
+    lu_le = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['envoye_le', 'id']
+
+    def __str__(self):
+        return f"{'Équipe' if self.de_l_equipe else self.auteur} : {self.texte[:40]}"
