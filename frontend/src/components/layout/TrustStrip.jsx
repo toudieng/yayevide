@@ -20,7 +20,7 @@ const ITEMS = [
 export default function TrustStrip() {
   const items = [...ITEMS, ...ITEMS];
   return (
-    <div className="bg-cream border-b border-line overflow-hidden whitespace-nowrap pause-on-hover">
+    <div className="bg-cream overflow-hidden whitespace-nowrap pause-on-hover">
       <div className="animate-marquee-reverse flex w-max py-3.5">
         {items.map((item, i) => (
           <span

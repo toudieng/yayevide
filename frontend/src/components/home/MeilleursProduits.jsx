@@ -29,9 +29,6 @@ export default function MeilleursProduits() {
       <div className="mx-auto max-w-[1280px] px-6 md:px-12">
         <div className="flex items-end justify-between mb-9">
           <div>
-            <span className="inline-block text-[11px] font-bold uppercase tracking-wide text-clay-dark bg-orange/10 px-3.5 py-1.5 rounded-full mb-4">
-              <span className="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17l-5.6 3 1.1-6.2L2.9 9.4l6.3-.9L12 2.8z" /></svg>Les favoris des mamans</span>
-            </span>
             <h2 className="font-impact font-extrabold text-ink text-[30px] sm:text-[40px] lg:text-[48px] leading-tight text-balance">
               Nos meilleurs produits
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="inline-block align-[-0.1em] ml-2.5 h-6 w-6 sm:h-7 sm:w-7 text-orange -rotate-6" aria-hidden="true">
