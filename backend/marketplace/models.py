@@ -395,6 +395,8 @@ class Commande(models.Model):
     MODE_PAIEMENT_CHOICES = (
         ('wave', 'Wave'),
         ('orange_money', 'Orange Money'),
+        # Mixx by Yas : ex-« Free Money » (Free Sénégal est devenu Yas)
+        ('mixx', 'Mixx by Yas'),
         ('especes', 'Espèces'),
     )
     acheteur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='achats')
@@ -476,7 +478,7 @@ class Commande(models.Model):
     def marquer_livree(self, mode_paiement_reel=None, reference_paiement=''):
         """
         À appeler par le livreur une fois l'article remis ET le paiement
-        (espèces, ou InTouch pour Wave/Orange Money) réellement encaissé.
+        (espèces, ou InTouch pour Wave/Orange Money/Mixx by Yas) réellement encaissé.
         C'est SEULEMENT à ce moment que le stock est décrémenté et que la
         commission est calculée — jamais avant, puisqu'il n'y a pas de
         paiement en ligne au moment de la commande elle-même.

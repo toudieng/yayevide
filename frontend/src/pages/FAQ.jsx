@@ -14,7 +14,7 @@ const FAQ_DATA = [
   {
     categorie: 'Fonctionnement de la plateforme',
     questions: [
-      { q: 'Comment acheter un article sur Yaay Vidé ?', r: "Parcourez le catalogue, ajoutez l'article souhaité au panier et payez directement via Intouch (Wave, Orange Money, Free Money, carte bancaire). L'article est collecté, vérifié, puis livré sous 24h à 48h." },
+      { q: 'Comment acheter un article sur Yaay Vidé ?', r: "Parcourez le catalogue, ajoutez l'article souhaité au panier et payez directement via Intouch (Wave, Orange Money, Mixx by Yas, carte bancaire). L'article est collecté, vérifié, puis livré sous 24h à 48h." },
       { q: 'Comment vendre un article ?', r: "Créez un compte vendeur, publiez vos articles avec photos et description honnête (poids et taille du colis précisés). Une fois l'article vendu, un livreur Yaay Vidé le récupère et le vérifie avant de le livrer à l'acheteuse et de libérer votre paiement." },
       { q: 'Puis-je louer un article sur Yaay Vidé ?', r: "Oui, via le bouton « Louer ». Cette option est soumise à des conditions de location et de vérification strictes. Les colis sont systématiquement inspectés à l'aller comme au retour." },
     ],
@@ -22,14 +22,14 @@ const FAQ_DATA = [
   {
     categorie: 'Paiements et sécurité',
     questions: [
-      { q: 'Quels moyens de paiement acceptez-vous ?', r: 'Wave, Orange Money, Free Money et carte bancaire, via notre partenaire sécurisé Intouch.' },
+      { q: 'Quels moyens de paiement acceptez-vous ?', r: 'Wave, Orange Money, Mixx by Yas et carte bancaire, via notre partenaire sécurisé Intouch.' },
       { q: 'Comment et quand suis-je payée pour mes ventes ?', r: "Vos paiements sont sécurisés par Intouch. Vous choisissez : récupérer immédiatement le montant de votre vente, ou cumuler vos gains et programmer des retraits à la fréquence de votre choix (journalière, hebdomadaire ou mensuelle)." },
     ],
   },
   {
     categorie: 'Livraison',
     questions: [
-      { q: 'Qui paie la livraison et comment est-elle calculée ?', r: "Les frais de livraison sont entièrement à la charge de l'acheteuse, calculés selon le poids et la taille du colis, quelle que soit la zone dans la région de Dakar. Tarifs : 1500 FCFA pour un colis S-M (jusqu'à 2kg), 2000 FCFA pour un colis L-XL (entre 2 et 3kg), et une tarification spécifique à partir de XXL. Ils sont payés directement au livreur (Orange Money, Wave, Free Money ou espèces)." },
+      { q: 'Qui paie la livraison et comment est-elle calculée ?', r: "Les frais de livraison sont entièrement à la charge de l'acheteuse, calculés selon le poids et la taille du colis, quelle que soit la zone dans la région de Dakar. Tarifs : 1500 FCFA pour un colis S-M (jusqu'à 2kg), 2000 FCFA pour un colis L-XL (entre 2 et 3kg), et une tarification spécifique à partir de XXL. Ils sont payés directement au livreur (Orange Money, Wave, Mixx by Yas ou espèces)." },
       { q: "Comment s'organisent les livraisons ?", r: "Deux rotations par jour, le matin et l'après-midi. Un service de livraison express est également disponible en cas d'urgence, avec une tarification individuelle selon le colis." },
     ],
   },

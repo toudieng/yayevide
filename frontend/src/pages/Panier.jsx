@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Reveal from '../components/ui/Reveal';
 import EtatVide from '../components/ui/EtatVide';
+import { LIBELLES_PAIEMENT, LOGOS_PAIEMENT } from '../utils/paiement';
 import { useCart } from '../context/CartContext';
 
 function formatFCFA(value) {
@@ -174,12 +175,15 @@ export default function Panier() {
 
             <div className="pt-3 border-t border-line">
               <p className="text-[11px] text-ink-soft/75 uppercase tracking-wide mb-2.5">Nous acceptons</p>
-              <div className="flex flex-wrap gap-2">
-                {['Wave', 'Orange Money', 'Free Money', 'Espèces'].map((mode) => (
-                  <span key={mode} className="text-[11px] font-semibold text-ink-soft/75 bg-sable border border-line rounded-full px-2.5 py-1">
-                    {mode}
+              <div className="flex flex-wrap items-center gap-2">
+                {['wave', 'orange_money', 'mixx'].map((mode) => (
+                  <span key={mode} className="h-10 px-2 flex items-center justify-center bg-white border border-line rounded-btn">
+                    <img src={LOGOS_PAIEMENT[mode]} alt={LIBELLES_PAIEMENT[mode]} className="max-h-7 max-w-[58px] object-contain" />
                   </span>
                 ))}
+                <span className="h-10 px-3 flex items-center text-[11.5px] font-semibold text-ink bg-white border border-line rounded-btn">
+                  Espèces
+                </span>
               </div>
             </div>
           </div>

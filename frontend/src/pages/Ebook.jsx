@@ -14,7 +14,7 @@ function formatFCFA(value) {
 const MODES_PAIEMENT = [
   { value: 'wave', label: 'Wave' },
   { value: 'orange_money', label: 'Orange Money' },
-  { value: 'free_money', label: 'Free Money' },
+  { value: 'mixx', label: 'Mixx by Yas' },
   { value: 'carte', label: 'Carte bancaire' },
 ];
 

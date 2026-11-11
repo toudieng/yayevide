@@ -4,27 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { useCart } from '../context/CartContext';
 import { apiFetch } from '../utils/api';
+import { MODES_PAIEMENT } from '../utils/paiement';
 
-const MODES_PAIEMENT = [
-  {
-    value: 'wave',
-    label: 'Wave',
-    couleur: 'bg-[#1DC8E0]',
-    icone: 'M4 12a8 8 0 1116 0 8 8 0 01-16 0z M9 9c0-1 .8-2 3-2s3 1 3 2-1 1.5-3 2-3 1-3 2 1 2 3 2 3-1 3-2',
-  },
-  {
-    value: 'orange_money',
-    label: 'Orange Money',
-    couleur: 'bg-orange',
-    icone: 'M12 2a10 10 0 100 20 10 10 0 000-20zM12 7v5l3 3',
-  },
-  {
-    value: 'especes',
-    label: 'Espèces',
-    couleur: 'bg-teal',
-    icone: 'M3 8h18v9H3zM3 8l9-4 9 4M12 12.5a2 2 0 100-4 2 2 0 000 4z',
-  },
-];
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
@@ -320,22 +301,33 @@ export default function Checkout() {
                   Vous ne payez rien maintenant — choisissez comment vous réglerez le livreur à la remise.
                 </p>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Moyen de paiement">
                   {MODES_PAIEMENT.map((mode) => (
                     <button
                       key={mode.value}
                       type="button"
+                      role="radio"
+                      aria-checked={modePaiement === mode.value}
                       onClick={() => setModePaiement(mode.value)}
-                      className={`flex flex-col items-center gap-2.5 p-5 rounded-m border-2 transition-all ${
+                      className={`flex flex-col items-center justify-between gap-2.5 p-4 rounded-m border-2 transition-all ${
                         modePaiement === mode.value ? 'border-teal bg-teal/5' : 'border-line hover:border-ink/30'
                       }`}
                     >
-                      <span className={`h-11 w-11 rounded-full ${mode.couleur} text-white flex items-center justify-center`}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5">
-                          <path d={mode.icone} />
-                        </svg>
+                      <span className="h-12 flex items-center justify-center">
+                        {mode.logo ? (
+                          <img src={mode.logo} alt="" className="max-h-12 max-w-[88px] object-contain" />
+                        ) : (
+                          // Espèces : pas de logo de marque, simple pictogramme
+                          <span className="h-11 w-11 rounded-full bg-teal-dark text-white flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5" aria-hidden="true">
+                              <rect x="2.5" y="6" width="19" height="12" rx="2" />
+                              <circle cx="12" cy="12" r="2.5" />
+                              <path d="M6 9.5v5M18 9.5v5" />
+                            </svg>
+                          </span>
+                        )}
                       </span>
-                      <span className="text-[12.5px] font-bold text-ink text-center">{mode.label}</span>
+                      <span className="text-[12.5px] font-bold text-ink text-center leading-tight">{mode.label}</span>
                     </button>
                   ))}
                 </div>

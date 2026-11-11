@@ -4,7 +4,7 @@ const ITEMS = [
     icon: 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z',
   },
   {
-    label: 'Wave · Orange Money · Free Money',
+    label: 'Wave · Orange Money · Mixx by Yas',
     icon: 'M3 10h18M5 10V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M5 10v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7',
   },
   {

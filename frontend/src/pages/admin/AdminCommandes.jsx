@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import ShellAdmin from '../../components/admin/ShellAdmin';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { LIBELLES_PAIEMENT } from '../../utils/paiement';
 import { GRADIENT_CARDS, SHADOW_CARD as SHADOW } from '../../utils/gradientCards';
 import SqueletteTableau from '../../components/ui/SqueletteTableau';
 import EtatVide from '../../components/ui/EtatVide';
@@ -338,7 +339,7 @@ export default function AdminCommandes() {
                 <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Acheteuse</span><span className="font-semibold text-ink">{selectionnee.acheteur_username}</span></div>
                 <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Montant</span><span className="font-semibold text-ink">{formatFCFA(selectionnee.prix_total_paye)}</span></div>
                 <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Commission Yaay Vidé</span><span className="font-semibold text-ink">{formatFCFA(selectionnee.commission_plateforme)}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Paiement</span><span className="font-semibold text-ink">{selectionnee.mode_paiement_choisi || '—'}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Paiement</span><span className="font-semibold text-ink">{LIBELLES_PAIEMENT[selectionnee.mode_paiement_choisi] || selectionnee.mode_paiement_choisi || '—'}</span></div>
                 <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Zone</span><span className="font-semibold text-ink">{selectionnee.zone_livraison_nom || '—'}</span></div>
               </div>
 

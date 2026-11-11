@@ -156,7 +156,7 @@ export default function Footer() {
             au Sénégal.
           </span>
           <span>
-            Paiements : Wave · Orange Money · Free Money · Carte bancaire
+            Paiements : Wave · Orange Money · Mixx by Yas · Espèces
           </span>
         </div>
       </div>

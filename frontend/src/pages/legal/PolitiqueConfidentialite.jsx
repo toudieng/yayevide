@@ -19,7 +19,7 @@ const SECTIONS = [
   },
   {
     title: '5. Partage des données',
-    content: "Yaay Vidé ne vend ni ne loue les données personnelles de ses utilisateurs. Les données peuvent uniquement être partagées avec les prestataires logistiques (collecte et livraison), les prestataires de paiement (Intouch : Wave, Orange Money, Free Money, carte bancaire), et les autorités administratives ou judiciaires compétentes lorsque la loi l'exige.",
+    content: "Yaay Vidé ne vend ni ne loue les données personnelles de ses utilisateurs. Les données peuvent uniquement être partagées avec les prestataires logistiques (collecte et livraison), les prestataires de paiement (Intouch : Wave, Orange Money, Mixx by Yas, carte bancaire), et les autorités administratives ou judiciaires compétentes lorsque la loi l'exige.",
   },
   {
     title: '6. Conservation des données',

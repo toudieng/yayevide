@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { apiFetch } from '../utils/api';
+import { LIBELLES_PAIEMENT } from '../utils/paiement';
 import { GRADIENT_CARDS, SHADOW_CARD } from '../utils/gradientCards';
 import SqueletteTableau from '../components/ui/SqueletteTableau';
 import EtatVide from '../components/ui/EtatVide';
@@ -53,7 +54,7 @@ const PLAINTE_STATUT_INFO = {
   rejetee: { label: 'Rejetée', couleur: 'bg-line text-ink-soft/75' },
 };
 
-const MODE_PAIEMENT_LABELS = { wave: 'Wave', orange_money: 'Orange Money', especes: 'Espèces' };
+const MODE_PAIEMENT_LABELS = LIBELLES_PAIEMENT;
 
 function CommandeLigne({ c, onOuvrir }) {
   const statutInfo = STATUT_INFO[c.statut] || STATUT_INFO.annule;

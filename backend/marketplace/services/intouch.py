@@ -78,7 +78,7 @@ class IntouchPaymentService:
         """
         Déclenche le paiement InTouch AU MOMENT DE LA LIVRAISON — le
         livreur confirme la remise de l'article, ce qui envoie une demande
-        de paiement (Wave ou Orange Money) au numéro de l'acheteuse.
+        de paiement (Wave, Orange Money ou Mixx by Yas) au numéro de l'acheteuse.
         Ne s'applique jamais aux espèces (rien à faire passer par InTouch).
 
         Retourne un dict : { reference, simulation, succes }

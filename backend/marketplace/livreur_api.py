@@ -133,7 +133,7 @@ class LivraisonStatutView(APIView):
     livré. On vérifie systématiquement que la commande lui est bien
     assignée pour qu'un livreur ne puisse pas modifier les livraisons d'un
     collègue. Passer à 'livre' déclenche l'encaissement réel (espèces,
-    Wave ou Orange Money selon ce que l'acheteuse a réellement donné sur
+    Wave, Orange Money ou Mixx by Yas selon ce que l'acheteuse a réellement donné sur
     place — peut différer du mode choisi à la commande)."""
     permission_classes = [EstLivreur]
 
@@ -156,7 +156,7 @@ class LivraisonStatutView(APIView):
         if nouveau_statut == 'livre':
             mode_reel = request.data.get('mode_paiement_reel') or commande.mode_paiement_choisi
 
-            if mode_reel in ('wave', 'orange_money'):
+            if mode_reel in ('wave', 'orange_money', 'mixx'):
                 # Le paiement passe par InTouch UNIQUEMENT à cet instant —
                 # jamais avant, la commande elle-même ne déclenche aucun
                 # paiement en ligne (cf. Commande.STATUT_CHOICES).

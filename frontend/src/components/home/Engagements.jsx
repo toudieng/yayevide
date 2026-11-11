@@ -12,7 +12,7 @@ const ITEMS = [
   },
   {
     title: 'Paiement sécurisé',
-    desc: 'Wave, Orange Money, Free Money & carte.',
+    desc: 'Wave, Orange Money, Mixx by Yas ou espèces.',
     path: 'M3 10h18M5 10V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M5 10v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7',
     lien: 'Moyens de paiement',
     to: '/faq',
