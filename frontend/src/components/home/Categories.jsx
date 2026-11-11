@@ -11,13 +11,10 @@ import { apiFetch } from '../../utils/api';
 // catégories en base mais figurent dans la boutique : on retrouve ainsi les
 // 8 entrées de la barre de filtres, avec les mêmes noms.
 const VITRINES = CATEGORIES.filter((c) => c.href).map((c) => ({ nom: c.name, slug: c.slug, image: c.img, href: c.href }));
-// Image de secours (par slug) si la photo d'une catégorie ne se charge pas
+// La photo saisie dans l'admin passe toujours en premier (l'équipe gère son
+// site). Image de secours par slug (photos du projet, assets/categories) si la
+// photo de l'admin est absente ou ne se charge pas, puis fond dégradé.
 const IMAGE_SECOURS = Object.fromEntries(CATEGORIES.map((c) => [c.slug, c.img]));
-// Photos officielles livrées avec le site (assets/categories) : elles passent
-// avant la photo saisie dans l'admin pour la catégorie correspondante.
-const IMAGE_SITE = Object.fromEntries(
-  CATEGORIES.filter((c) => !String(c.img).startsWith('http')).map((c) => [c.slug, c.img]),
-);
 
 function CategoryCard({ cat }) {
   const ref = useRef(null);
@@ -85,8 +82,7 @@ export default function Categories() {
         const data = await res.json();
         if (data.length > 0) {
           const slugs = new Set(data.map((c) => c.slug));
-          const reelles = data.map((c) => ({ ...c, image: IMAGE_SITE[c.slug] || c.image }));
-          setCategories([...reelles, ...VITRINES.filter((v) => !slugs.has(v.slug))]);
+          setCategories([...data, ...VITRINES.filter((v) => !slugs.has(v.slug))]);
         }
       })
       .catch(() => {});
