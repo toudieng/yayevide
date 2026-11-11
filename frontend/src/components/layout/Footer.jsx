@@ -10,16 +10,10 @@ const SOCIALS = [
   { label: "WhatsApp", path: "M5 19l1.4-3.6A8 8 0 1 1 9.6 19L5 19z" },
 ];
 
-const FOOTER_CATEGORIES = CATEGORIES.filter((c) =>
-  [
-    "maman-maternite",
-    "bebe",
-    "enfant",
-    "junior",
-    "jeux-jouets",
-    "bonnes-affaires",
-  ].includes(c.slug),
-);
+// Toutes les vraies catégories du site ; les vitrines automatiques
+// (« Occasions spéciales », « Bonnes affaires », repérées par leur `href`)
+// ne sont pas des catégories et restent hors du pied de page.
+const FOOTER_CATEGORIES = CATEGORIES.filter((c) => !c.href);
 
 const COLUMNS = [
   {
