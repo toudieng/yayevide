@@ -24,7 +24,7 @@ function SlideActuel({ sectionRef, mediaRef }) {
             <br />
             <span className="relative inline-block italic font-serif font-medium text-peche pb-3.5">
               au Sénégal
-              <span aria-hidden="true" className="absolute left-1/2 bottom-0 -translate-x-1/2 h-px w-14 sm:w-16 bg-peche/70" />
+              <span aria-hidden="true" className="absolute left-1/2 bottom-0 -translate-x-1/2 h-px w-20 sm:w-24 bg-gradient-to-r from-transparent via-peche to-transparent" />
             </span>
           </h1>
           <p className="text-cream/80 text-[17px] leading-relaxed max-w-md my-6.5">
