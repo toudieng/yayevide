@@ -60,7 +60,7 @@ export default function MeilleursProduits() {
         <TringleProduits ref={tringleRef} produits={produits} chargement={chargement} />
 
         <div className="text-center mt-6">
-          <Button to="/boutique" variant="orange" shine pulse>
+          <Button to="/boutique" variant="primary" shine pulse>
             Voir tous les produits
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6" />
