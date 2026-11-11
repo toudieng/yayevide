@@ -21,6 +21,8 @@
   --color-orange: #fb8502;
   --color-orange-dark: #d66f20;
   --color-line: #ded5c2;
+  /* pêche doux : bandeau d'annonce + accent du titre du hero */
+  --color-peche: #f9e9de;
 
   /* font-serif et font-sans pilotent déjà les classes Tailwind
      existantes (ex: font-serif utilisé dans les pages auth) */

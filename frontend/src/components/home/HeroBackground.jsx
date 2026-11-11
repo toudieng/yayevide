@@ -1,8 +1,7 @@
 // frontend/src/components/home/HeroBackground.jsx
 import { useRef } from 'react';
-
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1560707854-fb9a10eeaace?fm=jpg&q=80&w=2200&auto=format&fit=crop';
+// Photo locale (WebP ~80 Ko) : plus de dépendance à un site externe pour l'image principale
+import HERO_IMAGE from '../../assets/hero-maman-bebe.webp';
 
 const MOTIFS = [
   {
@@ -33,13 +32,15 @@ export default function HeroBackground({ mediaRef }) {
         <img
           src={HERO_IMAGE}
           alt=""
+          fetchPriority="high"
+          decoding="async"
           className="h-full w-full object-cover animate-kenburns [filter:saturate(.85)_contrast(1.05)]"
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(27,36,48,.55) 0%, rgba(27,36,48,.35) 40%, rgba(27,36,48,.5) 100%)',
+              'linear-gradient(180deg, rgba(27,36,48,.55) 0%, rgba(27,36,48,.45) 40%, rgba(27,36,48,.58) 100%)',
           }}
         />
       </div>

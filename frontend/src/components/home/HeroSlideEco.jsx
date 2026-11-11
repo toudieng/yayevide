@@ -12,21 +12,9 @@ export default function HeroSlideEco({ mediaRef }) {
           <h1 className="font-impact font-extrabold text-cream leading-[1.06] text-[38px] sm:text-[52px] lg:text-[clamp(40px,calc(8vw-42px),56px)] xl:text-[56px] 2xl:text-[68px]">
             Consommer mieux,
             <br />
-            <span className="relative inline-block italic font-serif font-semibold text-clay">
+            <span className="relative inline-block italic font-serif font-medium text-peche pb-3.5">
               pour nos petits
-              <svg
-                viewBox="0 0 200 20"
-                preserveAspectRatio="none"
-                className="absolute left-0 -bottom-2.5 w-full h-4.5 animate-draw"
-              >
-                <path
-                  d="M2,12 C40,18 90,2 140,10 C160,13 180,9 198,11"
-                  fill="none"
-                  stroke="#C4602F"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <span aria-hidden="true" className="absolute left-1/2 bottom-0 -translate-x-1/2 h-px w-14 sm:w-16 bg-peche/70" />
             </span>
           </h1>
           <p className="text-cream/80 text-[17px] leading-relaxed max-w-md my-6.5">
