@@ -1,9 +1,8 @@
 // frontend/src/components/boutique/BoutiqueBanner.jsx
 import { findCategoryBySlug } from '../../data/categories';
 import Reveal from '../ui/Reveal';
-
-const DEFAULT_IMG =
-  'https://images.unsplash.com/photo-1560707854-fb9a10eeaace?fm=jpg&q=75&w=1800&auto=format&fit=crop';
+// Même photo que l'accueil (locale, WebP ~80 Ko) pour « Tous les articles »
+import DEFAULT_IMG from '../../assets/hero-maman-bebe.webp';
 
 export default function BoutiqueBanner({ categorieSlug }) {
   const cat = findCategoryBySlug(categorieSlug);
@@ -14,7 +13,7 @@ export default function BoutiqueBanner({ categorieSlug }) {
         key={categorieSlug || 'all'}
         src={cat ? cat.img : DEFAULT_IMG}
         alt={cat ? cat.name : 'Tous les articles'}
-        className="absolute inset-0 h-full w-full object-cover animate-kenburns"
+        className={`absolute inset-0 h-full w-full object-cover animate-kenburns ${cat ? "" : "object-[50%_22%]"}`}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/35 to-ink/10" />
       <Reveal className="relative z-10 h-full flex flex-col items-start justify-end max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 pb-9">

@@ -81,8 +81,9 @@ export default function ProductCard({ produit, index = 0 }) {
     setFavoriEnCours(false);
   };
 
-  // Badges d'état : pastille pêche douce, texte foncé (lisible, AA)
-  const badge = "max-w-full leading-tight px-2 py-1 rounded-btn text-[10.5px] font-semibold shadow-sm";
+  // Badges : état en noir sur blanc, bonne affaire en blanc sur rouge,
+  // légèrement relevés par une ombre pour se détacher de la photo
+  const badge = "max-w-full leading-tight px-2 py-1 rounded-btn text-[10.5px] font-semibold shadow-[0_2px_6px_rgba(27,36,48,0.28)]";
 
   return (
     <Link
@@ -114,11 +115,11 @@ export default function ProductCard({ produit, index = 0 }) {
 
         {/* Haut-gauche : état, puis bonnes affaires / occasion spéciale */}
         <div className="absolute top-2 left-2 right-12 flex flex-col items-start gap-1">
-          <span className={`${badge} bg-peche text-ink`}>
+          <span className={`${badge} bg-white text-ink`}>
             {ETAT_LABELS[produit.etat] || "Bon état"}
           </span>
           {produit.bonne_affaire && (
-            <span className={`${badge} bg-peche text-clay-dark`}>Bonne affaire</span>
+            <span className={`${badge} bg-red-600 text-white`}>Bonne affaire</span>
           )}
           {estOccasionSpeciale && (
             <span className={`${badge} bg-peche text-clay-dark`}>Occasion spéciale</span>
