@@ -1,10 +1,4 @@
-const TICKER_ITEMS = [
-  'Achetez des produits de qualité à moindre coût',
-  'Rejoignez-nous en tant que vendeuse et vendez sans tracas',
-];
-
 export default function AnnouncementBar() {
-  const ticker = [...TICKER_ITEMS, ...TICKER_ITEMS];
   return (
     <div>
       {/* Bandeau statique du haut — offre de lancement */}
@@ -18,20 +12,6 @@ export default function AnnouncementBar() {
           </span>
           <span className="opacity-50" aria-hidden="true">|</span>
           <span className="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 shrink-0" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" /></svg>Premières 100 vendeuses !</span>
-        </div>
-      </div>
-
-      {/* Ticker défilant du bas */}
-      <div className="bg-ink overflow-hidden whitespace-nowrap pause-on-hover">
-        <div className="animate-marquee flex w-max py-2">
-          {ticker.map((text, i) => (
-            <span
-              key={i}
-              className="flex items-center gap-6 px-6 text-[11px] font-semibold uppercase tracking-[0.1em] text-sable/85 after:h-1 after:w-1 after:rounded-full after:bg-clay"
-            >
-              {text}
-            </span>
-          ))}
         </div>
       </div>
     </div>

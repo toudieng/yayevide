@@ -12,10 +12,12 @@ function SlideActuel({ sectionRef, mediaRef }) {
 
       <Hero3DShowcase trackRef={sectionRef} />
 
-      <div className="relative z-[2] w-full mx-auto max-w-[1280px] px-6 md:px-12">
+      {/* Entre 1024 et 1279 px, le texte se décale un peu à gauche pour laisser
+          la place au bloc produit à droite sans jamais le toucher */}
+      <div className="relative z-[2] w-full mx-auto max-w-[1280px] px-6 md:px-12 lg:pr-[220px] xl:pr-12">
         <div className="flex flex-col items-center text-center">
           <HeroShowcaseCompact />
-          <h1 className="font-impact font-extrabold text-cream leading-[1.06] text-[38px] sm:text-[52px] lg:text-[56px] 2xl:text-[68px]">
+          <h1 className="font-impact font-extrabold text-cream leading-[1.06] text-[38px] sm:text-[52px] lg:text-[52px] xl:text-[56px] 2xl:text-[68px]">
             La première marketplace
             <br />
             pour mamans

@@ -10,14 +10,13 @@ const CARD_THUMB_IMAGE =
   'https://images.unsplash.com/photo-1522771930-78848d9293e8?fm=jpg&q=75&w=144&h=144&auto=format&fit=crop';
 
 /**
- * Version compacte pour les écrans < 1280 px (téléphone, tablette, petit
- * portable) : une petite carte produit qui flotte doucement au-dessus du
+ * Version compacte pour les écrans < 1024 px (téléphone, tablette) : une petite carte produit qui flotte doucement au-dessus du
  * titre, dans le flux — elle ne peut donc jamais recouvrir le texte.
  * Animation coupée si l'utilisatrice préfère moins de mouvement.
  */
 export function HeroShowcaseCompact() {
   return (
-    <div className="xl:hidden mb-6 sm:mb-8 animate-float" aria-hidden="true">
+    <div className="lg:hidden mb-6 sm:mb-8 animate-float" aria-hidden="true">
       <div className="relative -rotate-2 flex items-center gap-3 rounded-m bg-cream/95 backdrop-blur-sm pl-2 pr-4 py-2 shadow-[0_14px_34px_-12px_rgba(0,0,0,0.55)] border border-white/40">
         <img
           src={CARD_THUMB_IMAGE}
@@ -49,7 +48,7 @@ export function HeroShowcaseCompact() {
  * Petite scène "3D" en pur CSS (perspective + translateZ), pas de WebGL —
  * deux cartes produit empilées qui basculent doucement selon la position de
  * la souris sur le hero. Reste léger (aucune dépendance ajoutée, aucun
- * rendu 3D réel à charger). Affichée à partir de 1280 px, collée au bord
+ * rendu 3D réel à charger). Affichée à partir de 1024 px, collée au bord
  * droit (à l'écart des flèches du carrousel) et dimensionnée pour ne jamais
  * toucher le titre ; en dessous, HeroShowcaseCompact prend le relais.
  * Figée si la personne préfère moins d'animations.
@@ -97,7 +96,7 @@ export default function Hero3DShowcase({ trackRef }) {
 
   return (
     <div
-      className="hidden xl:block absolute z-[3] pointer-events-none top-[12%] right-[84px] w-[150px] 2xl:w-[180px] 2xl:right-[96px]"
+      className="hidden lg:block absolute z-[3] pointer-events-none top-[12%] right-[84px] w-[140px] xl:w-[150px] 2xl:w-[180px] 2xl:right-[96px]"
       style={{ perspective: '1400px' }}
       aria-hidden="true"
     >
@@ -127,7 +126,7 @@ export default function Hero3DShowcase({ trackRef }) {
           className="relative rounded-m overflow-hidden border border-white/25 shadow-2xl bg-cream"
           style={{ transform: 'translateZ(30px)' }}
         >
-          <img src={CARD_FRONT_IMAGE} alt="" className="h-30 2xl:h-36 w-full object-cover bg-line/40" />
+          <img src={CARD_FRONT_IMAGE} alt="" className="h-26 xl:h-30 2xl:h-36 w-full object-cover bg-line/40" />
           <div className="p-3.5">
             <p className="text-[13px] font-semibold text-ink truncate">Ensemble pyjama bébé</p>
             <p className="text-[13px] font-bold text-clay-dark mt-0.5">4 800 FCFA</p>

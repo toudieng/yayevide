@@ -9,7 +9,7 @@ export default function HeroSlideEco({ mediaRef }) {
 
       <div className="relative z-[2] w-full mx-auto max-w-[1280px] px-6 md:px-12">
         <div className="flex flex-col items-center text-center">
-          <h1 className="font-impact font-extrabold text-cream leading-[1.06] text-[38px] sm:text-[52px] lg:text-[56px] 2xl:text-[68px]">
+          <h1 className="font-impact font-extrabold text-cream leading-[1.06] text-[38px] sm:text-[52px] lg:text-[52px] xl:text-[56px] 2xl:text-[68px]">
             Consommer mieux,
             <br />
             <span className="relative inline-block italic font-serif font-semibold text-clay">
