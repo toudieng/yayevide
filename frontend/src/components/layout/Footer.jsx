@@ -44,7 +44,7 @@ const COLUMNS = [
         to: "/politique-de-confidentialite",
       },
       {
-        label: "Politique de vente & plaintes",
+        label: "Politique de retour",
         to: "/politique-de-retour-et-remboursement",
       },
     ],

@@ -88,7 +88,9 @@ export default function Panier() {
                     </Link>
                     {item.typeOffre === 'location' ? (
                       <p className="text-[12px] text-ink font-semibold mt-1">
-                        Location · {item.dateDebut} → {item.dateFin} ({item.nbJours} jour{item.nbJours > 1 ? 's' : ''}) · Caution {formatFCFA(item.caution)}
+                        Location · {item.dateDebut} → {item.dateFin} ({item.nbJours} jour{item.nbJours > 1 ? 's' : ''})
+                        <br />
+                        Caution : {formatFCFA(item.caution)}
                       </p>
                     ) : (
                       <p className="text-[12px] text-ink-soft/75 mt-1">{item.categorieNom || 'Yaay Vidé'}</p>

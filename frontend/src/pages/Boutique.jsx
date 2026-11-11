@@ -10,6 +10,8 @@ import Reveal from "../components/ui/Reveal";
 import EtatVide from "../components/ui/EtatVide";
 import { apiFetch } from "../utils/api";
 import { useHistoriqueRecherches } from "../hooks/useHistoriqueRecherches";
+import { findCategoryBySlug } from "../data/categories";
+import { trouverRayon } from "../data/rayons";
 
 const SORT_OPTIONS = [
   { value: "recent", label: "Plus récents" },
@@ -85,9 +87,14 @@ export default function Boutique() {
     // Une nouvelle catégorie choisie manuellement (pas la synchro d'URL au
     // montage) vaut la peine d'être retenue pour les suggestions.
     if (next.categorie && next.categorie !== filters.categorie) {
-      const nomCategorie = produits.find(
-        (p) => p.categorie_slug === next.categorie,
-      )?.categorie_nom;
+      // Nom lisible pour l'historique : sous-catégorie, catégorie principale
+      // ou liste du site (sinon la pastille « récente » restait vide)
+      const produitSous = produits.find((p) => p.categorie_slug === next.categorie);
+      const produitRacine = produits.find((p) => p.categorie_racine_slug === next.categorie);
+      const nomCategorie =
+        produitSous?.categorie_nom ||
+        produitRacine?.categorie_racine_nom ||
+        findCategoryBySlug(next.categorie)?.name;
       enregistrer("", next.categorie, nomCategorie);
     }
     setFilters(next);
@@ -133,7 +140,11 @@ export default function Boutique() {
     !filters.typeOffre &&
     filters.etats.length === 0 &&
     !searchParams.get("occasion") &&
+    !searchParams.get("rayon") &&
     searchParams.get("bonne_affaire") !== "true";
+
+  // Rayon choisi depuis la section « Bonnes affaires » de l'accueil
+  const rayon = trouverRayon(searchParams.get("rayon"));
 
   const produitsFiltres = useMemo(() => {
     let list = [...produits];
@@ -156,6 +167,9 @@ export default function Boutique() {
     }
     if (searchParams.get("bonne_affaire") === "true") {
       list = list.filter((p) => p.bonne_affaire);
+    }
+    if (rayon) {
+      list = list.filter((p) => rayon.sousCategories.includes(p.categorie_nom));
     }
     if (filters.typeOffre) {
       list = list.filter((p) => p.type_offre === filters.typeOffre);
@@ -199,6 +213,7 @@ export default function Boutique() {
     modeDecouverte,
     idsDejaAffiches,
     searchParams,
+    rayon,
   ]);
 
   // Retour à la page 1 dès que les filtres, la recherche ou le tri changent
@@ -282,6 +297,28 @@ export default function Boutique() {
                 </select>
               </div>
             </Reveal>
+
+            {/* Filtre actif venant de l'accueil (bonnes affaires, rayon, occasion) */}
+            {(rayon || searchParams.get("bonne_affaire") === "true" || searchParams.get("occasion")) && (
+              <div className="flex flex-wrap items-center gap-2 mb-6">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-ink text-white text-[12.5px] font-semibold px-3.5 py-1.5">
+                  {[
+                    searchParams.get("bonne_affaire") === "true" && "Bonnes affaires",
+                    searchParams.get("occasion") && "Occasions spéciales",
+                    rayon?.nom,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </span>
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="text-[12.5px] font-semibold text-ink underline underline-offset-2 hover:text-clay-dark py-1"
+                >
+                  Voir tous les articles
+                </button>
+              </div>
+            )}
 
             {erreur && (
               <div className="p-4 mb-6 text-sm bg-red-50 text-red-600 rounded-btn border border-red-100">

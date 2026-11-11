@@ -6,11 +6,11 @@ import imgChaussures from '../../assets/categories/chaussures-de-fete.webp';
 import imgDeguisements from '../../assets/categories/deguisements.webp';
 
 const CHIPS = [
-  { name: 'Tenues de fête', img: imgTenues },
-  { name: 'Chaussures de fête', img: imgChaussures },
-  { name: 'Sacs & accessoires', img: 'https://images.unsplash.com/photo-1635874714425-c342060a4c58?fm=jpg&q=70&w=500&auto=format&fit=crop' },
-  { name: 'Déguisements', img: imgDeguisements },
-  { name: "Décorations d'occasion", img: 'https://images.unsplash.com/photo-1632337948797-ba161d29532b?fm=jpg&q=70&w=500&auto=format&fit=crop' },
+  { name: 'Tenues de fête', rayon: 'tenues-de-fete', img: imgTenues },
+  { name: 'Chaussures de fête', rayon: 'chaussures-de-fete', img: imgChaussures },
+  { name: 'Sacs & accessoires', rayon: 'sacs-accessoires', img: 'https://images.unsplash.com/photo-1635874714425-c342060a4c58?fm=jpg&q=70&w=500&auto=format&fit=crop' },
+  { name: 'Déguisements', rayon: 'deguisements', img: imgDeguisements },
+  { name: "Décorations d'occasion", rayon: 'decorations-occasion', img: 'https://images.unsplash.com/photo-1632337948797-ba161d29532b?fm=jpg&q=70&w=500&auto=format&fit=crop' },
 ];
 
 const WAVE_PATH = 'M0,64 C240,10 480,0 720,22 C960,44 1200,54 1440,18 L1440,0 L0,0 Z';
@@ -39,7 +39,7 @@ export default function BonnesAffaires() {
             {CHIPS.map((chip) => (
               <Link
                 key={chip.name}
-                to="/boutique?bonne_affaire=true"
+                to={`/boutique?bonne_affaire=true&rayon=${chip.rayon}`}
                 className="group relative shrink-0 w-50 aspect-square overflow-hidden rounded-m border border-white/14"
               >
                 <img loading="lazy" decoding="async"

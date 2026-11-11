@@ -2,6 +2,10 @@
 import { useEffect, useRef, useState } from 'react';
 import ProductCard from './ProductCard';
 import { apiFetch } from '../../utils/api';
+import { findCategoryBySlug } from '../../data/categories';
+
+// Libellé affichable d'une entrée d'historique (terme tapé ou catégorie)
+const libelle = (e) => e.terme || e.categorieNom || findCategoryBySlug(e.categorieSlug)?.name || '';
 
 function Fleche({ direction, onClick, disabled }) {
   return (
@@ -90,7 +94,9 @@ function RangeeProduits({ titre, sousTitre, produits }) {
  * les plus fréquentes, et tendances du moment (calculées côté serveur sur
  * les vraies ventes, pas inventées).
  */
-export default function Decouverte({ produits, recentes, frequentes, onEffacerHistorique, onSelectionnerRecherche, onIdsAffiches }) {
+export default function Decouverte({ produits, recentes: recentesBrutes, frequentes, onEffacerHistorique, onSelectionnerRecherche, onIdsAffiches }) {
+  // On n'affiche que les entrées qui ont un libellé (évite les pastilles vides)
+  const recentes = recentesBrutes.filter((r) => libelle(r));
   const [tendances, setTendances] = useState([]);
 
   useEffect(() => {
@@ -158,7 +164,7 @@ export default function Decouverte({ produits, recentes, frequentes, onEffacerHi
                   <circle cx="12" cy="12" r="9" />
                   <path d="M12 7v5l3 3" />
                 </svg>
-                {r.terme || r.categorieNom}
+                {libelle(r)}
               </button>
             ))}
           </div>
@@ -168,7 +174,7 @@ export default function Decouverte({ produits, recentes, frequentes, onEffacerHi
       {suggestion && (
         <RangeeProduits
           titre="Suggéré pour vous"
-          sousTitre={`Basé sur vos recherches de "${suggestion.entree.terme || suggestion.entree.categorieNom}"`}
+          sousTitre={`Basé sur vos recherches de "${libelle(suggestion.entree)}"`}
           produits={suggestion.correspondances.slice(0, 8)}
         />
       )}

@@ -372,7 +372,7 @@ export default function Checkout() {
               <span>{form.zone ? formatFCFA(fraisLivraison) : '—'}</span>
             </div>
             <div className="flex justify-between items-end gap-4 text-[16px] font-bold text-ink pt-3 border-t border-line">
-              <span>Total à payer à la livraison</span>
+              <span>Total à payer</span>
               <span className="whitespace-nowrap">{formatFCFA(totalGeneral)}</span>
             </div>
           </div>

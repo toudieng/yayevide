@@ -4,59 +4,60 @@ import Layout from '../components/layout/Layout';
 import PageBanner from '../components/ui/PageBanner';
 import Reveal from '../components/ui/Reveal';
 
+// Texte fourni par Yaay Vidé (FAQ_YAAYVIDE_final_1.docx).
 const FAQ_DATA = [
   {
-    categorie: 'À propos de Yaay Vidé',
+    categorie: "À propos de Yaay Vidé",
     questions: [
-      { q: "Qu'est-ce que Yaay Vidé ?", r: "Yaay Vidé est une plateforme numérique (site web + application mobile) dédiée à la vente et à la location d'articles de seconde main et neufs, principalement liés à l'enfance, la maternité, la parentalité et certaines catégories féminines. Elle garantit un processus sécurisé, une logistique centralisée et une vérification des produits avant livraison." },
+      { q: "Qu'est-ce que Yaay Vidé ?", r: "Yaay Vidé est une plateforme numérique (site web + application mobile) dédiée à la vente et à la location d'articles de seconde main et neufs, principalement liés à l'enfance, la maternité, la parentalité et à certaines catégories féminines. Elle garantit un processus sécurisé, une logistique centralisée et une vérification des produits avant livraison." },
     ],
   },
   {
-    categorie: 'Fonctionnement de la plateforme',
+    categorie: "Fonctionnement de la plateforme",
     questions: [
-      { q: 'Comment acheter un article sur Yaay Vidé ?', r: "Parcourez le catalogue, ajoutez l'article souhaité au panier et payez directement via Intouch (Wave, Orange Money, Mixx by Yas, carte bancaire). L'article est collecté, vérifié, puis livré sous 24h à 48h." },
-      { q: 'Comment vendre un article ?', r: "Créez un compte vendeur, publiez vos articles avec photos et description honnête (poids et taille du colis précisés). Une fois l'article vendu, un livreur Yaay Vidé le récupère et le vérifie avant de le livrer à l'acheteuse et de libérer votre paiement." },
-      { q: 'Puis-je louer un article sur Yaay Vidé ?', r: "Oui, via le bouton « Louer ». Cette option est soumise à des conditions de location et de vérification strictes. Les colis sont systématiquement inspectés à l'aller comme au retour." },
+      { q: "Comment acheter un article sur Yaay Vidé ?", r: "1. Parcourez le catalogue sur le site ou l'application.\n2. Ajoutez au panier l'article souhaité et payez directement via Intouch (Wave, Orange Money, Mixx by Yas, carte bancaire).\n3. L'article est collecté, vérifié, puis livré sous 24h à 48h." },
+      { q: "Comment vendre un article ?", r: "1. Créez un compte vendeur.\n2. Publiez vos articles avec des photos et une description honnête, en précisant le poids et la taille du colis.\n3. Lorsqu'un article est vendu, un livreur Yaay Vidé vient le récupérer et une vérification est effectuée.\n4. Après une vérification rigoureuse, il est livré à l'acheteur et le paiement est libéré." },
+      { q: "Puis-je louer un article sur Yaay Vidé ?", r: "Oui, via le bouton « Louer ». Cette option est soumise à des conditions de location et de vérification de colis strictes, incluant une caution validée par la plateforme. Les colis sont systématiquement inspectés à l'aller comme au retour." },
     ],
   },
   {
-    categorie: 'Paiements et sécurité',
+    categorie: "Paiements et sécurité",
     questions: [
-      { q: 'Quels moyens de paiement acceptez-vous ?', r: 'Wave, Orange Money, Mixx by Yas et carte bancaire, via notre partenaire sécurisé Intouch.' },
-      { q: 'Comment et quand suis-je payée pour mes ventes ?', r: "Vos paiements sont sécurisés par Intouch. Vous choisissez : récupérer immédiatement le montant de votre vente, ou cumuler vos gains et programmer des retraits à la fréquence de votre choix (journalière, hebdomadaire ou mensuelle)." },
+      { q: "Quels moyens de paiement acceptez-vous ?", r: "Nous acceptons les paiements par Wave, Orange Money, Mixx by Yas et carte bancaire via notre partenaire sécurisé Intouch." },
+      { q: "Comment et quand suis-je payé pour mes ventes ?", r: "Les paiements sont sécurisés par Intouch. En tant que vendeur, vous avez le choix :\n• Récupérer immédiatement le montant de votre vente.\n• Cumuler les gains de plusieurs ventes et choisir une périodicité de retrait (journalière, hebdomadaire ou mensuelle)." },
     ],
   },
   {
-    categorie: 'Livraison',
+    categorie: "Livraison",
     questions: [
-      { q: 'Qui paie la livraison et comment est-elle calculée ?', r: "Les frais de livraison sont entièrement à la charge de l'acheteuse, calculés selon le poids et la taille du colis, quelle que soit la zone dans la région de Dakar. Tarifs : 1500 FCFA pour un colis S-M (jusqu'à 2kg), 2000 FCFA pour un colis L-XL (entre 2 et 3kg), et une tarification spécifique à partir de XXL. Ils sont payés directement au livreur (Orange Money, Wave, Mixx by Yas ou espèces)." },
-      { q: "Comment s'organisent les livraisons ?", r: "Deux rotations par jour, le matin et l'après-midi. Un service de livraison express est également disponible en cas d'urgence, avec une tarification individuelle selon le colis." },
+      { q: "Qui paie la livraison et comment est-elle calculée ?", r: "Les frais de livraison sont entièrement à la charge de l'acheteur. Le tarif est calculé en fonction du poids et de la taille du colis, quelle que soit la zone de livraison dans la région de Dakar.\n\nLes frais de livraison sont payés directement au livreur Yaay Vidé après vérification du poids et de la taille réels. Les paiements possibles sont Orange Money, Wave, Mixx by Yas et espèces. Ils ne sont pas intégrés.\n\nTarifs :\n• Taille S – M (jusqu'à 2 kg) : 1 500 FCFA\n• Taille L – XL (entre 2 kg et 3 kg) : 2 000 FCFA\n• À partir de XXL : tarification spécifique en fonction du colis" },
+      { q: "Comment s'organisent les livraisons ?", r: "Nous avons deux rotations de livraison par jour :\n• une le matin ;\n• une l'après-midi.\n\nUn service de livraison express est également disponible en cas d'urgence. Tarification individuelle en fonction du colis." },
     ],
   },
   {
-    categorie: 'Commissions et frais',
+    categorie: "Commissions et frais",
     questions: [
-      { q: 'Quels sont les frais appliqués ?', r: "10% de commission fixe (Yaay Vidé + Intouch), répartis ainsi : commission Yaay Vidé (environ 8% du prix de vente), collecte gratuite pour la vendeuse, livraison à la charge de l'acheteuse, et frais de transaction Intouch (1,5% à 3% selon le mode de paiement). À la récupération de vos gains, 1% supplémentaire s'applique selon les normes propres à Wave et Orange Money." },
+      { q: "Quels sont les frais appliqués ?", r: "10 % de frais de commission fixe (Yaay Vidé + Intouch), répartis comme suit :\n• Commission Yaay Vidé : variable, autour de 8 % du prix de vente.\n• Frais de collecte : gratuits pour le vendeur.\n• Frais de livraison : payés par l'acheteur (voir les tarifs dans la rubrique Livraison).\n• Frais de transaction (Intouch) : une commission variable de 1,5 % à 3 % est appliquée en fonction du mode de paiement choisi.\n\n1 % lors de la récupération des gains du vendeur, lié aux normes légales propres aux applications Wave et Orange Money." },
     ],
   },
   {
-    categorie: 'Qualité et litiges',
+    categorie: "Qualité et litiges",
     questions: [
-      { q: 'Comment garantissez-vous la qualité des articles ?', r: "Chaque article est vérifié pour s'assurer de sa conformité avec l'annonce, de son état général et de sa propreté." },
-      { q: 'Que faire en cas de litige ?', r: "Les ventes étant fermes et définitives, Yaay Vidé n'organise pas de retour ni de remboursement. En cas de problème avéré avec une commande, déposez une plainte via le Centre de plainte accessible depuis votre compte — notre équipe examine chaque cas individuellement." },
+      { q: "Comment garantissez-vous la qualité des articles ?", r: "Chaque article est vérifié pour s'assurer de sa conformité avec l'annonce, de son état général et de sa propreté." },
+      { q: "Que faire en cas de litige ?", r: "Contactez notre service client. Nous analysons le cas et proposons une résolution amiable. En cas de problème majeur, un remboursement ou un échange peut être effectué." },
     ],
   },
   {
-    categorie: 'Publicité et partenariats',
+    categorie: "Publicité et partenariats",
     questions: [
-      { q: 'Puis-je faire de la publicité sur Yaay Vidé ?', r: 'Oui — contactez notre service client pour connaître les tarifs de nos supports : site web, application mobile (bientôt disponible) et posts sponsorisés.' },
-      { q: 'Des partenariats sont-ils possibles ?', r: 'Oui, nous sommes ouverts aux collaborations, notamment avec des ONG, des marques locales, des structures éducatives, des bambineries et autres.' },
+      { q: "Puis-je faire de la publicité sur Yaay Vidé ?", r: "Oui, appelez le service client pour connaître les tarifs de nos supports :\n• un site web\n• une application mobile (bientôt disponible)\n• des posts sponsorisés" },
+      { q: "Des partenariats sont-ils possibles ?", r: "Oui, nous sommes ouverts à des collaborations, notamment avec des ONG, des marques locales, des structures éducatives, des bambineries et autres." },
     ],
   },
   {
-    categorie: 'Contact et assistance',
+    categorie: "Contact et assistance",
     questions: [
-      { q: 'Comment vous contacter ?', r: 'Téléphone : 71 018 91 91 / 76 931 99 11 — Email : contact@yaayvide.com — Adresse : Dakar, Sénégal — Réseaux sociaux : Facebook, Instagram, TikTok (@yaayvide).' },
+      { q: "Comment vous contacter ?", r: "• Téléphone : 71 018 91 91 / 76 931 99 11\n• Courriel : contact@yaayvide.com\n• Adresse : Dakar\n• Réseaux sociaux : Facebook, Instagram, TikTok (@yaayvide)" },
     ],
   },
 ];
@@ -80,7 +81,7 @@ function AccordionItem({ q, r }) {
       </button>
       <div className={`grid transition-all duration-300 ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
         <div className="overflow-hidden">
-          <p className="px-5 pb-5 text-[13.5px] text-ink-soft leading-relaxed">{r}</p>
+          <p className="px-5 pb-5 text-[13.5px] text-ink-soft leading-relaxed whitespace-pre-line">{r}</p>
         </div>
       </div>
     </div>
