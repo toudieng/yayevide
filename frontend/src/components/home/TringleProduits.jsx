@@ -106,7 +106,7 @@ function Etiquette({ produit, onAjouter, ajoute }) {
         </div>
         <div className={`px-1 pt-2 ${isLocation ? '' : 'pr-11'}`}>
           <h3 className="truncate font-serif font-semibold text-[14.5px] leading-snug text-ink">{produit.titre}</h3>
-          <p className="text-[14px] font-bold text-clay-dark whitespace-nowrap">
+          <p className="text-[14px] font-bold text-ink whitespace-nowrap">
             {formatFCFA(produit.prix_final_public)}
             {isLocation && <span className="text-[11px] font-medium text-ink-soft/75"> /jour</span>}
           </p>
@@ -296,11 +296,11 @@ const TringleProduits = forwardRef(function TringleProduits({ produits, chargeme
         <TringleSquelette />
       ) : (
         <ul className="relative flex w-max min-w-full gap-4 sm:gap-6 px-7 sm:px-8 pb-6" aria-label="Produits populaires">
-          {/* la tringle en bois, avec ses deux supports */}
-          <li aria-hidden="true" className="absolute left-0 right-0 top-[12px] h-[7px] rounded-full bg-gradient-to-b from-clay to-clay-dark shadow-[0_3px_6px_-2px_rgba(27,36,48,0.4)]">
+          {/* la tringle (noire), avec ses deux supports */}
+          <li aria-hidden="true" className="absolute left-0 right-0 top-[12px] h-[7px] rounded-full bg-gradient-to-b from-ink-soft to-ink shadow-[0_3px_6px_-2px_rgba(27,36,48,0.4)]">
             <span className="absolute inset-x-3 top-[1px] h-px rounded-full bg-white/35" />
-            <span className="absolute -top-[5px] left-1 h-[17px] w-[10px] rounded-[4px] bg-ink/80" />
-            <span className="absolute -top-[5px] right-1 h-[17px] w-[10px] rounded-[4px] bg-ink/80" />
+            <span className="absolute -top-[5px] left-1 h-[17px] w-[10px] rounded-[4px] bg-ink-soft/70" />
+            <span className="absolute -top-[5px] right-1 h-[17px] w-[10px] rounded-[4px] bg-ink-soft/70" />
           </li>
           {produits.map((p, i) => (
             <li

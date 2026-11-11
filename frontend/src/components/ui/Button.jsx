@@ -12,7 +12,8 @@ const VARIANTS = {
   teal:
     'bg-teal-dark text-white hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-10px_rgba(23,111,132,0.55)]',
   orange:
-    'bg-orange text-ink hover:bg-orange-dark hover:-translate-y-0.5',
+    // orange du logo : texte foncé (blanc illisible sur cet orange, 2.5:1)
+    'bg-orange text-ink hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-10px_rgba(251,133,2,0.6)]',
 };
 
 /**
