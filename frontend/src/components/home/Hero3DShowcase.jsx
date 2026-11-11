@@ -16,7 +16,7 @@ const CARD_THUMB_IMAGE =
  */
 export function HeroShowcaseCompact() {
   return (
-    <div className="lg:hidden mb-6 sm:mb-8 animate-float" aria-hidden="true">
+    <div className="hidden sm:block lg:hidden mb-8 animate-float" aria-hidden="true">
       <div className="relative -rotate-2 flex items-center gap-3 rounded-m bg-cream/95 backdrop-blur-sm pl-2 pr-4 py-2 shadow-[0_14px_34px_-12px_rgba(0,0,0,0.55)] border border-white/40">
         <img
           src={CARD_THUMB_IMAGE}

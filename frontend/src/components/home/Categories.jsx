@@ -42,7 +42,7 @@ function CategoryCard({ cat }) {
       ref={ref}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      className="group relative block aspect-[4/3] overflow-hidden rounded-m transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-18px_rgba(27,36,48,0.4)]"
+      className="group relative block shrink-0 w-[44%] snap-start sm:w-auto aspect-[4/3] overflow-hidden rounded-m transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-18px_rgba(27,36,48,0.4)]"
     >
       {/* fond doux affiché si aucune photo n'est disponible */}
       <div className="absolute inset-0 bg-gradient-to-br from-teal-dark to-ink" aria-hidden="true" />
@@ -98,7 +98,11 @@ export default function Categories() {
           accent="teal"
         />
 
-        <Reveal as="div" className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+        {/* Mobile : rangée qui défile de côté ; dès 640 px : grille de 4. */}
+        <Reveal
+          as="div"
+          className="-mx-6 px-6 flex gap-3.5 overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pb-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-4"
+        >
           {categories.map((cat) => (
             <CategoryCard key={cat.slug} cat={cat} />
           ))}

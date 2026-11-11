@@ -43,13 +43,17 @@ export default function Engagements() {
           description="Parce que chaque parent mérite le meilleur pour ses enfants sans se ruiner, nous avons bâti une plateforme de confiance pour les familles sénégalaises."
         />
 
-        {/* Grille centrée, icônes rondes noires */}
+        {/* Mobile : rangée qui défile de côté (la carte suivante dépasse pour
+            inviter au glissement) ; dès 640 px : grille centrée. */}
         <Reveal
           as="div"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12"
+          className="-mx-6 px-6 flex gap-3.5 overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pb-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-10 sm:gap-y-12"
         >
           {ITEMS.map((item, i) => (
-            <div key={item.title} className="group flex flex-col items-center text-center">
+            <div
+              key={item.title}
+              className="group shrink-0 w-[72%] snap-start rounded-m border border-line px-4 py-6 sm:w-auto sm:border-0 sm:p-0 flex flex-col items-center text-center"
+            >
               <div
                 className="h-12 w-12 rounded-full border border-ink/15 bg-ink/5 flex items-center justify-center mb-5 animate-float transition-transform duration-300 group-hover:scale-110"
                 style={{ animationDelay: `${i * 0.3}s` }}

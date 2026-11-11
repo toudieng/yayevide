@@ -37,11 +37,19 @@ export default function Testimonials() {
           description="Rejoignez les milliers de parents au Sénégal qui ont choisi une consommation plus responsable et économique pour leurs enfants."
         />
 
-        <Reveal as="div" className="grid gap-5 md:grid-cols-3">
+        {/* Mobile et tablette : rangée qui défile de côté ; dès 768 px : 3 colonnes.
+            La rangée est focalisable pour pouvoir la faire défiler au clavier. */}
+        <Reveal
+          as="div"
+          role="region"
+          aria-label="Témoignages"
+          tabIndex={0}
+          className="-mx-6 px-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pb-2 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:grid md:grid-cols-3 md:gap-5"
+        >
           {TESTIMONIALS.map((t) => (
             <div
               key={t.name}
-              className="flex flex-col gap-4.5 rounded-m border border-line bg-cream p-8 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-20px_rgba(27,36,48,0.35)]"
+              className="shrink-0 w-[82%] sm:w-[60%] snap-start md:w-auto flex flex-col gap-4.5 rounded-m border border-line bg-cream p-6 md:p-8 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-20px_rgba(27,36,48,0.35)]"
             >
               <div className="text-clay text-sm">★★★★★</div>
               <blockquote className="font-serif italic text-lg leading-snug">«&nbsp;{t.quote}&nbsp;»</blockquote>
