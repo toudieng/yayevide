@@ -271,7 +271,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-creme py-20 md:py-24">
+      <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-14">
             <div className="flex gap-0.5 text-orange mb-5">
@@ -305,7 +305,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section id="sommaire" className="bg-peche/60 py-20 md:py-28">
+      <section id="sommaire" className="bg-white py-20 md:py-28">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Au sommaire</p>
@@ -419,7 +419,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-creme py-20 md:py-24">
+      <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Pourquoi ce guide ?</p>
@@ -452,7 +452,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-peche/60 py-20 md:py-24">
+      <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <Reveal className="relative">
             {ebook.couverture ? (
@@ -481,7 +481,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-creme py-20 md:py-24">
+      <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-16">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Votre chemin de lecture</p>
@@ -509,7 +509,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-peche/60 py-20 md:py-24">
+      <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Pour qui ?</p>
@@ -530,7 +530,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-creme py-20 md:py-24">
+      <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">
@@ -562,7 +562,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section id="acheter" className="relative overflow-hidden bg-peche/60 py-20 md:py-24">
+      <section id="acheter" className="relative overflow-hidden bg-white py-20 md:py-24">
         <div className="pointer-events-none absolute -top-20 -left-16 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-teal/20 to-transparent blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-16 h-[320px] w-[320px] rounded-full bg-gradient-to-tr from-orange/20 to-transparent blur-3xl" />
         <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-14 items-start">
@@ -707,7 +707,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-creme py-20 md:py-24">
+      <section className="bg-white py-20 md:py-24">
         <div className="max-w-[820px] mx-auto px-6">
           <Reveal className="mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Questions fréquentes</p>
