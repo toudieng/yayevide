@@ -11,7 +11,7 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
-import { ETAT_BADGE, ETAT_LABELS, formatFCFA } from '../../utils/produit';
+import { ETAT_LABELS, formatFCFA } from '../../utils/produit';
 
 const ANGLE_MAX = 14; // degrés
 const AMORTISSEMENT = 0.17;
@@ -94,12 +94,12 @@ function Etiquette({ produit, onAjouter, ajoute }) {
             </div>
           )}
           <span
-            className={`absolute top-1.5 left-1.5 max-w-[calc(100%-12px)] leading-tight px-1.5 py-0.5 rounded-[10px] text-[10px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || 'bg-clay-dark'}`}
+            className="absolute top-1.5 left-1.5 max-w-[calc(100%-12px)] leading-tight px-2 py-1 rounded-btn text-[10.5px] font-semibold bg-white text-ink shadow-[0_2px_6px_rgba(27,36,48,0.28)]"
           >
             {ETAT_LABELS[produit.etat] || 'Bon état'}
           </span>
           {produit.bonne_affaire && (
-            <span className="absolute bottom-1.5 left-1.5 leading-tight px-1.5 py-0.5 rounded-[10px] text-[10px] font-bold uppercase tracking-wide text-white bg-clay-dark shadow-sm">
+            <span className="absolute bottom-1.5 left-1.5 leading-tight px-2 py-1 rounded-btn text-[10.5px] font-semibold text-white bg-red-600 shadow-[0_2px_6px_rgba(27,36,48,0.28)]">
               Bonne affaire
             </span>
           )}

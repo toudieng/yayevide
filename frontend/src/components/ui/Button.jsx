@@ -8,6 +8,9 @@ const VARIANTS = {
     'border border-cream/55 text-cream hover:bg-white/10 hover:border-white hover:-translate-y-0.5',
   'outline-ink':
     'border border-ink text-ink hover:bg-ink hover:text-cream',
+  // bleu de la marque (teal-dark : texte blanc lisible, 5.8:1)
+  teal:
+    'bg-teal-dark text-white hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-10px_rgba(23,111,132,0.55)]',
   orange:
     'bg-orange text-ink hover:bg-orange-dark hover:-translate-y-0.5',
 };
@@ -32,7 +35,7 @@ export default function Button({
     transition-all duration-200 overflow-hidden disabled:opacity-60 disabled:pointer-events-none
     ${VARIANTS[variant] || VARIANTS.primary}
     ${shine ? 'btn-shine' : ''}
-    ${pulse ? 'animate-pulse-glow' : ''}
+    ${pulse ? (variant === 'teal' ? 'animate-pulse-glow-teal' : 'animate-pulse-glow') : ''}
     ${className}`;
 
   const fontStyle = { fontFamily: 'var(--font-rounded)' };

@@ -1,7 +1,7 @@
 // frontend/src/components/home/MeilleursProduits.jsx
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import TringleProduits from './TringleProduits';
+import Button from '../ui/Button';
 import { apiFetch } from '../../utils/api';
 
 export default function MeilleursProduits() {
@@ -60,15 +60,12 @@ export default function MeilleursProduits() {
         <TringleProduits ref={tringleRef} produits={produits} chargement={chargement} />
 
         <div className="text-center mt-6">
-          <Link
-            to="/boutique"
-            className="inline-flex items-center gap-2 bg-white text-teal-dark border-2 border-teal font-bold text-sm px-7 py-3.5 rounded-full hover:bg-teal hover:text-white transition-colors"
-          >
+          <Button to="/boutique" variant="teal" shine pulse>
             Voir tous les produits
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
-          </Link>
+          </Button>
         </div>
       </div>
     </section>

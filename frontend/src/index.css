@@ -135,6 +135,11 @@
     50% { box-shadow: 0 0 0 9px rgba(196, 96, 47, 0); }
   }
   .animate-pulse-glow { animation: pulseGlow 2.6s ease-in-out infinite; }
+  @keyframes pulseGlowTeal {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(23, 111, 132, 0.45); }
+    50% { box-shadow: 0 0 0 9px rgba(23, 111, 132, 0); }
+  }
+  .animate-pulse-glow-teal { animation: pulseGlowTeal 2.6s ease-in-out infinite; }
 
   /* --- trait dessiné à la main sous "Sénégal" --- */
   @keyframes draw {
@@ -219,6 +224,7 @@
   .animate-pulse,
   .animate-pulse-dot,
   .animate-pulse-glow,
+  .animate-pulse-glow-teal,
   .animate-slide-cue,
   .animate-fade-in,
   .animate-card-in,

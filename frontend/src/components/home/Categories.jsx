@@ -5,13 +5,20 @@ import SectionHeader from '../ui/SectionHeader';
 import { CATEGORIES } from '../../data/categories';
 import { apiFetch } from '../../utils/api';
 
-// Les photos et l'ordre viennent de l'API (modifiables depuis le dashboard
-// admin) ; le tracé décoratif du petit fanion au coin de chaque carte reste
-// une donnée purement visuelle côté code, associée par slug.
-const FLAG_PATH_BY_SLUG = Object.fromEntries(CATEGORIES.map((c) => [c.slug, c.flagPath]));
+// Les vraies catégories (photos, ordre) viennent de l'API, modifiables depuis
+// le dashboard admin. On y ajoute les deux vitrines automatiques du site
+// (« Occasions spéciales », « Bonnes affaires ») qui ne sont pas des
+// catégories en base mais figurent dans la boutique : on retrouve ainsi les
+// 8 entrées de la barre de filtres, avec les mêmes noms.
+const VITRINES = CATEGORIES.filter((c) => c.href).map((c) => ({ nom: c.name, slug: c.slug, image: c.img, href: c.href }));
+// Image de secours (par slug) si la photo d'une catégorie ne se charge pas
+const IMAGE_SECOURS = Object.fromEntries(CATEGORIES.map((c) => [c.slug, c.img]));
 
-function CategoryCard({ cat, index }) {
+function CategoryCard({ cat }) {
   const ref = useRef(null);
+  // 0 = photo de l'API, 1 = photo de secours, 2 = aucune (fond dégradé)
+  const [essai, setEssai] = useState(cat.image ? 0 : 1);
+  const source = essai === 0 ? cat.image : essai === 1 ? IMAGE_SECOURS[cat.slug] : null;
 
   const handleMove = (e) => {
     const el = ref.current;
@@ -27,29 +34,26 @@ function CategoryCard({ cat, index }) {
     if (ref.current) ref.current.style.transform = '';
   };
 
-  const isTeal = index % 2 === 1;
-
   return (
     <Link
       to={cat.href || `/boutique?categorie=${cat.slug}`}
       ref={ref}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      className="group relative block aspect-[4/3] overflow-hidden rounded-m border border-line transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-18px_rgba(27,36,48,0.4)]"
+      className="group relative block aspect-[4/3] overflow-hidden rounded-m transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-18px_rgba(27,36,48,0.4)]"
     >
-      <span
-        className="absolute top-0 left-0 z-2 h-0 w-0 border-y-[19px] border-r-[38px] border-y-transparent"
-        style={{ borderRightColor: isTeal ? 'var(--color-teal)' : 'var(--color-clay)' }}
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" className="absolute -left-7.5 top-0.5 h-3.5 w-3.5">
-          <path d={FLAG_PATH_BY_SLUG[cat.slug]} />
-        </svg>
-      </span>
-      <img loading="lazy" decoding="async"
-        src={cat.image}
-        alt={cat.nom}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-      />
+      {/* fond doux affiché si aucune photo n'est disponible */}
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-dark to-ink" aria-hidden="true" />
+      {source && (
+        <img
+          loading="lazy"
+          decoding="async"
+          src={source}
+          alt=""
+          onError={() => setEssai((e) => e + 1)}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        />
+      )}
       <div
         className="absolute inset-0"
         style={{ background: 'linear-gradient(0deg, rgba(27,36,48,.82) 0%, rgba(27,36,48,.15) 60%)' }}
@@ -67,14 +71,17 @@ function CategoryCard({ cat, index }) {
 }
 
 export default function Categories() {
-  const [categories, setCategories] = useState(CATEGORIES.map((c) => ({ nom: c.name, slug: c.slug, image: c.img })));
+  const [categories, setCategories] = useState(CATEGORIES.map((c) => ({ nom: c.name, slug: c.slug, image: c.img, href: c.href })));
 
   useEffect(() => {
     apiFetch('/categories/')
       .then(async (res) => {
         if (!res.ok) return;
         const data = await res.json();
-        if (data.length > 0) setCategories(data);
+        if (data.length > 0) {
+          const slugs = new Set(data.map((c) => c.slug));
+          setCategories([...data, ...VITRINES.filter((v) => !slugs.has(v.slug))]);
+        }
       })
       .catch(() => {});
   }, []);
@@ -90,8 +97,8 @@ export default function Categories() {
         />
 
         <Reveal as="div" className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-          {categories.map((cat, i) => (
-            <CategoryCard key={cat.slug} cat={cat} index={i} />
+          {categories.map((cat) => (
+            <CategoryCard key={cat.slug} cat={cat} />
           ))}
         </Reveal>
       </div>

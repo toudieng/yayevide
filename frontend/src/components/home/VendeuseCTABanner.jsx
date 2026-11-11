@@ -63,7 +63,7 @@ export default function VendeuseCTABanner() {
         </svg>
 
         <div className="relative px-6 py-12 sm:px-12 sm:py-16 max-w-[640px]">
-          <span className="inline-flex items-center gap-1.5 bg-orange/10 text-clay-dark border border-orange/20 text-[12px] font-bold px-4 py-2 rounded-full mb-6">
+          <span className="inline-flex items-center gap-1.5 bg-orange/10 text-clay-dark text-[12px] font-bold px-4 py-2 rounded-full mb-6">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 shrink-0" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M12 8v13M19 12v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7M7.5 8a2.5 2.5 0 010-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 010 5" /></svg>
             Transformez votre activité !
           </span>
@@ -120,7 +120,7 @@ export default function VendeuseCTABanner() {
             </Link>
             <a
               href="tel:+221710189191"
-              className="flex items-center justify-center gap-2 h-[52px] bg-white text-ink border-2 border-[#2563eb]/30 font-bold text-sm px-7 rounded-full w-full sm:w-auto hover:bg-[#2563eb]/5 transition-colors whitespace-nowrap"
+              className="flex items-center justify-center gap-2 h-[52px] bg-white text-ink shadow-[0_6px_18px_-8px_rgba(27,36,48,0.22)] font-bold text-sm px-7 rounded-full w-full sm:w-auto hover:bg-[#2563eb]/5 transition-colors whitespace-nowrap"
             >
               <svg
                 viewBox="0 0 24 24"
