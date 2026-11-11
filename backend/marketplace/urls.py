@@ -75,8 +75,6 @@ from .ebook_api import (
     TelechargerEbookView,
 )
 
-from .messagerie_api import ConversationsView, ConversationMessagesView, MessagesNonLusView
-
 urlpatterns = [
     path('inscription/', InscriptionVendeurView.as_view(), name='inscription'),
     path('connexion/', ConnexionView.as_view(), name='api_connexion'),
@@ -151,9 +149,4 @@ urlpatterns = [
     path('admin/ebook/', EbookAdminView.as_view(), name='api_admin_ebook'),
     path('admin/ebook/<int:pk>/', EbookAdminDetailView.as_view(), name='api_admin_ebook_detail'),
     path('admin/ebook-achats/', AchatsEbookAdminView.as_view(), name='api_admin_ebook_achats'),
-
-    # Messagerie acheteuse <-> vendeuse
-    path('messagerie/conversations/', ConversationsView.as_view(), name='api_conversations'),
-    path('messagerie/conversations/<int:pk>/', ConversationMessagesView.as_view(), name='api_conversation_messages'),
-    path('messagerie/non-lus/', MessagesNonLusView.as_view(), name='api_messages_non_lus'),
 ]

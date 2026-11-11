@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../ui/Logo";
 import { useCart } from "../../context/CartContext";
 import { apiFetch } from "../../utils/api";
-import { useMessagesNonLus } from "../../hooks/useMessagesNonLus";
 
 const NAV_LINKS = [
   { label: "Accueil", to: "/" },
@@ -22,7 +21,6 @@ export default function Header() {
   const [moi, setMoi] = useState(null);
   const [compteOuvert, setCompteOuvert] = useState(false);
   const compteRef = useRef(null);
-  const nbMessagesNonLus = useMessagesNonLus(Boolean(moi));
 
   useEffect(() => {
     apiFetch("/moi/")
@@ -266,29 +264,6 @@ export default function Header() {
             )}
           </div>
 
-          {/* Messagerie : entre le compte et le panier */}
-          <Link
-            to="/messages"
-            onClick={(e) => {
-              if (!moi) {
-                e.preventDefault();
-                navigate("/connexion", { state: { from: "/messages" } });
-              }
-            }}
-            aria-label={nbMessagesNonLus > 0 ? `Messages, ${nbMessagesNonLus} non lu${nbMessagesNonLus > 1 ? "s" : ""}` : "Messages"}
-            className="relative h-9.5 w-9.5 flex items-center justify-center rounded-btn text-ink hover:text-teal-dark hover:-translate-y-0.5 transition-all"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
-              <path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z" />
-              <path d="M8.5 11h7M8.5 14h4" />
-            </svg>
-            {nbMessagesNonLus > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 px-1 rounded-full bg-teal-dark text-[10px] font-bold text-white flex items-center justify-center">
-                {nbMessagesNonLus > 9 ? "9+" : nbMessagesNonLus}
-              </span>
-            )}
-          </Link>
-
           <Link
             to="/panier"
             aria-label="Panier"
@@ -367,20 +342,6 @@ export default function Header() {
               Vendre / Louer
             </Link>
           </div>
-          {moi && (
-            <Link
-              to="/messages"
-              onClick={() => setMobileOpen(false)}
-              className="px-6 py-4 text-[15px] font-medium border-b border-line flex items-center justify-between"
-            >
-              Messages
-              {nbMessagesNonLus > 0 && (
-                <span className="min-w-5 h-5 px-1.5 rounded-full bg-teal-dark text-[11px] font-bold text-white flex items-center justify-center">
-                  {nbMessagesNonLus}
-                </span>
-              )}
-            </Link>
-          )}
           <Link
             to={moi ? lienCompteRole() : "/connexion"}
             onClick={() => setMobileOpen(false)}

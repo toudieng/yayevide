@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Boutique, Produit, Commande, AvisVendeur, Categorie, ImageProduit, Conversation, Message
+from .models import User, Boutique, Produit, Commande, AvisVendeur, Categorie, ImageProduit
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
@@ -32,16 +32,3 @@ admin.site.register(Produit, ProduitAdmin)
 admin.site.register(Commande)
 admin.site.register(AvisVendeur)
 admin.site.register(Categorie, CategorieAdmin)
-
-class MessageInline(admin.TabularInline):
-    model = Message
-    extra = 0
-    fields = ['auteur', 'texte', 'produit', 'envoye_le', 'lu_le']
-    readonly_fields = ['envoye_le']
-
-
-@admin.register(Conversation)
-class ConversationAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'dernier_message_le']
-    search_fields = ['participant_1__username', 'participant_2__username']
-    inlines = [MessageInline]

@@ -6,17 +6,26 @@ import Reveal from '../ui/Reveal';
 export default function GuideSteps({ badge, title, titleAccent, subtitle, heroImage, steps, note, trust, cta }) {
   return (
     <Layout>
-      <section className="relative grid grid-cols-1 md:grid-cols-2 bg-ink overflow-hidden">
-        <div className="relative z-[1] px-6 md:px-16 py-20 md:py-36 flex flex-col justify-center">
+      {/* Bannière : la photo occupe toute la largeur ; un voile en dégradé
+          (opaque côté texte, transparent côté photo) garde le texte lisible
+          sans couper l'image en deux. */}
+      <section className="relative isolate overflow-hidden bg-ink">
+        <img src={heroImage} alt="" className="absolute inset-0 -z-10 h-full w-full object-cover" />
+        <div
+          className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/75 to-ink/55 md:bg-gradient-to-r md:from-ink/90 md:via-ink/55 md:to-ink/0"
+          aria-hidden="true"
+        />
+        <div className="relative z-[1] max-w-[1180px] mx-auto px-6 md:px-12 py-24 md:py-36">
+          <div className="max-w-xl flex flex-col">
           {badge && (
             <span className="inline-flex items-center gap-2 self-start bg-white/10 text-cream text-[11.5px] font-bold uppercase tracking-[0.14em] px-4 py-2.5 rounded-full mb-7 border border-white/15">
               {badge}
             </span>
           )}
           <h1 className="font-serif font-semibold text-cream text-[38px] sm:text-[52px] leading-[1.08] mb-6">
-            {title} <span className="italic text-orange">{titleAccent}</span>
+            {title} <span className="italic text-orange whitespace-nowrap">{titleAccent}</span>
           </h1>
-          <p className="text-cream/70 text-[17px] leading-relaxed max-w-md mb-9">{subtitle}</p>
+          <p className="text-cream/85 text-[17px] leading-relaxed max-w-md mb-9">{subtitle}</p>
           <a
             href="#etapes"
             className="inline-flex items-center gap-2 self-start bg-clay-dark hover:bg-ink text-white px-7 py-4 rounded-full text-[15px] font-bold transition-colors"
@@ -26,10 +35,7 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
               <path d="M12 5v14M6 13l6 6 6-6" />
             </svg>
           </a>
-        </div>
-        <div className="relative h-[320px] md:h-[560px]">
-          <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink/40 via-transparent to-transparent md:bg-gradient-to-r md:from-ink md:via-ink/10 md:to-transparent" />
+          </div>
         </div>
       </section>
 
