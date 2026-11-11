@@ -1,9 +1,9 @@
 import GuideSteps from '../../components/static/GuideSteps';
-import heroImage from '../../assets/guides/vendre-compte.jpg';
-import imgPublier from '../../assets/guides/vendre-publier.jpg';
-import imgCollecte from '../../assets/guides/vendre-collecte.jpg';
-import imgLivraison from '../../assets/guides/vendre-livraison.jpg';
-import imgPaiement from '../../assets/guides/vendre-paiement.jpg';
+import heroImage from '../../assets/guides/vendre-compte.webp';
+import imgPublier from '../../assets/guides/vendre-publier.webp';
+import imgCollecte from '../../assets/guides/vendre-collecte.webp';
+import imgLivraison from '../../assets/guides/vendre-livraison.webp';
+import imgPaiement from '../../assets/guides/vendre-paiement.webp';
 
 const STEPS = [
   {

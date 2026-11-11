@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import Layout from '../components/layout/Layout';
 import Reveal from '../components/ui/Reveal';
 import { apiFetch, API_BASE } from '../utils/api';
-import spreadChapitre0 from '../assets/ebook/spread_chapitre0.jpg';
-import spreadChapitre5 from '../assets/ebook/spread_chapitre5.jpg';
-import spreadChapitre11 from '../assets/ebook/spread_chapitre11.jpg';
+import spreadChapitre0 from '../assets/ebook/spread_chapitre0.webp';
+import spreadChapitre5 from '../assets/ebook/spread_chapitre5.webp';
+import spreadChapitre11 from '../assets/ebook/spread_chapitre11.webp';
 
 function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';

@@ -1,10 +1,10 @@
 import GuideSteps from '../../components/static/GuideSteps';
-import heroImage from '../../assets/guides/mise-hero.jpg';
-import imgAnnonce from '../../assets/guides/mise-annonce.jpg';
-import imgDemande from '../../assets/guides/mise-demande.jpg';
-import imgCollecte from '../../assets/guides/mise-collecte.jpg';
-import imgGains from '../../assets/guides/mise-gains.jpg';
-import imgRetour from '../../assets/guides/mise-retour.jpg';
+import heroImage from '../../assets/guides/mise-hero.webp';
+import imgAnnonce from '../../assets/guides/mise-annonce.webp';
+import imgDemande from '../../assets/guides/mise-demande.webp';
+import imgCollecte from '../../assets/guides/mise-collecte.webp';
+import imgGains from '../../assets/guides/mise-gains.webp';
+import imgRetour from '../../assets/guides/mise-retour.webp';
 
 const STEPS = [
   {

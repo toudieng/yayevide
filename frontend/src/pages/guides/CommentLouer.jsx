@@ -1,10 +1,10 @@
 import GuideSteps from '../../components/static/GuideSteps';
-import heroImage from '../../assets/guides/louer-hero.jpg';
-import imgSelection from '../../assets/guides/louer-selection.jpg';
-import imgDates from '../../assets/guides/louer-dates.jpg';
-import imgPaiement from '../../assets/guides/louer-paiement.jpg';
-import imgLivraison from '../../assets/guides/louer-livraison.jpg';
-import imgRetour from '../../assets/guides/louer-retour.jpg';
+import heroImage from '../../assets/guides/louer-hero.webp';
+import imgSelection from '../../assets/guides/louer-selection.webp';
+import imgDates from '../../assets/guides/louer-dates.webp';
+import imgPaiement from '../../assets/guides/louer-paiement.webp';
+import imgLivraison from '../../assets/guides/louer-livraison.webp';
+import imgRetour from '../../assets/guides/louer-retour.webp';
 
 const STEPS = [
   {

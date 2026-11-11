@@ -1,9 +1,9 @@
 import GuideSteps from '../../components/static/GuideSteps';
-import heroImage from '../../assets/guides/achat-hero.jpg';
-import imgPaiement from '../../assets/guides/achat-paiement.jpg';
-import imgConfirmation from '../../assets/guides/achat-confirmation.jpg';
-import imgLivraison from '../../assets/guides/achat-livraison.jpg';
-import imgColis from '../../assets/guides/achat-colis.jpg';
+import heroImage from '../../assets/guides/achat-hero.webp';
+import imgPaiement from '../../assets/guides/achat-paiement.webp';
+import imgConfirmation from '../../assets/guides/achat-confirmation.webp';
+import imgLivraison from '../../assets/guides/achat-livraison.webp';
+import imgColis from '../../assets/guides/achat-colis.webp';
 
 const STEPS = [
   {

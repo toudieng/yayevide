@@ -1,4 +1,4 @@
-import logoUrl from '../../assets/logo.png';
+import logoUrl from '../../assets/logo.webp';
 
 /**
  * <Logo /> — le vrai logo Yaay Vidé (icône + wordmark inclus dans le PNG).
