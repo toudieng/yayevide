@@ -65,18 +65,18 @@ function RangeeProduits({ titre, sousTitre, produits }) {
           </div>
         )}
       </div>
-      {/* Largeur calculée sur la place réellement disponible (requête de
-          conteneur) : 3 ou 4 cartes tiennent pile, jamais de carte coupée au
-          bord ; sur mobile, la suivante dépasse un peu pour inviter à glisser. */}
+      {/* Mobile : grille de 2 colonnes qui défile verticalement (plus fluide).
+          Dès 540 px de place : rangée défilante où 3 ou 4 cartes tiennent pile
+          (requête de conteneur), avec les flèches. */}
       <div
         ref={rangeeRef}
         onScroll={majBords}
-        className="flex gap-4 overflow-x-auto pt-1 pb-3 snap-x snap-mandatory -mx-1 px-1 no-scrollbar"
+        className="grid grid-cols-2 gap-3 pt-1 pb-3 @min-[540px]:flex @min-[540px]:gap-4 @min-[540px]:overflow-x-auto @min-[540px]:snap-x @min-[540px]:snap-mandatory -mx-1 px-1 no-scrollbar"
       >
         {produits.map((p, i) => (
           <div
             key={p.id}
-            className="w-[160px] @min-[540px]:w-[calc((100%-2rem)/3)] @min-[800px]:w-[calc((100%-3rem)/4)] shrink-0 snap-start"
+            className="min-w-0 @min-[540px]:w-[calc((100%-2rem)/3)] @min-[800px]:w-[calc((100%-3rem)/4)] @min-[540px]:shrink-0 @min-[540px]:snap-start"
           >
             <ProductCard produit={p} index={i} />
           </div>
