@@ -19,11 +19,11 @@ const STATUTS = [
 
 const STATUT_STYLE = {
   en_attente_confirmation: 'bg-orange/10 text-orange',
-  confirme: 'bg-teal/10 text-teal',
+  confirme: 'bg-teal/10 text-teal-dark',
   indisponible: 'bg-red-50 text-red-500',
   en_cours_livraison: 'bg-clay/10 text-clay',
   livre: 'bg-teal text-white',
-  terminee: 'bg-line text-ink-soft/60',
+  terminee: 'bg-line text-ink-soft/75',
   annule: 'bg-red-50 text-red-500',
 };
 
@@ -160,7 +160,7 @@ export default function AdminCommandes() {
   return (
     <ShellAdmin active="commandes" moi={moi} titre="Commandes & Activités">
 
-      <p className="text-[13px] text-ink-soft/60 -mt-2">Suivez les ventes, locations et transactions associées sur toute la plateforme.</p>
+      <p className="text-[13px] text-ink-soft/75 -mt-2">Suivez les ventes, locations et transactions associées sur toute la plateforme.</p>
 
       {erreur && (
         <div className="p-4 text-sm bg-red-50 text-red-600 rounded-btn border border-red-100">{erreur}</div>
@@ -169,13 +169,13 @@ export default function AdminCommandes() {
       <div className={`flex items-center gap-2 bg-white rounded-btn p-1 w-fit ${SHADOW}`}>
         <button
           onClick={() => changerVue('commandes')}
-          className={`px-4 py-2 rounded-btn text-sm font-semibold transition-all ${vue === 'commandes' ? 'bg-ink text-cream' : 'text-ink-soft/70 hover:text-ink'}`}
+          className={`px-4 py-2 rounded-btn text-sm font-semibold transition-all ${vue === 'commandes' ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'}`}
         >
           Commandes
         </button>
         <button
           onClick={() => changerVue('activites')}
-          className={`px-4 py-2 rounded-btn text-sm font-semibold transition-all ${vue === 'activites' ? 'bg-ink text-cream' : 'text-ink-soft/70 hover:text-ink'}`}
+          className={`px-4 py-2 rounded-btn text-sm font-semibold transition-all ${vue === 'activites' ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'}`}
         >
           Fil d'activités
         </button>
@@ -190,7 +190,7 @@ export default function AdminCommandes() {
                 type="button"
                 onClick={() => setFiltreActivite(f.id)}
                 className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold transition-colors ${
-                  filtreActivite === f.id ? 'bg-ink text-cream' : 'bg-cream text-ink-soft/70 hover:bg-line/60'
+                  filtreActivite === f.id ? 'bg-ink text-cream' : 'bg-cream text-ink-soft/75 hover:bg-line/60'
                 }`}
               >
                 {f.label}
@@ -204,7 +204,7 @@ export default function AdminCommandes() {
             </div>
           ) : evenementsFiltres.length === 0 ? (
             <div className={`bg-white rounded-m ${SHADOW} p-16 text-center`}>
-              <p className="text-ink-soft/60 text-sm">Aucune activité pour le moment.</p>
+              <p className="text-ink-soft/75 text-sm">Aucune activité pour le moment.</p>
             </div>
           ) : (
             <div className={`bg-white rounded-m ${SHADOW} p-6`}>
@@ -216,10 +216,10 @@ export default function AdminCommandes() {
                     <div key={i} className="relative">
                       <span className={`absolute -left-6 top-1 h-3.5 w-3.5 rounded-full border-2 border-white ${info.couleur}`} />
                       <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-[10px] font-bold uppercase tracking-wide text-ink-soft/50">{info.label}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wide text-ink-soft/75">{info.label}</span>
                       </div>
                       <p className="text-[13.5px] text-ink">{e.texte}</p>
-                      <p className="text-[11px] text-ink-soft/50 mt-0.5">{formatDateHeure(e.date)}</p>
+                      <p className="text-[11px] text-ink-soft/75 mt-0.5">{formatDateHeure(e.date)}</p>
                     </div>
                   );
                 })}
@@ -248,28 +248,28 @@ export default function AdminCommandes() {
 
       <div className={`bg-white rounded-m ${SHADOW} p-5 space-y-4`}>
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide w-full sm:w-auto">Type</span>
+          <span className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide w-full sm:w-auto">Type</span>
           <div className="flex items-center gap-1 bg-cream rounded-btn p-1">
             {[{ id: '', l: 'Toutes' }, { id: 'vente', l: 'Vente' }, { id: 'location', l: 'Location' }].map((t) => (
-              <button key={t.id} onClick={() => setFiltreType(t.id)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtreType === t.id ? 'bg-ink text-cream' : 'text-ink-soft/60 hover:text-ink'}`}>
+              <button key={t.id} onClick={() => setFiltreType(t.id)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtreType === t.id ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'}`}>
                 {t.l}
               </button>
             ))}
           </div>
-          <span className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide ml-2">Période</span>
+          <span className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide ml-2">Période</span>
           <div className="flex items-center gap-1 bg-cream rounded-btn p-1">
             {[{ id: '', l: 'Tout' }, { id: '7j', l: '7 jours' }, { id: '30j', l: '30 jours' }].map((p) => (
-              <button key={p.id} onClick={() => setFiltrePeriode(p.id)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtrePeriode === p.id ? 'bg-ink text-cream' : 'text-ink-soft/60 hover:text-ink'}`}>
+              <button key={p.id} onClick={() => setFiltrePeriode(p.id)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtrePeriode === p.id ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'}`}>
                 {p.l}
               </button>
             ))}
           </div>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide w-full sm:w-auto">Statut</span>
+          <span className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide w-full sm:w-auto">Statut</span>
           <div className="flex items-center gap-1 bg-cream rounded-btn p-1 flex-wrap">
             {STATUTS.map((s) => (
-              <button key={s.value} onClick={() => changerStatut(s.value)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtreStatut === s.value ? 'bg-ink text-cream' : 'text-ink-soft/60 hover:text-ink'}`}>
+              <button key={s.value} onClick={() => changerStatut(s.value)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtreStatut === s.value ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'}`}>
                 {s.label}
               </button>
             ))}
@@ -291,7 +291,7 @@ export default function AdminCommandes() {
               <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
             </div>
           ) : commandes.length === 0 ? (
-            <p className="text-ink-soft/60 text-sm text-center py-16">Aucune commande ne correspond à ces filtres.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-16">Aucune commande ne correspond à ces filtres.</p>
           ) : (
             <div className="divide-y divide-line">
               {commandes.map((c) => (
@@ -302,16 +302,16 @@ export default function AdminCommandes() {
                   className={`w-full flex items-center gap-3.5 p-4 text-left transition-colors ${selectionnee?.id === c.id ? 'bg-teal/5' : 'hover:bg-sable'}`}
                 >
                   <div className="h-11 w-11 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                    {c.produit_image && <img src={c.produit_image} alt="" className="h-full w-full object-cover" />}
+                    {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[13px] font-bold text-ink truncate">CMD-{String(c.id).padStart(6, '0')} · {c.produit_titre}</p>
-                    <p className="text-[11.5px] text-ink-soft/55 truncate">{c.boutique_nom} → {c.acheteur_username} · {formatDate(c.date_commande)}</p>
+                    <p className="text-[11.5px] text-ink-soft/75 truncate">{c.boutique_nom} → {c.acheteur_username} · {formatDate(c.date_commande)}</p>
                   </div>
-                  <span className={`text-[9.5px] font-bold uppercase px-2 py-1 rounded-full shrink-0 ${c.produit_type_offre === 'location' ? 'bg-clay/10 text-clay' : 'bg-teal/10 text-teal'}`}>
+                  <span className={`text-[10px] font-bold uppercase px-2 py-1 rounded-full shrink-0 ${c.produit_type_offre === 'location' ? 'bg-clay/10 text-clay' : 'bg-teal/10 text-teal-dark'}`}>
                     {c.produit_type_offre === 'location' ? 'Location' : 'Vente'}
                   </span>
-                  <span className={`text-[9.5px] font-bold uppercase px-2 py-1 rounded-full shrink-0 ${STATUT_STYLE[c.statut] || 'bg-line text-ink-soft/60'}`}>
+                  <span className={`text-[10px] font-bold uppercase px-2 py-1 rounded-full shrink-0 ${STATUT_STYLE[c.statut] || 'bg-line text-ink-soft/75'}`}>
                     {STATUTS.find((s) => s.value === c.statut)?.label || c.statut}
                   </span>
                 </button>
@@ -322,29 +322,29 @@ export default function AdminCommandes() {
 
         <div className={`bg-white rounded-m ${SHADOW} p-6 h-fit lg:sticky lg:top-6`}>
           {!selectionnee ? (
-            <p className="text-ink-soft/60 text-sm text-center py-10">Sélectionnez une commande.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-10">Sélectionnez une commande.</p>
           ) : (
             <>
               <div className="flex items-center justify-between mb-1">
                 <p className="font-serif font-bold text-lg text-ink">CMD-{String(selectionnee.id).padStart(6, '0')}</p>
-                <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full ${STATUT_STYLE[selectionnee.statut] || 'bg-line text-ink-soft/60'}`}>
+                <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full ${STATUT_STYLE[selectionnee.statut] || 'bg-line text-ink-soft/75'}`}>
                   {STATUTS.find((s) => s.value === selectionnee.statut)?.label || selectionnee.statut}
                 </span>
               </div>
-              <p className="text-[13px] text-ink-soft/60 mb-5">{selectionnee.produit_titre}</p>
+              <p className="text-[13px] text-ink-soft/75 mb-5">{selectionnee.produit_titre}</p>
 
               <div className="space-y-3 text-[13px] border-t border-line pt-4">
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Boutique</span><span className="font-semibold text-ink">{selectionnee.boutique_nom}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Acheteuse</span><span className="font-semibold text-ink">{selectionnee.acheteur_username}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Montant</span><span className="font-semibold text-ink">{formatFCFA(selectionnee.prix_total_paye)}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Commission Yaay Vidé</span><span className="font-semibold text-ink">{formatFCFA(selectionnee.commission_plateforme)}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Paiement</span><span className="font-semibold text-ink">{selectionnee.mode_paiement_choisi || '—'}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Zone</span><span className="font-semibold text-ink">{selectionnee.zone_livraison_nom || '—'}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Boutique</span><span className="font-semibold text-ink">{selectionnee.boutique_nom}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Acheteuse</span><span className="font-semibold text-ink">{selectionnee.acheteur_username}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Montant</span><span className="font-semibold text-ink">{formatFCFA(selectionnee.prix_total_paye)}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Commission Yaay Vidé</span><span className="font-semibold text-ink">{formatFCFA(selectionnee.commission_plateforme)}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Paiement</span><span className="font-semibold text-ink">{selectionnee.mode_paiement_choisi || '—'}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Zone</span><span className="font-semibold text-ink">{selectionnee.zone_livraison_nom || '—'}</span></div>
               </div>
 
               <div className="pt-4 border-t border-line mt-4 space-y-3">
                 <div>
-                  <p className="text-[11px] font-bold text-ink-soft/50 uppercase tracking-wide mb-1.5">Changer le statut</p>
+                  <p className="text-[11px] font-bold text-ink-soft/75 uppercase tracking-wide mb-1.5">Changer le statut</p>
                   <select
                     value={selectionnee.statut}
                     disabled={enCours === selectionnee.id}
@@ -355,7 +355,7 @@ export default function AdminCommandes() {
                   </select>
                 </div>
                 <div>
-                  <p className="text-[11px] font-bold text-ink-soft/50 uppercase tracking-wide mb-1.5">Assigner un livreur</p>
+                  <p className="text-[11px] font-bold text-ink-soft/75 uppercase tracking-wide mb-1.5">Assigner un livreur</p>
                   <select
                     value={selectionnee.livreur || ''}
                     disabled={enCours === selectionnee.id}
@@ -375,11 +375,11 @@ export default function AdminCommandes() {
               </div>
 
               <div className="pt-4 border-t border-line mt-4">
-                <p className="text-[11px] font-bold text-ink-soft/50 uppercase tracking-wide mb-2">Chronologie</p>
+                <p className="text-[11px] font-bold text-ink-soft/75 uppercase tracking-wide mb-2">Chronologie</p>
                 <div className="space-y-2 text-[12.5px]">
-                  <div className="flex justify-between"><span className="text-ink-soft/55">Commandée</span><span className="text-ink">{formatDateHeure(selectionnee.date_commande)}</span></div>
+                  <div className="flex justify-between"><span className="text-ink-soft/75">Commandée</span><span className="text-ink">{formatDateHeure(selectionnee.date_commande)}</span></div>
                   {selectionnee.date_paiement && (
-                    <div className="flex justify-between"><span className="text-ink-soft/55">Payée</span><span className="text-ink">{formatDateHeure(selectionnee.date_paiement)}</span></div>
+                    <div className="flex justify-between"><span className="text-ink-soft/75">Payée</span><span className="text-ink">{formatDateHeure(selectionnee.date_paiement)}</span></div>
                   )}
                 </div>
               </div>

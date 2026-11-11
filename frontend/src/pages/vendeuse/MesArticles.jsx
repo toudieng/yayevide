@@ -94,7 +94,7 @@ export default function MesArticles() {
   return (
     <ShellVendeuse active="articles" moi={moi} titre="Mes articles">
 
-      <p className="text-[13px] text-ink-soft/60 -mt-2">
+      <p className="text-[13px] text-ink-soft/75 -mt-2">
         Gérez vos articles : modifiez, mettez à jour ou supprimez vos publications.
       </p>
 
@@ -109,7 +109,7 @@ export default function MesArticles() {
               key={o.id}
               onClick={() => setOnglet(o.id)}
               className={`px-4 py-2 rounded-btn text-sm font-semibold transition-all ${
-                onglet === o.id ? 'bg-teal text-white' : 'text-ink-soft/70 hover:text-ink'
+                onglet === o.id ? 'bg-teal text-white' : 'text-ink-soft/75 hover:text-ink'
               }`}
             >
               {o.label} <span className="opacity-60">({compteurs[o.id]})</span>
@@ -127,7 +127,7 @@ export default function MesArticles() {
 
       {produitsFiltres.length === 0 ? (
         <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-          <p className="text-ink-soft/60 text-sm">
+          <p className="text-ink-soft/75 text-sm">
             {onglet === 'tous'
               ? 'Aucun article pour le moment. Commencez par en ajouter un !'
               : 'Aucun article dans cette catégorie.'}
@@ -142,7 +142,7 @@ export default function MesArticles() {
             >
               <div className="h-40 bg-line/30 relative">
                 {p.image_principale ? (
-                  <img src={p.image_principale} alt={p.titre} className="h-full w-full object-cover" />
+                  <img loading="lazy" decoding="async" src={p.image_principale} alt={p.titre} className="h-full w-full object-cover" />
                 ) : (
                   <div className="h-full w-full flex items-center justify-center text-ink-soft/30 text-xs">
                     Pas de photo
@@ -155,7 +155,7 @@ export default function MesArticles() {
                 >
                   {p.disponible ? 'En ligne' : 'Masqué'}
                 </span>
-                <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-cream/90 text-ink-soft/70">
+                <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-cream/90 text-ink-soft/75">
                   {p.type_offre === 'location' ? 'Location' : 'Vente'}
                 </span>
                 {p.taille && (
@@ -167,12 +167,12 @@ export default function MesArticles() {
 
               <div className="p-4 flex flex-col gap-2 flex-1">
                 <p className="text-sm font-semibold text-ink truncate">{p.titre}</p>
-                <p className="text-[12px] text-ink-soft/60">{p.categorie_nom || 'Sans catégorie'}</p>
+                <p className="text-[12px] text-ink-soft/75">{p.categorie_nom || 'Sans catégorie'}</p>
                 <p className="text-sm font-bold text-ink">
                   {formatFCFA(p.prix_final_public)}
-                  {p.type_offre === 'location' && <span className="text-ink-soft/50 font-normal"> /jour</span>}
+                  {p.type_offre === 'location' && <span className="text-ink-soft/75 font-normal"> /jour</span>}
                 </p>
-                <p className="text-[11.5px] text-ink-soft/50 flex items-center gap-1.5 mt-auto">
+                <p className="text-[11.5px] text-ink-soft/75 flex items-center gap-1.5 mt-auto">
                   <span className={`h-1.5 w-1.5 rounded-full ${p.disponible ? 'bg-teal' : 'bg-ink-soft/40'}`} />
                   {p.disponible ? 'En ligne' : 'Masqué'}
                   {p.date_ajout && <> · Publié le {formatDate(p.date_ajout)}</>}
@@ -182,7 +182,7 @@ export default function MesArticles() {
                   <button
                     type="button"
                     onClick={() => navigate(`/vendeuse/produit/${p.id}/modifier`, { state: { produit: p } })}
-                    className="flex-1 text-[11px] font-bold uppercase tracking-wide px-2 py-2 rounded-btn border border-teal text-teal hover:bg-teal hover:text-white transition-colors"
+                    className="flex-1 text-[11px] font-bold uppercase tracking-wide px-2 py-2 rounded-btn border border-teal text-teal-dark hover:bg-teal hover:text-white transition-colors"
                   >
                     Modifier
                   </button>
@@ -191,7 +191,7 @@ export default function MesArticles() {
                     type="button"
                     disabled={enCours === p.id}
                     onClick={() => toggleDisponibilite(p)}
-                    className="flex-1 text-[11px] font-bold uppercase tracking-wide px-2 py-2 rounded-btn border border-line text-ink-soft/70 hover:border-teal hover:text-teal transition-colors disabled:opacity-50"
+                    className="flex-1 text-[11px] font-bold uppercase tracking-wide px-2 py-2 rounded-btn border border-line text-ink-soft/75 hover:border-teal hover:text-teal-dark transition-colors disabled:opacity-50"
                   >
                     {p.disponible ? 'Masquer' : 'Republier'}
                   </button>
@@ -209,7 +209,7 @@ export default function MesArticles() {
                     <button
                       type="button"
                       onClick={() => setConfirmationSuppression(p.id)}
-                      className="flex-1 text-[11px] font-bold uppercase tracking-wide px-2 py-2 rounded-btn border border-line text-ink-soft/70 hover:border-red-400 hover:text-red-500 transition-colors"
+                      className="flex-1 text-[11px] font-bold uppercase tracking-wide px-2 py-2 rounded-btn border border-line text-ink-soft/75 hover:border-red-400 hover:text-red-500 transition-colors"
                     >
                       Supprimer
                     </button>
@@ -228,7 +228,7 @@ export default function MesArticles() {
           </span>
           <div className="flex-1">
             <p className="text-sm font-bold text-ink">Conseil</p>
-            <p className="text-[13px] text-ink-soft/60 mt-0.5">
+            <p className="text-[13px] text-ink-soft/75 mt-0.5">
               Gardez vos articles à jour pour attirer plus d'acheteurs. Des photos claires et des descriptions précises font toute la différence !
             </p>
           </div>

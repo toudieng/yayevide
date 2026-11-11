@@ -74,6 +74,8 @@ export default function ProductCard({ produit, index = 0 }) {
   const handleMove = (e) => {
     const el = ref.current;
     if (!el) return;
+    // Pas d'effet 3D si l'utilisatrice a demandé moins d'animations
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const r = el.getBoundingClientRect();
     const x = e.clientX - r.left;
     const y = e.clientY - r.top;
@@ -121,7 +123,7 @@ export default function ProductCard({ produit, index = 0 }) {
     >
       <div className="relative aspect-square overflow-hidden bg-line/40 shrink-0">
         {image ? (
-          <img
+          <img loading="lazy" decoding="async"
             src={image}
             alt={produit.titre}
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
@@ -145,17 +147,17 @@ export default function ProductCard({ produit, index = 0 }) {
         {/* Haut-gauche : état du produit, puis bonnes affaires / occasion spéciale */}
         <div className="absolute top-2 left-2 flex flex-col items-start gap-1.5">
           <span
-            className={`px-1.5 py-0.5 rounded-full text-[8.5px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || "bg-orange"}`}
+            className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || "bg-orange"}`}
           >
             {ETAT_LABELS[produit.etat] || "Bon état"}
           </span>
           {produit.bonne_affaire && (
-            <span className="px-1.5 py-0.5 rounded-full text-[8.5px] font-bold uppercase tracking-wide text-white bg-clay shadow-sm">
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide text-white bg-clay shadow-sm">
               💰 Bonne affaire
             </span>
           )}
           {estOccasionSpeciale && (
-            <span className="px-1.5 py-0.5 rounded-full text-[8.5px] font-bold uppercase tracking-wide text-white bg-orange shadow-sm">
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide text-white bg-orange shadow-sm">
               🎉 Occasion spéciale
             </span>
           )}
@@ -195,7 +197,7 @@ export default function ProductCard({ produit, index = 0 }) {
       </div>
 
       <div className="px-3.5 pt-3 pb-3.5 flex flex-col flex-1">
-        <span className="self-start text-[9px] font-bold uppercase tracking-wide text-teal bg-teal/10 px-2 py-0.5 rounded-full mb-1.5">
+        <span className="self-start text-[10px] font-bold uppercase tracking-wide text-teal-dark bg-teal/10 px-2 py-0.5 rounded-full mb-1.5">
           {produit.categorie_racine_nom || produit.categorie_nom || "Yaay Vidé"}
         </span>
 
@@ -206,7 +208,7 @@ export default function ProductCard({ produit, index = 0 }) {
         <p className="font-sans font-bold text-orange text-[15px] sm:text-[17px] mb-2">
           {formatFCFA(produit.prix_final_public)}
           {isLocation && (
-            <span className="text-ink-soft/60 font-medium text-[11px]">
+            <span className="text-ink-soft/75 font-medium text-[11px]">
               {" "}
               /jour
             </span>
@@ -215,7 +217,7 @@ export default function ProductCard({ produit, index = 0 }) {
 
         <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 mb-2">
           {produit.boutique_zone_nom && (
-            <span className="flex items-center gap-1 text-[10.5px] text-ink-soft/60">
+            <span className="flex items-center gap-1 text-[10.5px] text-ink-soft/75">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -230,7 +232,7 @@ export default function ProductCard({ produit, index = 0 }) {
             </span>
           )}
           {produit.date_ajout && (
-            <span className="flex items-center gap-1 text-[10.5px] text-ink-soft/60">
+            <span className="flex items-center gap-1 text-[10.5px] text-ink-soft/75">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"

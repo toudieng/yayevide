@@ -117,8 +117,8 @@ export default function ModifierProduit() {
     return (
       <ShellVendeuse active="articles" moi={moi} titre="Modifier l'article">
         <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-10 text-center">
-          <p className="text-ink-soft/60 text-sm mb-4">{erreur || 'Article introuvable.'}</p>
-          <Link to="/vendeuse/mes-articles" className="text-teal font-semibold text-sm hover:underline">
+          <p className="text-ink-soft/75 text-sm mb-4">{erreur || 'Article introuvable.'}</p>
+          <Link to="/vendeuse/mes-articles" className="text-teal-dark font-semibold text-sm hover:underline">
             Retour à mes articles
           </Link>
         </div>
@@ -128,7 +128,7 @@ export default function ModifierProduit() {
 
   return (
     <ShellVendeuse active="articles" moi={moi} titre="Modifier l'article">
-      <p className="text-[13px] text-ink-soft/60 -mt-2">
+      <p className="text-[13px] text-ink-soft/75 -mt-2">
         Mettez à jour les informations de « {produit.titre} ». La photo actuelle est conservée.
       </p>
 
@@ -145,9 +145,9 @@ export default function ModifierProduit() {
         <div className="lg:col-span-2 bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-5">
           <div className="flex gap-4">
             <div className="h-20 w-20 rounded-btn bg-line/40 overflow-hidden shrink-0">
-              {produit.image_principale && <img src={produit.image_principale} alt="" className="h-full w-full object-cover" />}
+              {produit.image_principale && <img loading="lazy" decoding="async" src={produit.image_principale} alt="" className="h-full w-full object-cover" />}
             </div>
-            <p className="text-[12px] text-ink-soft/50 self-center">
+            <p className="text-[12px] text-ink-soft/75 self-center">
               Changement de photos non disponible depuis cette page pour le moment — contactez-nous si besoin.
             </p>
           </div>
@@ -276,7 +276,7 @@ export default function ModifierProduit() {
             </div>
           )}
 
-          <div className="pt-3 border-t border-line text-[12.5px] text-ink-soft/60">
+          <div className="pt-3 border-t border-line text-[12.5px] text-ink-soft/75">
             Prix public affiché : <span className="font-bold text-ink">{formatFCFA(produit.prix_final_public)}</span>
           </div>
 
@@ -289,7 +289,7 @@ export default function ModifierProduit() {
           </button>
           <Link
             to="/vendeuse/mes-articles"
-            className="block text-center text-ink-soft/60 text-sm font-semibold hover:text-ink transition-colors"
+            className="block text-center text-ink-soft/75 text-sm font-semibold hover:text-ink transition-colors"
           >
             Annuler
           </Link>

@@ -112,7 +112,7 @@ export default function AdminUtilisateurs() {
   return (
     <ShellAdmin active="utilisateurs" moi={moi} titre="Utilisateurs">
 
-      <p className="text-[13px] text-ink-soft/60 -mt-2">Gérez les profils, les vérifications et les interventions sur les comptes.</p>
+      <p className="text-[13px] text-ink-soft/75 -mt-2">Gérez les profils, les vérifications et les interventions sur les comptes.</p>
 
       {erreur && (
         <div className="p-4 text-sm bg-red-50 text-red-600 rounded-btn border border-red-100">{erreur}</div>
@@ -135,14 +135,14 @@ export default function AdminUtilisateurs() {
 
       <div className={`bg-white rounded-m ${SHADOW} p-5 space-y-4`}>
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide w-full sm:w-auto">Rôle</span>
+          <span className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide w-full sm:w-auto">Rôle</span>
           <div className="flex items-center gap-1 bg-cream rounded-btn p-1 flex-wrap">
             {ROLES.map((r) => (
               <button
                 key={r.value}
                 onClick={() => changerRole(r.value)}
                 className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${
-                  filtreRole === r.value ? 'bg-ink text-cream' : 'text-ink-soft/60 hover:text-ink'
+                  filtreRole === r.value ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'
                 }`}
               >
                 {r.label}
@@ -151,18 +151,18 @@ export default function AdminUtilisateurs() {
           </div>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide w-full sm:w-auto">Statut</span>
+          <span className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide w-full sm:w-auto">Statut</span>
           <div className="flex items-center gap-1 bg-cream rounded-btn p-1">
             {[{ id: '', l: 'Tous' }, { id: 'actif', l: 'Actif' }, { id: 'suspendu', l: 'Suspendu' }].map((s) => (
-              <button key={s.id} onClick={() => setFiltreStatut(s.id)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtreStatut === s.id ? 'bg-ink text-cream' : 'text-ink-soft/60 hover:text-ink'}`}>
+              <button key={s.id} onClick={() => setFiltreStatut(s.id)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtreStatut === s.id ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'}`}>
                 {s.l}
               </button>
             ))}
           </div>
-          <span className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide ml-2">Vérification</span>
+          <span className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide ml-2">Vérification</span>
           <div className="flex items-center gap-1 bg-cream rounded-btn p-1">
             {[{ id: '', l: 'Tous' }, { id: 'verifie', l: 'Vérifié' }, { id: 'non_verifie', l: 'Non vérifié' }].map((s) => (
-              <button key={s.id} onClick={() => setFiltreVerif(s.id)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtreVerif === s.id ? 'bg-ink text-cream' : 'text-ink-soft/60 hover:text-ink'}`}>
+              <button key={s.id} onClick={() => setFiltreVerif(s.id)} className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${filtreVerif === s.id ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'}`}>
                 {s.l}
               </button>
             ))}
@@ -184,7 +184,7 @@ export default function AdminUtilisateurs() {
               <div className="h-9 w-9 rounded-full border-2 border-line border-t-teal animate-spin" />
             </div>
           ) : utilisateurs.length === 0 ? (
-            <p className="text-ink-soft/60 text-sm text-center py-16">Aucun utilisateur ne correspond à ces filtres.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-16">Aucun utilisateur ne correspond à ces filtres.</p>
           ) : (
             <div className="divide-y divide-line">
               {utilisateurs.map((u) => (
@@ -199,11 +199,11 @@ export default function AdminUtilisateurs() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold text-ink truncate">
-                      {u.username} {u.nom_boutique && <span className="text-ink-soft/50 font-normal">· {u.nom_boutique}</span>}
+                      {u.username} {u.nom_boutique && <span className="text-ink-soft/75 font-normal">· {u.nom_boutique}</span>}
                     </p>
-                    <p className="text-[11.5px] text-ink-soft/55 truncate">{u.email || u.phone_number}</p>
+                    <p className="text-[11.5px] text-ink-soft/75 truncate">{u.email || u.phone_number}</p>
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-line text-ink-soft/70 whitespace-nowrap shrink-0">
+                  <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-line text-ink-soft/75 whitespace-nowrap shrink-0">
                     {ROLE_LABEL[u.role] || u.role}
                   </span>
                   {!u.is_active && <span className="h-2 w-2 rounded-full bg-red-400 shrink-0" title="Suspendu" />}
@@ -215,7 +215,7 @@ export default function AdminUtilisateurs() {
 
         <div className={`bg-white rounded-m ${SHADOW} p-6 h-fit lg:sticky lg:top-6`}>
           {!selectionne ? (
-            <p className="text-ink-soft/60 text-sm text-center py-10">Sélectionnez un utilisateur.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-10">Sélectionnez un utilisateur.</p>
           ) : (
             <>
               <div className="flex items-start justify-between gap-3 mb-5">
@@ -230,36 +230,36 @@ export default function AdminUtilisateurs() {
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-teal"><circle cx="12" cy="12" r="9" /><path d="M8 12l2.5 2.5L16 9" /></svg>
                       )}
                     </p>
-                    <p className="text-[11.5px] text-ink-soft/55">USR-{String(selectionne.id).padStart(6, '0')} · {ROLE_LABEL[selectionne.role]}</p>
+                    <p className="text-[11.5px] text-ink-soft/75">USR-{String(selectionne.id).padStart(6, '0')} · {ROLE_LABEL[selectionne.role]}</p>
                   </div>
                 </div>
-                <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full shrink-0 ${selectionne.is_active ? 'bg-teal/10 text-teal' : 'bg-red-50 text-red-500'}`}>
+                <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full shrink-0 ${selectionne.is_active ? 'bg-teal/10 text-teal-dark' : 'bg-red-50 text-red-500'}`}>
                   {selectionne.is_active ? 'Actif' : 'Suspendu'}
                 </span>
               </div>
 
               <div className="space-y-3 text-[13px] border-t border-line pt-4">
                 {selectionne.nom_boutique && (
-                  <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Boutique</span><span className="font-semibold text-ink">{selectionne.nom_boutique}</span></div>
+                  <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Boutique</span><span className="font-semibold text-ink">{selectionne.nom_boutique}</span></div>
                 )}
                 {selectionne.email && (
-                  <div className="flex justify-between gap-3"><span className="text-ink-soft/55">E-mail</span><span className="font-semibold text-ink">{selectionne.email}</span></div>
+                  <div className="flex justify-between gap-3"><span className="text-ink-soft/75">E-mail</span><span className="font-semibold text-ink">{selectionne.email}</span></div>
                 )}
                 {selectionne.phone_number && (
-                  <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Téléphone</span><span className="font-semibold text-ink">{selectionne.phone_number}</span></div>
+                  <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Téléphone</span><span className="font-semibold text-ink">{selectionne.phone_number}</span></div>
                 )}
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Inscription</span><span className="font-semibold text-ink">{formatDate(selectionne.date_joined)}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Inscription</span><span className="font-semibold text-ink">{formatDate(selectionne.date_joined)}</span></div>
                 {selectionne.note_moyenne !== null && selectionne.note_moyenne !== undefined && (
-                  <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Note moyenne</span><span className="font-semibold text-ink">⭐ {Number(selectionne.note_moyenne).toFixed(1)}</span></div>
+                  <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Note moyenne</span><span className="font-semibold text-ink">⭐ {Number(selectionne.note_moyenne).toFixed(1)}</span></div>
                 )}
                 {selectionne.nb_produits !== null && selectionne.nb_produits !== undefined && (
-                  <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Articles publiés</span><span className="font-semibold text-ink">{selectionne.nb_produits}</span></div>
+                  <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Articles publiés</span><span className="font-semibold text-ink">{selectionne.nb_produits}</span></div>
                 )}
                 {selectionne.nb_ventes !== null && selectionne.nb_ventes !== undefined && (
-                  <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Ventes réalisées</span><span className="font-semibold text-ink">{selectionne.nb_ventes}</span></div>
+                  <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Ventes réalisées</span><span className="font-semibold text-ink">{selectionne.nb_ventes}</span></div>
                 )}
                 {selectionne.nb_commandes !== null && selectionne.nb_commandes !== undefined && (
-                  <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Commandes passées</span><span className="font-semibold text-ink">{selectionne.nb_commandes}</span></div>
+                  <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Commandes passées</span><span className="font-semibold text-ink">{selectionne.nb_commandes}</span></div>
                 )}
               </div>
 
@@ -279,7 +279,7 @@ export default function AdminUtilisateurs() {
                   className={`text-[12.5px] font-bold px-4 py-3 rounded-btn border transition-colors disabled:opacity-50 ${
                     selectionne.is_active
                       ? 'border-red-300 text-red-500 hover:bg-red-50'
-                      : 'border-teal text-teal hover:bg-teal hover:text-white'
+                      : 'border-teal text-teal-dark hover:bg-teal hover:text-white'
                   }`}
                 >
                   {selectionne.is_active ? 'Suspendre le compte' : 'Réactiver le compte'}

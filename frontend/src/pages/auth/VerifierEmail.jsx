@@ -37,13 +37,13 @@ export default function VerifierEmail() {
 
           {statut === 'succes' && (
             <>
-              <div className="h-14 w-14 mx-auto mb-5 rounded-full bg-teal/10 flex items-center justify-center text-teal">
+              <div className="h-14 w-14 mx-auto mb-5 rounded-full bg-teal/10 flex items-center justify-center text-teal-dark">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-7 w-7">
                   <path d="M5 12l4.5 4.5L19 7" />
                 </svg>
               </div>
               <h1 className="font-serif text-2xl text-ink mb-2">Compte vérifié !</h1>
-              <p className="text-sm text-ink-soft/70 mb-8">{message}</p>
+              <p className="text-sm text-ink-soft/75 mb-8">{message}</p>
               <Link to="/connexion" className="inline-flex items-center gap-2 px-7 py-3.5 bg-ink text-cream rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-clay transition-colors">
                 Se connecter
               </Link>
@@ -58,8 +58,8 @@ export default function VerifierEmail() {
                 </svg>
               </div>
               <h1 className="font-serif text-2xl text-ink mb-2">Lien invalide</h1>
-              <p className="text-sm text-ink-soft/70 mb-8">{message}</p>
-              <Link to="/connexion" className="text-teal font-semibold hover:underline">Retour à la connexion</Link>
+              <p className="text-sm text-ink-soft/75 mb-8">{message}</p>
+              <Link to="/connexion" className="text-teal-dark font-semibold hover:underline">Retour à la connexion</Link>
             </>
           )}
         </div>

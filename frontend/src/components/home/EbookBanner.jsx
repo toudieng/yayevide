@@ -29,7 +29,7 @@ export default function EbookBanner() {
       className="group relative flex flex-col sm:flex-row items-center gap-6 overflow-hidden rounded-m bg-ink text-cream px-6 py-6 sm:px-8 sm:py-7 mb-10 hover:-translate-y-0.5 transition-transform"
     >
       {ebook.couverture && (
-        <img
+        <img loading="lazy" decoding="async"
           src={ebook.couverture}
           alt={ebook.titre}
           className="h-28 w-20 shrink-0 rounded-btn object-cover shadow-lg"

@@ -19,8 +19,8 @@ export default function VerificationCompte() {
     return (
       <div className="min-h-screen bg-sable flex items-center justify-center px-6">
         <div className="text-center">
-          <p className="text-ink-soft/70 mb-4">Aucune inscription en cours.</p>
-          <Link to="/inscription" className="text-teal font-semibold hover:underline">Créer un compte</Link>
+          <p className="text-ink-soft/75 mb-4">Aucune inscription en cours.</p>
+          <Link to="/inscription" className="text-teal-dark font-semibold hover:underline">Créer un compte</Link>
         </div>
       </div>
     );
@@ -59,27 +59,27 @@ export default function VerificationCompte() {
       <div className="w-full max-w-lg bg-cream rounded-m border border-ink shadow-2xl overflow-hidden">
         <div className="h-1.5 bg-gradient-to-r from-teal via-clay to-orange" />
         <div className="p-10 text-center">
-          <div className="h-14 w-14 mx-auto mb-5 rounded-full bg-teal/10 flex items-center justify-center text-teal">
+          <div className="h-14 w-14 mx-auto mb-5 rounded-full bg-teal/10 flex items-center justify-center text-teal-dark">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-7 w-7">
               <rect x="3" y="5" width="18" height="14" rx="2" />
               <path d="M3 7l9 6 9-6" />
             </svg>
           </div>
           <h1 className="font-serif text-2xl text-ink mb-2">Plus qu'une étape !</h1>
-          <p className="text-sm text-ink-soft/70 mb-8 leading-relaxed">
+          <p className="text-sm text-ink-soft/75 mb-8 leading-relaxed">
             Pour activer votre boutique <span className="font-semibold text-ink">{username}</span>, confirmez votre compte par WhatsApp ou par email.
           </p>
 
           <div className="grid sm:grid-cols-2 gap-4 text-left">
             {/* OPTION WHATSAPP */}
             <div className="border border-line rounded-btn p-5 flex flex-col">
-              <div className="h-9 w-9 rounded-full bg-teal/10 text-teal flex items-center justify-center mb-3">
+              <div className="h-9 w-9 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center mb-3">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4.5 w-4.5">
                   <path d="M3 21l1.65-4.95A8 8 0 1 1 9 19.5L3 21z" />
                 </svg>
               </div>
               <h3 className="text-sm font-bold text-ink mb-1.5">Par WhatsApp</h3>
-              <p className="text-[12.5px] text-ink-soft/60 mb-4 flex-1">
+              <p className="text-[12.5px] text-ink-soft/75 mb-4 flex-1">
                 Envoyez votre code à notre équipe, qui validera votre boutique sous peu.
               </p>
               <a href={whatsappHref} target="_blank" rel="noreferrer" className="text-center px-4 py-2.5 bg-teal text-white rounded-btn text-[12.5px] font-bold uppercase tracking-wide hover:bg-teal-dark transition-colors">
@@ -96,7 +96,7 @@ export default function VerificationCompte() {
                 </svg>
               </div>
               <h3 className="text-sm font-bold text-ink mb-1.5">Par email</h3>
-              <p className="text-[12.5px] text-ink-soft/60 mb-4 flex-1">
+              <p className="text-[12.5px] text-ink-soft/75 mb-4 flex-1">
                 {renvoye
                   ? 'Email envoyé ! Cliquez sur le lien reçu pour activer votre compte instantanément.'
                   : 'Recevez un lien de confirmation immédiat, sans attendre.'}
@@ -117,7 +117,7 @@ export default function VerificationCompte() {
           <button
             type="button"
             onClick={() => navigate('/connexion')}
-            className="text-[12.5px] font-semibold text-ink-soft/60 hover:text-ink mt-7"
+            className="text-[12.5px] font-semibold text-ink-soft/75 hover:text-ink mt-7"
           >
             J'ai déjà validé mon compte → Se connecter
           </button>

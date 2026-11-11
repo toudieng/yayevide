@@ -19,11 +19,11 @@ function formatDateHeure(iso) {
 
 const STATUT_INFO = {
   en_attente_confirmation: { label: 'En attente', couleur: 'bg-orange/10 text-orange', point: 'bg-orange' },
-  confirme: { label: 'Confirmée', couleur: 'bg-teal/10 text-teal', point: 'bg-teal' },
+  confirme: { label: 'Confirmée', couleur: 'bg-teal/10 text-teal-dark', point: 'bg-teal' },
   indisponible: { label: 'Indisponible', couleur: 'bg-red-50 text-red-500', point: 'bg-red-400' },
-  en_cours_livraison: { label: 'En cours de livraison', couleur: 'bg-teal/10 text-teal', point: 'bg-teal' },
+  en_cours_livraison: { label: 'En cours de livraison', couleur: 'bg-teal/10 text-teal-dark', point: 'bg-teal' },
   livre: { label: 'Livrée', couleur: 'bg-green-50 text-green-600', point: 'bg-green-500' },
-  annule: { label: 'Annulée', couleur: 'bg-line text-ink-soft/60', point: 'bg-ink-soft/40' },
+  annule: { label: 'Annulée', couleur: 'bg-line text-ink-soft/75', point: 'bg-ink-soft/40' },
 };
 
 const FILTRES_STATUT = [
@@ -46,9 +46,9 @@ const SECTIONS = [
 
 const PLAINTE_STATUT_INFO = {
   nouvelle: { label: 'Nouvelle', couleur: 'bg-orange/10 text-orange' },
-  en_cours: { label: 'En cours de traitement', couleur: 'bg-teal/10 text-teal' },
+  en_cours: { label: 'En cours de traitement', couleur: 'bg-teal/10 text-teal-dark' },
   resolue: { label: 'Résolue', couleur: 'bg-green-50 text-green-600' },
-  rejetee: { label: 'Rejetée', couleur: 'bg-line text-ink-soft/60' },
+  rejetee: { label: 'Rejetée', couleur: 'bg-line text-ink-soft/75' },
 };
 
 const MODE_PAIEMENT_LABELS = { wave: 'Wave', orange_money: 'Orange Money', especes: 'Espèces' };
@@ -62,11 +62,11 @@ function CommandeLigne({ c, onOuvrir }) {
       className="w-full flex items-center gap-4 bg-white rounded-m p-4 shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] hover:-translate-y-0.5 transition-transform text-left"
     >
       <div className="h-14 w-14 rounded-btn bg-line/40 overflow-hidden shrink-0">
-        {c.produit_image && <img src={c.produit_image} alt="" className="h-full w-full object-cover" />}
+        {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-bold text-ink truncate">{c.produit_titre}</p>
-        <p className="text-[12px] text-ink-soft/55 mt-0.5">
+        <p className="text-[12px] text-ink-soft/75 mt-0.5">
           {formatDate(c.date_commande)} · {c.boutique_nom}
         </p>
       </div>
@@ -108,7 +108,7 @@ function CommandeDetailModal({ c, onFermer }) {
       >
         <div className="flex items-start gap-4 p-6 border-b border-line">
           <div className="h-16 w-16 rounded-btn bg-line/40 overflow-hidden shrink-0">
-            {c.produit_image && <img src={c.produit_image} alt="" className="h-full w-full object-cover" />}
+            {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-serif font-bold text-lg text-ink leading-snug">{c.produit_titre}</p>
@@ -125,7 +125,7 @@ function CommandeDetailModal({ c, onFermer }) {
         <div className="p-6 space-y-3">
           {lignes.map((l) => (
             <div key={l.label} className="flex items-center justify-between gap-4 text-[13.5px]">
-              <span className="text-ink-soft/60">{l.label}</span>
+              <span className="text-ink-soft/75">{l.label}</span>
               <span className="font-semibold text-ink text-right">{l.valeur}</span>
             </div>
           ))}
@@ -255,7 +255,7 @@ export default function MonCompte() {
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-bold text-ink truncate">{moi.first_name || moi.username}</p>
-                <p className="text-[11.5px] text-ink-soft/50 truncate">{moi.username}</p>
+                <p className="text-[11.5px] text-ink-soft/75 truncate">{moi.username}</p>
               </div>
             </div>
 
@@ -266,7 +266,7 @@ export default function MonCompte() {
                   type="button"
                   onClick={() => setSection(s.id)}
                   className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-btn text-[13.5px] font-semibold transition-colors ${
-                    section === s.id ? 'bg-teal/10 text-teal' : 'text-ink-soft/70 hover:bg-cream hover:text-ink'
+                    section === s.id ? 'bg-teal/10 text-teal-dark' : 'text-ink-soft/75 hover:bg-cream hover:text-ink'
                   }`}
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="h-4 w-4 shrink-0">
@@ -295,7 +295,7 @@ export default function MonCompte() {
               <div className="space-y-8">
                 <div>
                   <h1 className="font-impact font-extrabold text-2xl text-ink">Bonjour {moi.first_name || moi.username} 👋</h1>
-                  <p className="text-[13px] text-ink-soft/55 mt-1">Voici un aperçu de votre activité sur Yaay Vidé.</p>
+                  <p className="text-[13px] text-ink-soft/75 mt-1">Voici un aperçu de votre activité sur Yaay Vidé.</p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -333,31 +333,31 @@ export default function MonCompte() {
                 <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
                   <div className="flex items-center justify-between mb-5">
                     <h2 className="text-sm font-bold text-ink flex items-center gap-2.5">
-                      <span className="h-8 w-8 rounded-full bg-teal/10 text-teal flex items-center justify-center">
+                      <span className="h-8 w-8 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
                       </span>
                       Activité récente
                     </h2>
                     {activiteRecente.length > 0 && (
-                      <button type="button" onClick={() => setSection('commandes')} className="text-[12px] font-bold text-teal flex items-center gap-1 hover:underline">
+                      <button type="button" onClick={() => setSection('commandes')} className="text-[12px] font-bold text-teal-dark flex items-center gap-1 hover:underline">
                         Tout voir
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="h-3 w-3"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                       </button>
                     )}
                   </div>
                   {activiteRecente.length === 0 ? (
-                    <p className="text-ink-soft/60 text-sm text-center py-6">Rien à afficher pour le moment.</p>
+                    <p className="text-ink-soft/75 text-sm text-center py-6">Rien à afficher pour le moment.</p>
                   ) : (
                     <div className="space-y-3">
                       {activiteRecente.map((e, i) => (
                         <div key={i} className="flex items-center gap-3.5">
                           <div className="h-11 w-11 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                            {e.image && <img src={e.image} alt="" className="h-full w-full object-cover" />}
+                            {e.image && <img loading="lazy" decoding="async" src={e.image} alt="" className="h-full w-full object-cover" />}
                           </div>
                           <span className={`h-2 w-2 rounded-full shrink-0 ${e.type === 'livraison' ? 'bg-teal' : 'bg-orange'}`} />
                           <div className="min-w-0 flex-1">
                             <p className="text-[13px] text-ink font-medium truncate">{e.texte}</p>
-                            <p className="text-[11px] text-ink-soft/50">{formatDateHeure(e.date)}</p>
+                            <p className="text-[11px] text-ink-soft/75">{formatDateHeure(e.date)}</p>
                           </div>
                         </div>
                       ))}
@@ -378,7 +378,7 @@ export default function MonCompte() {
                       type="button"
                       onClick={() => setFiltreStatut(f.id)}
                       className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold transition-colors ${
-                        filtreStatut === f.id ? 'bg-ink text-cream' : 'bg-cream text-ink-soft/70 hover:bg-line/60'
+                        filtreStatut === f.id ? 'bg-ink text-cream' : 'bg-cream text-ink-soft/75 hover:bg-line/60'
                       }`}
                     >
                       {f.label}
@@ -388,8 +388,8 @@ export default function MonCompte() {
 
                 {commandesFiltrees.length === 0 ? (
                   <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-                    <p className="text-ink-soft/60 text-sm mb-4">Aucune commande dans cette catégorie.</p>
-                    <Link to="/boutique" className="text-teal font-semibold text-sm hover:underline">
+                    <p className="text-ink-soft/75 text-sm mb-4">Aucune commande dans cette catégorie.</p>
+                    <Link to="/boutique" className="text-teal-dark font-semibold text-sm hover:underline">
                       Découvrir la boutique
                     </Link>
                   </div>
@@ -405,7 +405,7 @@ export default function MonCompte() {
               <div>
                 <h1 className="font-impact font-extrabold text-2xl text-ink mb-5">Locations</h1>
                 <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-                  <p className="text-ink-soft/60 text-sm">
+                  <p className="text-ink-soft/75 text-sm">
                     Les demandes de location se font pour l'instant directement par WhatsApp avec la vendeuse — un historique dédié arrivera bientôt ici.
                   </p>
                 </div>
@@ -417,8 +417,8 @@ export default function MonCompte() {
                 <h1 className="font-impact font-extrabold text-2xl text-ink mb-5">Favoris</h1>
                 {favoris.length === 0 ? (
                   <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-                    <p className="text-ink-soft/60 text-sm mb-4">Aucun article mis de côté pour le moment.</p>
-                    <Link to="/boutique" className="text-teal font-semibold text-sm hover:underline">
+                    <p className="text-ink-soft/75 text-sm mb-4">Aucun article mis de côté pour le moment.</p>
+                    <Link to="/boutique" className="text-teal-dark font-semibold text-sm hover:underline">
                       Découvrir la boutique
                     </Link>
                   </div>
@@ -432,12 +432,12 @@ export default function MonCompte() {
                       >
                         <div className="h-12 w-12 rounded-btn bg-line/40 overflow-hidden shrink-0">
                           {f.produit_detail.image_principale && (
-                            <img src={f.produit_detail.image_principale} alt="" className="h-full w-full object-cover" />
+                            <img loading="lazy" decoding="async" src={f.produit_detail.image_principale} alt="" className="h-full w-full object-cover" />
                           )}
                         </div>
                         <div className="min-w-0">
                           <p className="text-[13px] font-semibold text-ink truncate">{f.produit_detail.titre}</p>
-                          <p className="text-[12px] text-ink-soft/60">{formatFCFA(f.produit_detail.prix_final_public)}</p>
+                          <p className="text-[12px] text-ink-soft/75">{formatFCFA(f.produit_detail.prix_final_public)}</p>
                         </div>
                       </Link>
                     ))}
@@ -450,14 +450,14 @@ export default function MonCompte() {
               <div className="space-y-8">
                 <div>
                   <h1 className="font-impact font-extrabold text-2xl text-ink mb-2">Centre de plainte</h1>
-                  <p className="text-[13px] text-ink-soft/60 max-w-lg">
+                  <p className="text-[13px] text-ink-soft/75 max-w-lg">
                     Les ventes étant fermes et définitives, ceci n'est pas un formulaire de remboursement — mais toute plainte est examinée individuellement par notre équipe.
                   </p>
                 </div>
 
                 {messagePlainte && (
                   <div className={`p-4 text-sm rounded-btn border ${
-                    messagePlainte.type === 'succes' ? 'bg-teal/10 text-teal border-teal/20' : 'bg-red-50 text-red-600 border-red-100'
+                    messagePlainte.type === 'succes' ? 'bg-teal/10 text-teal-dark border-teal/20' : 'bg-red-50 text-red-600 border-red-100'
                   }`}>
                     {messagePlainte.texte}
                   </div>
@@ -468,7 +468,7 @@ export default function MonCompte() {
 
                   <div>
                     <label className="block text-[11px] font-bold text-ink uppercase tracking-wider mb-1.5">
-                      Commande concernée <span className="font-normal normal-case text-ink-soft/50">(facultatif)</span>
+                      Commande concernée <span className="font-normal normal-case text-ink-soft/75">(facultatif)</span>
                     </label>
                     <select
                       value={formPlainte.commande}
@@ -517,7 +517,7 @@ export default function MonCompte() {
                   <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Mes plaintes ({plaintes.length})</h3>
                   {plaintes.length === 0 ? (
                     <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-10 text-center">
-                      <p className="text-ink-soft/60 text-sm">Aucune plainte déposée pour le moment.</p>
+                      <p className="text-ink-soft/75 text-sm">Aucune plainte déposée pour le moment.</p>
                     </div>
                   ) : (
                     <div className="space-y-3">
@@ -528,7 +528,7 @@ export default function MonCompte() {
                             <div className="flex items-start justify-between gap-3 mb-2">
                               <div>
                                 <p className="text-sm font-semibold text-ink">{p.sujet}</p>
-                                <p className="text-[11.5px] text-ink-soft/50 mt-0.5">
+                                <p className="text-[11.5px] text-ink-soft/75 mt-0.5">
                                   {formatDate(p.date_creation)}{p.commande_produit_titre && ` · ${p.commande_produit_titre}`}
                                 </p>
                               </div>
@@ -539,7 +539,7 @@ export default function MonCompte() {
                             <p className="text-[13px] text-ink-soft leading-relaxed">{p.description}</p>
                             {p.reponse_admin && (
                               <div className="bg-sable rounded-btn p-3.5 mt-3">
-                                <p className="text-[11px] font-bold text-teal uppercase tracking-wide mb-1">Réponse de Yaay Vidé</p>
+                                <p className="text-[11px] font-bold text-teal-dark uppercase tracking-wide mb-1">Réponse de Yaay Vidé</p>
                                 <p className="text-[13px] text-ink-soft">{p.reponse_admin}</p>
                               </div>
                             )}
@@ -556,7 +556,7 @@ export default function MonCompte() {
               <div>
                 <h1 className="font-impact font-extrabold text-2xl text-ink mb-5">Notifications</h1>
                 <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-                  <p className="text-ink-soft/60 text-sm">
+                  <p className="text-ink-soft/75 text-sm">
                     Pas encore de notifications actives — cette fonctionnalité arrive bientôt.
                   </p>
                 </div>

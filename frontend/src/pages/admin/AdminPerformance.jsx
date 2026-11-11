@@ -18,7 +18,7 @@ const PERIODES = [
 
 function Variation({ valeur, suffixe = '% vs période précédente' }) {
   if (valeur === null || valeur === undefined) {
-    return <span className="text-[11px] font-semibold text-ink-soft/40">— vs période précédente</span>;
+    return <span className="text-[11px] font-semibold text-ink-soft/75">— vs période précédente</span>;
   }
   const positif = valeur >= 0;
   return (
@@ -84,7 +84,7 @@ export default function AdminPerformance() {
     <ShellAdmin active="performance" moi={moi} titre="Performance">
 
       <div className="flex items-center justify-between gap-4 flex-wrap -mt-2">
-        <p className="text-[13px] text-ink-soft/60">Vue d'ensemble de la santé financière et de l'activité de Yaay Vidé.</p>
+        <p className="text-[13px] text-ink-soft/75">Vue d'ensemble de la santé financière et de l'activité de Yaay Vidé.</p>
         <div className="flex items-center gap-2 bg-cream border border-line rounded-btn p-1">
           {PERIODES.map((p) => (
             <button
@@ -92,7 +92,7 @@ export default function AdminPerformance() {
               type="button"
               onClick={() => setPeriode(p.id)}
               className={`px-4 py-2 rounded-btn text-sm font-semibold transition-all ${
-                periode === p.id ? 'bg-ink text-cream' : 'text-ink-soft/70 hover:text-ink'
+                periode === p.id ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'
               }`}
             >
               {p.label}
@@ -113,27 +113,27 @@ export default function AdminPerformance() {
         </div>
 
         <div className={`bg-white rounded-m ${SHADOW} p-6`}>
-          <p className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide mb-2">Commission Yaay Vidé</p>
+          <p className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide mb-2">Commission Yaay Vidé</p>
           <p className="text-3xl font-serif font-bold text-ink mb-2">{formatFCFA(v.commission)}</p>
-          <p className="text-[11px] text-ink-soft/50 mb-3">{v.gmv ? Math.round((v.commission / v.gmv) * 100) : 0}% du CA brut</p>
+          <p className="text-[11px] text-ink-soft/75 mb-3">{v.gmv ? Math.round((v.commission / v.gmv) * 100) : 0}% du CA brut</p>
           <div className="h-2 bg-line rounded-full overflow-hidden mb-1.5">
             <div className="h-full bg-orange rounded-full transition-all duration-700" style={{ width: `${Math.min(100, (v.gmv ? (v.commission / v.gmv) * 100 : 0) / (v.commission_taux_standard || 10) * 100)}%` }} />
           </div>
-          <p className="text-[10.5px] text-ink-soft/45">Taux standard configuré : {v.commission_taux_standard}%</p>
+          <p className="text-[10.5px] text-ink-soft/75">Taux standard configuré : {v.commission_taux_standard}%</p>
         </div>
 
         <div className={`bg-white rounded-m ${SHADOW} p-6`}>
-          <p className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide mb-4">Répartition des revenus</p>
+          <p className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide mb-4">Répartition des revenus</p>
           <div className="grid grid-cols-2 gap-4 mb-3">
             <div>
-              <p className="text-[10.5px] font-bold text-teal uppercase tracking-wide mb-1">Valeur des ventes</p>
+              <p className="text-[10.5px] font-bold text-teal-dark uppercase tracking-wide mb-1">Valeur des ventes</p>
               <p className="text-lg font-serif font-bold text-ink">{formatFCFA(rep.ventes?.montant)}</p>
-              <p className="text-[10.5px] text-ink-soft/50">{rep.ventes?.pct_total ?? 0}% du total</p>
+              <p className="text-[10.5px] text-ink-soft/75">{rep.ventes?.pct_total ?? 0}% du total</p>
             </div>
             <div>
               <p className="text-[10.5px] font-bold text-orange uppercase tracking-wide mb-1">Valeur des locations</p>
               <p className="text-lg font-serif font-bold text-ink">{formatFCFA(rep.locations?.montant)}</p>
-              <p className="text-[10.5px] text-ink-soft/50">{rep.locations?.pct_total ?? 0}% du total</p>
+              <p className="text-[10.5px] text-ink-soft/75">{rep.locations?.pct_total ?? 0}% du total</p>
             </div>
           </div>
           <div className="h-2.5 bg-line rounded-full overflow-hidden flex">
@@ -147,10 +147,10 @@ export default function AdminPerformance() {
       <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6">
         <div className={`bg-white rounded-m ${SHADOW} p-6`}>
           <h3 className="font-serif text-lg text-ink mb-1 flex items-center gap-2">
-            <span className="h-7 w-7 rounded-full bg-teal/10 text-teal flex items-center justify-center text-sm">📦</span>
+            <span className="h-7 w-7 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center text-sm">📦</span>
             Activité de la plateforme
           </h3>
-          <p className="text-[12.5px] text-ink-soft/55 mb-5">Volume et cycle des transactions.</p>
+          <p className="text-[12.5px] text-ink-soft/75 mb-5">Volume et cycle des transactions.</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
             {[
               { label: 'Nombre de commandes', valeur: act.nb_commandes, variation: act.nb_commandes_variation },
@@ -162,7 +162,7 @@ export default function AdminPerformance() {
             ].map((m) => (
               <div key={m.label}>
                 <p className="text-2xl font-serif font-bold text-ink">{m.valeur}</p>
-                <p className="text-[11px] text-ink-soft/50 mb-1.5">{m.label}</p>
+                <p className="text-[11px] text-ink-soft/75 mb-1.5">{m.label}</p>
                 <Variation valeur={m.variation} suffixe={m.suffixe || '% vs période précédente'} />
               </div>
             ))}
@@ -210,18 +210,18 @@ export default function AdminPerformance() {
             <span className="h-7 w-7 rounded-full bg-orange/15 text-orange flex items-center justify-center text-sm">👁️</span>
             Engagement
           </h3>
-          <p className="text-[12.5px] text-ink-soft/55 mb-5">Intérêt → conversion, cumulé depuis le lancement.</p>
+          <p className="text-[12.5px] text-ink-soft/75 mb-5">Intérêt → conversion, cumulé depuis le lancement.</p>
           <p className="text-2xl font-serif font-bold text-ink">{eng.nb_vues_total?.toLocaleString('fr-FR')}</p>
-          <p className="text-[11px] text-ink-soft/50 mb-4">Nombre total de vues produits</p>
+          <p className="text-[11px] text-ink-soft/75 mb-4">Nombre total de vues produits</p>
 
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <p className="text-lg font-serif font-bold text-ink">{eng.taux_conversion}%</p>
-              <p className="text-[10.5px] text-ink-soft/50">Taux de conversion</p>
+              <p className="text-[10.5px] text-ink-soft/75">Taux de conversion</p>
             </div>
             <div>
               <p className="text-lg font-serif font-bold text-ink">{eng.ratio_commandes_vues ? `1 sur ${eng.ratio_commandes_vues}` : '—'}</p>
-              <p className="text-[10.5px] text-ink-soft/50">Vues → commandes</p>
+              <p className="text-[10.5px] text-ink-soft/75">Vues → commandes</p>
             </div>
           </div>
 
@@ -229,7 +229,7 @@ export default function AdminPerformance() {
             <div className="pt-4 border-t border-orange/15">
               <p className="text-[10.5px] font-bold text-orange uppercase tracking-wide mb-1">Catégorie la plus consultée</p>
               <p className="text-sm font-bold text-ink">{eng.categorie_plus_consultee.nom}</p>
-              <p className="text-[11px] text-ink-soft/50">{eng.categorie_plus_consultee.nb_vues?.toLocaleString('fr-FR')} vues</p>
+              <p className="text-[11px] text-ink-soft/75">{eng.categorie_plus_consultee.nb_vues?.toLocaleString('fr-FR')} vues</p>
             </div>
           )}
         </div>
@@ -238,26 +238,26 @@ export default function AdminPerformance() {
           <div className="flex items-center justify-between mb-5">
             <div>
               <h3 className="font-serif text-lg text-ink">Produits vedettes</h3>
-              <p className="text-[12.5px] text-ink-soft/55">Les plus consultés, toutes périodes confondues.</p>
+              <p className="text-[12.5px] text-ink-soft/75">Les plus consultés, toutes périodes confondues.</p>
             </div>
-            <span className="text-[11px] font-bold text-ink-soft/50">{data.produits_vedettes.length}</span>
+            <span className="text-[11px] font-bold text-ink-soft/75">{data.produits_vedettes.length}</span>
           </div>
           {data.produits_vedettes.length === 0 ? (
-            <p className="text-ink-soft/60 text-sm text-center py-8">Pas encore de données de vues.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-8">Pas encore de données de vues.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {data.produits_vedettes.map((p, i) => (
                 <div key={p.titre + i} className="rounded-btn overflow-hidden border border-line">
                   <div className="relative h-28 bg-line/30">
-                    {p.image && <img src={p.image} alt="" className="h-full w-full object-cover" />}
+                    {p.image && <img loading="lazy" decoding="async" src={p.image} alt="" className="h-full w-full object-cover" />}
                     <span className="absolute top-2 left-2 h-6 w-6 rounded-full bg-ink text-white text-[11px] font-bold flex items-center justify-center">#{i + 1}</span>
-                    <span className={`absolute top-2 right-2 text-[9px] font-bold uppercase px-2 py-1 rounded-full ${p.type_offre === 'location' ? 'bg-clay text-white' : 'bg-teal text-white'}`}>
+                    <span className={`absolute top-2 right-2 text-[10px] font-bold uppercase px-2 py-1 rounded-full ${p.type_offre === 'location' ? 'bg-clay text-white' : 'bg-teal text-white'}`}>
                       {p.type_offre === 'location' ? 'Location' : 'Vente'}
                     </span>
                   </div>
                   <div className="p-3">
                     <p className="text-[12.5px] font-semibold text-ink truncate mb-1.5">{p.titre}</p>
-                    <div className="flex items-center justify-between text-[11px] text-ink-soft/55">
+                    <div className="flex items-center justify-between text-[11px] text-ink-soft/75">
                       <span>{p.nb_vues.toLocaleString('fr-FR')} vues</span>
                       <span>{p.nb_transactions} {p.type_offre === 'location' ? 'locations' : 'commandes'}</span>
                     </div>
@@ -271,16 +271,16 @@ export default function AdminPerformance() {
 
       <div className={`bg-white rounded-m ${SHADOW} p-6`}>
         <h3 className="font-serif text-lg text-ink mb-1">Évolution du GMV</h3>
-        <p className="text-[12.5px] text-ink-soft/60 mb-6">Chiffre d'affaires total généré, 6 derniers mois.</p>
+        <p className="text-[12.5px] text-ink-soft/75 mb-6">Chiffre d'affaires total généré, 6 derniers mois.</p>
         <div className="flex items-end gap-4 h-40">
           {data.evolution_gmv.map((e) => (
             <div key={e.mois} className="flex-1 flex flex-col items-center gap-2">
-              <span className="text-[11px] font-bold text-ink-soft/60">{e.montant > 0 ? formatFCFA(e.montant) : ''}</span>
+              <span className="text-[11px] font-bold text-ink-soft/75">{e.montant > 0 ? formatFCFA(e.montant) : ''}</span>
               <div
                 className={`w-full rounded-t-s transition-all duration-700 ${e.montant > 0 ? 'bg-teal' : 'bg-line'}`}
                 style={{ height: `${Math.max(4, (e.montant / maxEvolution) * 120)}px` }}
               />
-              <span className="text-[10.5px] text-ink-soft/50 font-semibold capitalize">{e.mois}</span>
+              <span className="text-[10.5px] text-ink-soft/75 font-semibold capitalize">{e.mois}</span>
             </div>
           ))}
         </div>
@@ -290,9 +290,9 @@ export default function AdminPerformance() {
 
         <div className={`bg-white rounded-m ${SHADOW} p-6`}>
           <h3 className="font-serif text-lg text-ink mb-1">Top vendeuses</h3>
-          <p className="text-[12.5px] text-ink-soft/60 mb-5">Classées par revenu net généré.</p>
+          <p className="text-[12.5px] text-ink-soft/75 mb-5">Classées par revenu net généré.</p>
           {data.top_vendeuses.length === 0 ? (
-            <p className="text-ink-soft/60 text-sm text-center py-8">Aucune vente pour le moment.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-8">Aucune vente pour le moment.</p>
           ) : (
             <div className="space-y-3">
               {data.top_vendeuses.map((vd, i) => (
@@ -307,9 +307,9 @@ export default function AdminPerformance() {
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-ink truncate">{vd.nom_boutique}</p>
-                    <p className="text-[11.5px] text-ink-soft/55">{vd.nb_ventes} vente{vd.nb_ventes > 1 ? 's' : ''}</p>
+                    <p className="text-[11.5px] text-ink-soft/75">{vd.nb_ventes} vente{vd.nb_ventes > 1 ? 's' : ''}</p>
                   </div>
-                  <p className="text-sm font-bold text-teal whitespace-nowrap">{formatFCFA(vd.revenu_net)}</p>
+                  <p className="text-sm font-bold text-teal-dark whitespace-nowrap">{formatFCFA(vd.revenu_net)}</p>
                 </Link>
               ))}
             </div>
@@ -318,16 +318,16 @@ export default function AdminPerformance() {
 
         <div className={`bg-white rounded-m ${SHADOW} p-6`}>
           <h3 className="font-serif text-lg text-ink mb-1">Ventes par catégorie</h3>
-          <p className="text-[12.5px] text-ink-soft/60 mb-5">Répartition du chiffre d'affaires.</p>
+          <p className="text-[12.5px] text-ink-soft/75 mb-5">Répartition du chiffre d'affaires.</p>
           {data.ventes_par_categorie.length === 0 ? (
-            <p className="text-ink-soft/60 text-sm text-center py-8">Aucune vente pour le moment.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-8">Aucune vente pour le moment.</p>
           ) : (
             <div className="space-y-3.5">
               {data.ventes_par_categorie.map((c) => (
                 <div key={c.produit__categorie__nom || 'sans-categorie'}>
                   <div className="flex items-center justify-between text-[13px] mb-1">
                     <span className="font-semibold text-ink">{c.produit__categorie__nom || 'Sans catégorie'}</span>
-                    <span className="text-ink-soft/60">{formatFCFA(c.total)} · {c.nb}</span>
+                    <span className="text-ink-soft/75">{formatFCFA(c.total)} · {c.nb}</span>
                   </div>
                   <div className="h-2 bg-line rounded-full overflow-hidden">
                     <div className="h-full bg-orange rounded-full transition-all duration-700" style={{ width: `${(c.total / maxCategorie) * 100}%` }} />

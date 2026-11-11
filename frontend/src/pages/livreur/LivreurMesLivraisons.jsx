@@ -15,7 +15,7 @@ const PROCHAIN_STATUT = {
 
 const STATUT_INFO = {
   confirme: { label: 'À récupérer', couleur: 'bg-orange/10 text-orange' },
-  en_cours_livraison: { label: 'En cours', couleur: 'bg-teal/10 text-teal' },
+  en_cours_livraison: { label: 'En cours', couleur: 'bg-teal/10 text-teal-dark' },
   livre: { label: 'Livrée', couleur: 'bg-teal text-white' },
   annule: { label: 'Annulée', couleur: 'bg-red-50 text-red-500' },
   indisponible: { label: 'Annulée', couleur: 'bg-red-50 text-red-500' },
@@ -122,7 +122,7 @@ export default function LivreurMesLivraisons() {
   return (
     <ShellLivreur active="livraisons" moi={moi} titre="Mes livraisons">
 
-      <p className="text-[13px] text-ink-soft/60 -mt-2">Suivez et gérez vos tournées du jour.</p>
+      <p className="text-[13px] text-ink-soft/75 -mt-2">Suivez et gérez vos tournées du jour.</p>
 
       {erreur && (
         <div className="p-4 text-sm bg-red-50 text-red-600 rounded-btn border border-red-100">{erreur}</div>
@@ -132,7 +132,7 @@ export default function LivreurMesLivraisons() {
         <div className={`bg-teal/5 border border-teal/20 rounded-m p-5`}>
           <div className="flex items-center justify-between mb-1">
             <h3 className="font-serif text-base text-ink">Livraisons disponibles dans ma zone</h3>
-            <span className="text-[11px] font-bold text-teal bg-white px-3 py-1.5 rounded-full">{disponibles.length}</span>
+            <span className="text-[11px] font-bold text-teal-dark bg-white px-3 py-1.5 rounded-full">{disponibles.length}</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
             {disponibles.map((c) => (
@@ -159,7 +159,7 @@ export default function LivreurMesLivraisons() {
               key={o.id}
               onClick={() => setOnglet(o.id)}
               className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all ${
-                onglet === o.id ? 'bg-teal text-white' : 'text-ink-soft/60 hover:text-ink'
+                onglet === o.id ? 'bg-teal text-white' : 'text-ink-soft/75 hover:text-ink'
               }`}
             >
               {o.label} <span className="opacity-70">({commandes.filter(o.test).length})</span>
@@ -194,7 +194,7 @@ export default function LivreurMesLivraisons() {
       <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-6">
         <div className={`bg-white rounded-m ${SHADOW} overflow-hidden`}>
           {commandesFiltrees.length === 0 ? (
-            <p className="text-ink-soft/60 text-sm text-center py-16">Aucune livraison dans cette catégorie.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-16">Aucune livraison dans cette catégorie.</p>
           ) : (
             <div className="divide-y divide-line">
               {commandesFiltrees.map((c) => {
@@ -207,11 +207,11 @@ export default function LivreurMesLivraisons() {
                     className={`w-full flex items-center gap-3.5 p-4 text-left transition-colors ${selectionnee?.id === c.id ? 'bg-teal/5' : 'hover:bg-sable'}`}
                   >
                     <div className="h-11 w-11 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                      {c.produit_image && <img src={c.produit_image} alt="" className="h-full w-full object-cover" />}
+                      {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[13px] font-bold text-ink truncate">{c.acheteur_username}</p>
-                      <p className="text-[11.5px] text-ink-soft/55 truncate">{c.zone_livraison_nom || c.boutique_nom}</p>
+                      <p className="text-[11.5px] text-ink-soft/75 truncate">{c.zone_livraison_nom || c.boutique_nom}</p>
                     </div>
                     <span className={`text-[10px] font-bold uppercase px-2 py-1 rounded-full shrink-0 ${st.couleur}`}>{st.label}</span>
                   </button>
@@ -223,41 +223,41 @@ export default function LivreurMesLivraisons() {
 
         <div className={`bg-white rounded-m ${SHADOW} p-6 h-fit lg:sticky lg:top-6`}>
           {!selectionnee ? (
-            <p className="text-ink-soft/60 text-sm text-center py-10">Sélectionnez une livraison pour voir le détail.</p>
+            <p className="text-ink-soft/75 text-sm text-center py-10">Sélectionnez une livraison pour voir le détail.</p>
           ) : (
             <>
               <div className="flex items-center justify-between mb-4">
                 <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full ${(STATUT_INFO[selectionnee.statut] || STATUT_INFO.confirme).couleur}`}>
                   {(STATUT_INFO[selectionnee.statut] || STATUT_INFO.confirme).label}
                 </span>
-                <button type="button" onClick={() => setSelectionnee(null)} className="text-ink-soft/40 hover:text-ink transition-colors">
+                <button type="button" onClick={() => setSelectionnee(null)} className="text-ink-soft/75 hover:text-ink transition-colors">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><path d="M18 6L6 18M6 6l12 12" /></svg>
                 </button>
               </div>
 
               <p className="font-serif font-bold text-lg text-ink mb-1">{selectionnee.produit_titre}</p>
-              <p className="text-[12.5px] text-ink-soft/55 mb-5">Chez {selectionnee.boutique_nom}</p>
+              <p className="text-[12.5px] text-ink-soft/75 mb-5">Chez {selectionnee.boutique_nom}</p>
 
               <div className="space-y-3.5 text-[13px] border-t border-line pt-4">
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Cliente</span><span className="font-semibold text-ink">{selectionnee.acheteur_username}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">WhatsApp</span><span className="font-semibold text-ink">{selectionnee.acheteur_telephone}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Adresse</span><span className="font-semibold text-ink text-right">{selectionnee.adresse_livraison}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Zone</span><span className="font-semibold text-ink">{selectionnee.zone_livraison_nom}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-ink-soft/55">Frais de livraison</span><span className="font-semibold text-ink">{formatFCFA(selectionnee.frais_livraison)}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Cliente</span><span className="font-semibold text-ink">{selectionnee.acheteur_username}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">WhatsApp</span><span className="font-semibold text-ink">{selectionnee.acheteur_telephone}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Adresse</span><span className="font-semibold text-ink text-right">{selectionnee.adresse_livraison}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Zone</span><span className="font-semibold text-ink">{selectionnee.zone_livraison_nom}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-ink-soft/75">Frais de livraison</span><span className="font-semibold text-ink">{formatFCFA(selectionnee.frais_livraison)}</span></div>
               </div>
 
               <div className="flex flex-col gap-2.5 mt-6">
                 <a
                   href={`https://www.google.com/maps/search/${encodeURIComponent(selectionnee.adresse_livraison || '')}`}
                   target="_blank" rel="noreferrer"
-                  className="text-center text-[12.5px] font-bold px-4 py-3 rounded-btn border border-line text-ink hover:border-teal hover:text-teal transition-colors"
+                  className="text-center text-[12.5px] font-bold px-4 py-3 rounded-btn border border-line text-ink hover:border-teal hover:text-teal-dark transition-colors"
                 >
                   Voir l'itinéraire
                 </a>
                 <a
                   href={`https://wa.me/${(selectionnee.acheteur_telephone || '').replace(/[^0-9]/g, '')}`}
                   target="_blank" rel="noreferrer"
-                  className="text-center text-[12.5px] font-bold px-4 py-3 rounded-btn border border-line text-ink hover:border-teal hover:text-teal transition-colors"
+                  className="text-center text-[12.5px] font-bold px-4 py-3 rounded-btn border border-line text-ink hover:border-teal hover:text-teal-dark transition-colors"
                 >
                   Contacter la cliente
                 </a>

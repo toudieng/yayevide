@@ -120,7 +120,7 @@ export default function LivreurTableauDeBord() {
       <div className={`bg-white rounded-m ${SHADOW_CARD} p-6`}>
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-5">Activités récentes</h3>
         {activitesRecentes.length === 0 ? (
-          <p className="text-ink-soft/60 text-sm text-center py-6">Aucune activité pour le moment.</p>
+          <p className="text-ink-soft/75 text-sm text-center py-6">Aucune activité pour le moment.</p>
         ) : (
           <div className="space-y-4">
             {activitesRecentes.map((e, i) => (
@@ -128,9 +128,9 @@ export default function LivreurTableauDeBord() {
                 <span className={`h-2 w-2 rounded-full mt-1.5 shrink-0 ${e.type === 'cours' ? 'bg-teal' : 'bg-orange'}`} />
                 <div className="min-w-0 flex-1">
                   <p className="text-[13px] font-semibold text-ink">{e.titre}</p>
-                  <p className="text-[12px] text-ink-soft/55 truncate">{e.detail}</p>
+                  <p className="text-[12px] text-ink-soft/75 truncate">{e.detail}</p>
                 </div>
-                <span className="text-[11px] text-ink-soft/45 shrink-0">{formatHeure(e.date)}</span>
+                <span className="text-[11px] text-ink-soft/75 shrink-0">{formatHeure(e.date)}</span>
               </div>
             ))}
           </div>

@@ -32,7 +32,7 @@ export default function TrustStrip() {
               fill="none"
               stroke="currentColor"
               strokeWidth="1.6"
-              className={`h-4 w-4 shrink-0 ${i % 2 === 0 ? 'text-teal' : 'text-clay'}`}
+              className={`h-4 w-4 shrink-0 ${i % 2 === 0 ? 'text-teal-dark' : 'text-clay'}`}
             >
               <path d={item.icon} />
             </svg>

@@ -7,7 +7,7 @@ import Reveal from './Reveal';
  * eyebrow + petit soulignement centré dessous + titre + description.
  */
 export default function SectionHeader({ eyebrow, title, description, accent = 'clay', className = '' }) {
-  const accentColor = accent === 'teal' ? 'bg-teal text-teal' : 'bg-clay text-clay';
+  const accentColor = accent === 'teal' ? 'bg-teal text-teal-dark' : 'bg-clay text-clay';
   const [bgClass, textClass] = accentColor.split(' ');
 
   return (

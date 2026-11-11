@@ -17,8 +17,8 @@ function formatDateHeure(iso) {
 
 const STATUT_STYLE = {
   en_attente_confirmation: 'bg-orange/10 text-orange',
-  confirme: 'bg-teal/10 text-teal',
-  en_cours_livraison: 'bg-teal/10 text-teal',
+  confirme: 'bg-teal/10 text-teal-dark',
+  en_cours_livraison: 'bg-teal/10 text-teal-dark',
   livre: 'bg-teal/15 text-teal-dark',
   terminee: 'bg-teal/15 text-teal-dark',
   indisponible: 'bg-red-50 text-red-500',
@@ -104,11 +104,11 @@ export default function Ventes() {
     <ShellVendeuse active="ventes" moi={moi} titre="Ventes">
 
       <div className="flex items-start justify-between gap-4 flex-wrap -mt-2">
-        <p className="text-[13px] text-ink-soft/60">Suivez vos ventes, revenus et paiements en toute simplicité.</p>
+        <p className="text-[13px] text-ink-soft/75">Suivez vos ventes, revenus et paiements en toute simplicité.</p>
         <button
           type="button"
           onClick={exporterCSV}
-          className="flex items-center gap-2 text-[13px] font-bold text-ink border border-line px-4 py-2 rounded-btn hover:border-teal hover:text-teal transition-colors shrink-0"
+          className="flex items-center gap-2 text-[13px] font-bold text-ink border border-line px-4 py-2 rounded-btn hover:border-teal hover:text-teal-dark transition-colors shrink-0"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" /></svg>
           Exporter mes ventes
@@ -153,14 +153,14 @@ export default function Ventes() {
               key={o.id}
               onClick={() => setOnglet(o.id)}
               className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all whitespace-nowrap ${
-                onglet === o.id ? 'bg-teal text-white' : 'text-ink-soft/60 hover:text-ink'
+                onglet === o.id ? 'bg-teal text-white' : 'text-ink-soft/75 hover:text-ink'
               }`}
             >
               {o.label} <span className="opacity-70">({compteurs[o.id]})</span>
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-2 text-[12.5px] font-semibold text-ink-soft/70 border border-line rounded-btn px-3 py-2">
+        <div className="flex items-center gap-2 text-[12.5px] font-semibold text-ink-soft/75 border border-line rounded-btn px-3 py-2">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></svg>
           Ce mois
         </div>
@@ -169,11 +169,11 @@ export default function Ventes() {
       {/* TABLE */}
       {commandesFiltrees.length === 0 ? (
         <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-          <p className="text-ink-soft/60 text-sm">Aucune vente dans cette catégorie pour le moment.</p>
+          <p className="text-ink-soft/75 text-sm">Aucune vente dans cette catégorie pour le moment.</p>
         </div>
       ) : (
         <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] overflow-hidden">
-          <div className="hidden md:grid grid-cols-[2fr_1.2fr_1fr_1.2fr_1fr] gap-4 px-5 py-3 border-b border-line text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wider">
+          <div className="hidden md:grid grid-cols-[2fr_1.2fr_1fr_1.2fr_1fr] gap-4 px-5 py-3 border-b border-line text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wider">
             <span>Article</span><span>Date</span><span>Montant</span><span>Statut</span><span className="text-right">Actions</span>
           </div>
           <div className="divide-y divide-line">
@@ -181,16 +181,16 @@ export default function Ventes() {
               <div key={c.id} className="grid grid-cols-1 md:grid-cols-[2fr_1.2fr_1fr_1.2fr_1fr] gap-3 md:gap-4 items-center px-5 py-4">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="h-11 w-11 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                    {c.produit_image && <img src={c.produit_image} alt="" className="h-full w-full object-cover" />}
+                    {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
                   </div>
                   <p className="text-sm font-bold text-ink truncate">{c.produit_titre}</p>
                 </div>
-                <p className="text-[12.5px] text-ink-soft/60 whitespace-pre-line">{formatDateHeure(c.date_commande)}</p>
+                <p className="text-[12.5px] text-ink-soft/75 whitespace-pre-line">{formatDateHeure(c.date_commande)}</p>
                 <p className="text-sm font-bold text-ink">{formatFCFA(c.montant_net_vendeuse || c.prix_total_paye)}</p>
-                <span className={`inline-flex w-fit text-[11px] font-bold px-2.5 py-1 rounded-full ${STATUT_STYLE[c.statut] || 'bg-line text-ink-soft/60'}`}>
+                <span className={`inline-flex w-fit text-[11px] font-bold px-2.5 py-1 rounded-full ${STATUT_STYLE[c.statut] || 'bg-line text-ink-soft/75'}`}>
                   {STATUT_LABEL[c.statut] || c.statut}
                 </span>
-                <a href={`https://wa.me/?text=${encodeURIComponent(`Commande ${c.produit_titre}`)}`} className="text-teal font-semibold text-[13px] flex items-center gap-1 md:justify-end hover:underline">
+                <a href={`https://wa.me/?text=${encodeURIComponent(`Commande ${c.produit_titre}`)}`} className="text-teal-dark font-semibold text-[13px] flex items-center gap-1 md:justify-end hover:underline">
                   Voir les détails
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </a>
@@ -207,7 +207,7 @@ export default function Ventes() {
           </span>
           <div className="flex-1 min-w-[220px]">
             <p className="font-bold text-ink">Vous n'avez pas encore de ventes ?</p>
-            <p className="text-[13px] text-ink-soft/60 mt-0.5">Publiez davantage d'articles pour augmenter vos chances d'être visible auprès des mamans.</p>
+            <p className="text-[13px] text-ink-soft/75 mt-0.5">Publiez davantage d'articles pour augmenter vos chances d'être visible auprès des mamans.</p>
           </div>
           <a
             href="/vendeuse/ajouter-produit"

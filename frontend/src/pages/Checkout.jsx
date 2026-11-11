@@ -164,7 +164,7 @@ export default function Checkout() {
               </svg>
             </div>
             <h1 className="font-serif text-2xl text-ink mb-3">Commande en cours de confirmation</h1>
-            <p className="text-sm text-ink-soft/70 leading-relaxed">
+            <p className="text-sm text-ink-soft/75 leading-relaxed">
               Nous vérifions la disponibilité de vos articles auprès des vendeuses. Elles disposent de{' '}
               <span className="font-bold text-ink">24 heures maximum</span> pour répondre.
               Vous serez notifiée dès que votre commande sera prête — le paiement se fera à la livraison.
@@ -172,7 +172,7 @@ export default function Checkout() {
           </div>
 
           <div className="bg-cream border border-line rounded-m overflow-hidden mb-8">
-            <p className="px-5 py-3 text-[11px] font-bold uppercase tracking-wide text-ink-soft/60 border-b border-line">
+            <p className="px-5 py-3 text-[11px] font-bold uppercase tracking-wide text-ink-soft/75 border-b border-line">
               Vos articles
             </p>
             <div className="divide-y divide-line">
@@ -212,9 +212,9 @@ export default function Checkout() {
             return (
               <div key={label} className="flex items-center gap-3">
                 {i > 0 && <span className="w-8 h-px bg-line" />}
-                <span className={`flex items-center gap-2 ${actif ? 'text-ink' : complete ? 'text-teal' : 'text-ink-soft/40'}`}>
+                <span className={`flex items-center gap-2 ${actif ? 'text-ink' : complete ? 'text-teal-dark' : 'text-ink-soft/75'}`}>
                   <span className={`h-6 w-6 rounded-full flex items-center justify-center text-[11px] ${
-                    actif ? 'bg-ink text-cream' : complete ? 'bg-teal text-white' : 'bg-line text-ink-soft/50'
+                    actif ? 'bg-ink text-cream' : complete ? 'bg-teal text-white' : 'bg-line text-ink-soft/75'
                   }`}>
                     {complete ? '✓' : i + 1}
                   </span>
@@ -235,7 +235,7 @@ export default function Checkout() {
             {etape === 'adresse' && (
               <form onSubmit={validerAdresse} className="bg-cream border border-line rounded-m p-7 space-y-5">
                 <h2 className="font-serif text-xl text-ink mb-1">Adresse de livraison</h2>
-                <p className="text-[12.5px] text-ink-soft/60 mb-5">
+                <p className="text-[12.5px] text-ink-soft/75 mb-5">
                   {form.adresse ? 'Modifiez si besoin, ou continuez avec cette adresse.' : 'Renseignez où vous souhaitez être livrée.'}
                 </p>
 
@@ -270,7 +270,7 @@ export default function Checkout() {
 
                 <div>
                   <label className="block text-[11px] font-bold text-ink uppercase tracking-wider mb-1.5">
-                    Complément d'adresse <span className="font-normal normal-case text-ink-soft/50">(facultatif)</span>
+                    Complément d'adresse <span className="font-normal normal-case text-ink-soft/75">(facultatif)</span>
                   </label>
                   <input
                     type="text" value={form.complement}
@@ -293,14 +293,14 @@ export default function Checkout() {
                     ))}
                   </select>
                   {zones.find((z) => z.code === form.zone) && (
-                    <p className="text-[12px] text-ink-soft/55 mt-1.5">
+                    <p className="text-[12px] text-ink-soft/75 mt-1.5">
                       {zones.find((z) => z.code === form.zone).localites}
                     </p>
                   )}
                 </div>
 
                 <div className="flex gap-3 pt-2">
-                  <Link to="/panier" className="px-6 py-3 rounded-full border border-line text-sm font-bold text-ink-soft/70 hover:border-ink/40 transition-colors">
+                  <Link to="/panier" className="px-6 py-3 rounded-full border border-line text-sm font-bold text-ink-soft/75 hover:border-ink/40 transition-colors">
                     Annuler
                   </Link>
                   <button
@@ -316,7 +316,7 @@ export default function Checkout() {
             {etape === 'paiement' && (
               <div className="bg-cream border border-line rounded-m p-7 space-y-5">
                 <h2 className="font-serif text-xl text-ink mb-1">Moyen de paiement à la livraison</h2>
-                <p className="text-[12.5px] text-ink-soft/60 mb-5">
+                <p className="text-[12.5px] text-ink-soft/75 mb-5">
                   Vous ne payez rien maintenant — choisissez comment vous réglerez le livreur à la remise.
                 </p>
 
@@ -344,7 +344,7 @@ export default function Checkout() {
                   <button
                     type="button"
                     onClick={() => setEtape('adresse')}
-                    className="px-6 py-3 rounded-full border border-line text-sm font-bold text-ink-soft/70 hover:border-ink/40 transition-colors"
+                    className="px-6 py-3 rounded-full border border-line text-sm font-bold text-ink-soft/75 hover:border-ink/40 transition-colors"
                   >
                     Retour
                   </button>
@@ -366,16 +366,16 @@ export default function Checkout() {
             <div className="divide-y divide-line">
               {items.map((item) => (
                 <div key={item.id} className="flex justify-between py-2.5 text-[13px]">
-                  <span className="text-ink-soft/70 truncate pr-3">{item.quantite} × {item.titre}</span>
+                  <span className="text-ink-soft/75 truncate pr-3">{item.quantite} × {item.titre}</span>
                   <span className="font-semibold text-ink whitespace-nowrap">{formatFCFA(item.prixUnitaire * item.quantite)}</span>
                 </div>
               ))}
             </div>
-            <div className="flex justify-between text-[13px] text-ink-soft/70 pt-2">
+            <div className="flex justify-between text-[13px] text-ink-soft/75 pt-2">
               <span>Sous-total</span>
               <span>{formatFCFA(subtotal)}</span>
             </div>
-            <div className="flex justify-between text-[13px] text-ink-soft/70">
+            <div className="flex justify-between text-[13px] text-ink-soft/75">
               <span>Livraison estimée</span>
               <span>{form.zone ? formatFCFA(fraisLivraison) : '—'}</span>
             </div>

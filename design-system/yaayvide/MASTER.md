@@ -27,7 +27,7 @@
 |------|-------|-----|---------------------|----------------|
 | Texte principal | `ink` | `#1B2430` | 15.6:1 | Titres, corps |
 | Texte secondaire | `ink-soft` | `#3A4350` | 10.0:1 | Corps secondaire |
-| Texte discret | `ink-soft/70` | — | 4.3:1 | **Minimum** pour texte ≥ 14 px gras / ≥ 18 px |
+| Texte discret | `ink-soft/75` | — | 4.9:1 | **Minimum** pour tout texte lisible |
 | Structure sombre | `night` | `#0A2B58` | 14.0:1 | Bandeaux, footer |
 | Fond | `sable` / `cream` | `#FFFFFF` | — | Toutes les surfaces |
 | CTA principal | `clay` | `#C4602F` | 4.15:1 | Fond de bouton (texte blanc ≥ 14 px gras), icônes |
@@ -39,7 +39,7 @@
 | Bordures | `line` | `#DED5C2` | 1.5:1 | Séparateurs, contours non essentiels |
 
 **Règles couleur**
-- Texte courant : `ink`, `ink-soft`, ou `ink-soft/70` minimum. Bannir `ink-soft/30-60` pour du texte lisible (réservé aux icônes décoratives / placeholders).
+- Texte courant : `ink`, `ink-soft`, ou `ink-soft/75` minimum. Bannir `ink-soft/30-70` pour du texte lisible (réservé aux icônes décoratives / placeholders).
 - Jamais de texte blanc sur `orange` ni `teal` clair en petite taille ; utiliser `teal-dark`, `clay`/`clay-dark` ou texte `ink` sur `orange`.
 - Pas de hex en dur dans les composants (sauf `GRADIENT_CARDS`).
 - États sémantiques : erreur `red-600/700` + fond `red-50`, succès `teal-dark` + fond `teal/10`.

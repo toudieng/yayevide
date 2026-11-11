@@ -9,7 +9,7 @@ function RangeeProduits({ titre, sousTitre, produits }) {
     <div className="mb-10">
       <div className="mb-3.5">
         <h3 className="font-impact font-extrabold text-lg text-ink">{titre}</h3>
-        {sousTitre && <p className="text-[12.5px] text-ink-soft/60 mt-0.5">{sousTitre}</p>}
+        {sousTitre && <p className="text-[12.5px] text-ink-soft/75 mt-0.5">{sousTitre}</p>}
       </div>
       <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-1 px-1 no-scrollbar">
         {produits.map((p, i) => (
@@ -77,11 +77,11 @@ export default function Decouverte({ produits, recentes, frequentes, onEffacerHi
       {recentes.length > 0 && (
         <div className="mb-9">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/60">Recherches récentes</h3>
+            <h3 className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75">Recherches récentes</h3>
             <button
               type="button"
               onClick={onEffacerHistorique}
-              className="text-[11.5px] text-ink-soft/50 hover:text-clay transition-colors"
+              className="text-[11.5px] text-ink-soft/75 hover:text-clay transition-colors"
             >
               Effacer
             </button>
@@ -92,7 +92,7 @@ export default function Decouverte({ produits, recentes, frequentes, onEffacerHi
                 key={r.cle}
                 type="button"
                 onClick={() => onSelectionnerRecherche(r)}
-                className="px-3.5 py-2 bg-cream border border-line rounded-full text-[12.5px] text-ink-soft/80 hover:border-teal hover:text-teal transition-colors flex items-center gap-1.5"
+                className="px-3.5 py-2 bg-cream border border-line rounded-full text-[12.5px] text-ink-soft/80 hover:border-teal hover:text-teal-dark transition-colors flex items-center gap-1.5"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-3 w-3 opacity-60">
                   <circle cx="12" cy="12" r="9" />

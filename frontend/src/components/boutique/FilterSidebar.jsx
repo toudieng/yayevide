@@ -20,11 +20,11 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
             type="button"
             onClick={() => set({ categorie: '' })}
             className={`flex items-center justify-between text-left px-1 py-1.5 text-[13.5px] rounded-btn transition-colors ${
-              !filters.categorie ? 'text-teal font-semibold' : 'text-ink-soft hover:text-ink'
+              !filters.categorie ? 'text-teal-dark font-semibold' : 'text-ink-soft hover:text-ink'
             }`}
           >
             Toutes les catégories
-            <span className="text-[11px] text-ink-soft/50">{counts.total ?? 0}</span>
+            <span className="text-[11px] text-ink-soft/75">{counts.total ?? 0}</span>
           </button>
           {CATEGORIES.map((cat) => (
             <button
@@ -32,11 +32,11 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
               type="button"
               onClick={() => set({ categorie: cat.slug })}
               className={`flex items-center justify-between text-left px-1 py-1.5 text-[13.5px] rounded-btn transition-colors ${
-                filters.categorie === cat.slug ? 'text-teal font-semibold' : 'text-ink-soft hover:text-ink'
+                filters.categorie === cat.slug ? 'text-teal-dark font-semibold' : 'text-ink-soft hover:text-ink'
               }`}
             >
               {cat.name}
-              <span className="text-[11px] text-ink-soft/50">{counts[cat.slug] ?? 0}</span>
+              <span className="text-[11px] text-ink-soft/75">{counts[cat.slug] ?? 0}</span>
             </button>
           ))}
         </div>
@@ -102,7 +102,7 @@ export default function FilterSidebar({ filters, onChange, counts, onReset }) {
             onChange={(e) => set({ prixMin: e.target.value })}
             className="w-full px-3 py-2 bg-cream border border-line rounded-btn text-[13px] focus:outline-none focus:border-teal"
           />
-          <span className="text-ink-soft/50 text-xs">—</span>
+          <span className="text-ink-soft/75 text-xs">—</span>
           <input
             type="number"
             min="0"

@@ -152,7 +152,7 @@ export default function AdminCategories() {
             <button
               type="button"
               onClick={() => setFormulaireOuvert(false)}
-              className="px-5 py-2.5 rounded-btn text-sm font-semibold text-ink-soft/70 hover:text-ink transition-colors"
+              className="px-5 py-2.5 rounded-btn text-sm font-semibold text-ink-soft/75 hover:text-ink transition-colors"
             >
               Annuler
             </button>
@@ -164,17 +164,17 @@ export default function AdminCategories() {
         {categories.map((c) => (
           <div key={c.id} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] overflow-hidden">
             <div className="h-28 bg-line/30">
-              {c.image && <img src={c.image} alt={c.nom} className="h-full w-full object-cover" />}
+              {c.image && <img loading="lazy" decoding="async" src={c.image} alt={c.nom} className="h-full w-full object-cover" />}
             </div>
             <div className="p-4 flex items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-ink">{c.nom}</p>
-                <p className="text-[11px] text-ink-soft/50">Ordre {c.ordre}</p>
+                <p className="text-[11px] text-ink-soft/75">Ordre {c.ordre}</p>
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => ouvrirEdition(c)}
-                  className="text-[11px] font-bold uppercase px-2.5 py-1.5 rounded-btn border border-line text-ink-soft/70 hover:border-teal hover:text-teal transition-colors"
+                  className="text-[11px] font-bold uppercase px-2.5 py-1.5 rounded-btn border border-line text-ink-soft/75 hover:border-teal hover:text-teal-dark transition-colors"
                 >
                   Modifier
                 </button>
@@ -188,7 +188,7 @@ export default function AdminCategories() {
                 ) : (
                   <button
                     onClick={() => setConfirmationSuppression(c.id)}
-                    className="text-[11px] font-bold uppercase px-2.5 py-1.5 rounded-btn border border-line text-ink-soft/70 hover:border-red-400 hover:text-red-500 transition-colors"
+                    className="text-[11px] font-bold uppercase px-2.5 py-1.5 rounded-btn border border-line text-ink-soft/75 hover:border-red-400 hover:text-red-500 transition-colors"
                   >
                     Suppr.
                   </button>

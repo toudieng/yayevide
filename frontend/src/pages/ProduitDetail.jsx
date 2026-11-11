@@ -175,7 +175,7 @@ export default function ProduitDetail() {
           </p>
           <Link
             to="/boutique"
-            className="text-teal font-semibold hover:underline"
+            className="text-teal-dark font-semibold hover:underline"
           >
             Retour à la boutique
           </Link>
@@ -186,7 +186,7 @@ export default function ProduitDetail() {
 
   return (
     <Layout>
-      <div className="max-w-[1280px] mx-auto px-6 md:px-12 pt-7 text-[12.5px] text-ink-soft/60 flex items-center gap-2">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 pt-7 text-[12.5px] text-ink-soft/75 flex items-center gap-2">
         <Link to="/" className="hover:text-ink transition-colors">
           Découvrir
         </Link>
@@ -277,7 +277,7 @@ export default function ProduitDetail() {
                       : "border-line hover:border-ink/40"
                   }`}
                 >
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={img}
                     alt=""
                     className="h-full w-full object-cover"
@@ -289,7 +289,7 @@ export default function ProduitDetail() {
         </div>
 
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-teal mb-2">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-teal-dark mb-2">
             {produit.categorie_nom || "Yaay Vidé"}
           </p>
           <h1 className="font-serif text-[28px] sm:text-[32px] leading-tight text-ink mb-3">
@@ -305,13 +305,13 @@ export default function ProduitDetail() {
               <span className="font-bold text-ink">
                 {produit.boutique_note_moyenne}
               </span>
-              <span className="text-ink-soft/60">
+              <span className="text-ink-soft/75">
                 ({produit.boutique_nb_avis} avis)
               </span>
             </div>
           )}
 
-          <div className="flex flex-wrap items-center gap-4 text-[12.5px] text-ink-soft/60 mb-6 pb-6 border-b border-line">
+          <div className="flex flex-wrap items-center gap-4 text-[12.5px] text-ink-soft/75 mb-6 pb-6 border-b border-line">
             {produit.boutique_zone_nom && (
               <span className="flex items-center gap-1.5">
                 <svg
@@ -356,7 +356,7 @@ export default function ProduitDetail() {
             <button
               type="button"
               onClick={partagerLien}
-              className="flex items-center gap-1.5 text-teal font-semibold hover:text-teal-dark transition-colors"
+              className="flex items-center gap-1.5 text-teal-dark font-semibold hover:text-ink transition-colors"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -379,7 +379,7 @@ export default function ProduitDetail() {
               <p className="font-serif text-3xl font-bold text-ink mb-1">
                 {formatFCFA(produit.prix_final_public)}
               </p>
-              <p className="text-[12.5px] text-ink-soft/50 mb-6">
+              <p className="text-[12.5px] text-ink-soft/75 mb-6">
                 Prix d'achat
               </p>
 
@@ -428,7 +428,7 @@ export default function ProduitDetail() {
               {ajoute && (
                 <Link
                   to="/panier"
-                  className="block text-center text-[12.5px] font-semibold text-teal hover:underline mt-3 animate-fade-in"
+                  className="block text-center text-[12.5px] font-semibold text-teal-dark hover:underline mt-3 animate-fade-in"
                 >
                   Voir mon panier →
                 </Link>
@@ -458,12 +458,12 @@ export default function ProduitDetail() {
             <>
               <p className="font-serif text-3xl font-bold text-ink mb-1">
                 {formatFCFA(produit.prix_final_public)}
-                <span className="text-ink-soft/50 font-sans font-normal text-base">
+                <span className="text-ink-soft/75 font-sans font-normal text-base">
                   {" "}
                   /jour
                 </span>
               </p>
-              <p className="text-[12.5px] text-ink-soft/60 mb-7">
+              <p className="text-[12.5px] text-ink-soft/75 mb-7">
                 Caution de {formatFCFA(produit.caution)}, rendue à la fin de la
                 location.
               </p>
@@ -503,14 +503,14 @@ export default function ProduitDetail() {
                   <div
                     className={`space-y-2 pt-2 ${pricePulse ? "animate-price-pop" : ""}`}
                   >
-                    <div className="flex justify-between text-[13px] text-ink-soft/70">
+                    <div className="flex justify-between text-[13px] text-ink-soft/75">
                       <span>
                         Prix base ({calcul.jours} jour
                         {calcul.jours > 1 ? "s" : ""})
                       </span>
                       <span>{formatFCFA(calcul.prixBase)}</span>
                     </div>
-                    <div className="flex justify-between text-[13px] text-ink-soft/70">
+                    <div className="flex justify-between text-[13px] text-ink-soft/75">
                       <span>
                         Commission ({Math.round(calcul.tauxCommission * 100)}%)
                       </span>
@@ -520,7 +520,7 @@ export default function ProduitDetail() {
                       <span>Total</span>
                       <span>{formatFCFA(calcul.total)}</span>
                     </div>
-                    <div className="flex justify-between text-[13px] text-teal font-medium">
+                    <div className="flex justify-between text-[13px] text-teal-dark font-medium">
                       <span>Caution (remboursable)</span>
                       <span>{formatFCFA(calcul.caution)}</span>
                     </div>
@@ -550,7 +550,7 @@ export default function ProduitDetail() {
                   </svg>
                   Ajouter la location au panier
                 </button>
-                <p className="text-[11px] text-ink-soft/50 text-center -mt-2">
+                <p className="text-[11px] text-ink-soft/75 text-center -mt-2">
                   Paiement uniquement à la livraison — la vendeuse confirme la
                   disponibilité sous 24h.
                 </p>
@@ -575,7 +575,7 @@ export default function ProduitDetail() {
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[11px] text-ink-soft/50 uppercase tracking-wide">
+                <p className="text-[11px] text-ink-soft/75 uppercase tracking-wide">
                   Boutique
                 </p>
                 <p className="text-sm font-bold text-ink truncate">
@@ -584,7 +584,7 @@ export default function ProduitDetail() {
                 {produit.boutique_note_moyenne > 0 && (
                   <p className="text-[12.5px] text-orange mt-0.5">
                     ★ {produit.boutique_note_moyenne}{" "}
-                    <span className="text-ink-soft/60">
+                    <span className="text-ink-soft/75">
                       ({produit.boutique_nb_avis} avis)
                     </span>
                   </p>
@@ -594,14 +594,14 @@ export default function ProduitDetail() {
                 <p className="text-sm font-bold text-ink">
                   {produit.boutique_nb_ventes}
                 </p>
-                <p className="text-[11px] text-ink-soft/50">ventes</p>
+                <p className="text-[11px] text-ink-soft/75">ventes</p>
               </div>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                className="h-4 w-4 text-ink-soft/40 group-hover:text-teal group-hover:translate-x-0.5 transition-all"
+                className="h-4 w-4 text-ink-soft/40 group-hover:text-teal-dark group-hover:translate-x-0.5 transition-all"
               >
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
@@ -635,14 +635,14 @@ export default function ProduitDetail() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
-                  className="h-5 w-5 mx-auto mb-1.5 text-teal"
+                  className="h-5 w-5 mx-auto mb-1.5 text-teal-dark"
                 >
                   <path d={b.path} />
                 </svg>
                 <p className="text-[11.5px] font-bold text-ink leading-snug">
                   {b.label}
                 </p>
-                <p className="text-[10.5px] text-ink-soft/60 leading-snug">
+                <p className="text-[10.5px] text-ink-soft/75 leading-snug">
                   {b.desc}
                 </p>
               </div>
@@ -661,8 +661,8 @@ export default function ProduitDetail() {
                   onClick={() => setTab(t.id)}
                   className={`pb-3 text-[13.5px] font-semibold transition-colors border-b-2 -mb-px ${
                     tab === t.id
-                      ? "text-teal border-teal"
-                      : "text-ink-soft/50 border-transparent hover:text-ink"
+                      ? "text-teal-dark border-teal"
+                      : "text-ink-soft/75 border-transparent hover:text-ink"
                   }`}
                 >
                   {t.label}
@@ -675,35 +675,35 @@ export default function ProduitDetail() {
                 <p className="whitespace-pre-line">{produit.description}</p>
               ) : (
                 <dl className="grid grid-cols-2 gap-y-3 text-[13.5px]">
-                  <dt className="text-ink-soft/60">État</dt>
+                  <dt className="text-ink-soft/75">État</dt>
                   <dd className="text-ink font-medium">
                     {ETAT_LABELS[produit.etat] || "Bon état"}
                   </dd>
                   {produit.taille && (
                     <>
-                      <dt className="text-ink-soft/60">Taille / pointure</dt>
+                      <dt className="text-ink-soft/75">Taille / pointure</dt>
                       <dd className="text-ink font-medium">{produit.taille}</dd>
                     </>
                   )}
-                  <dt className="text-ink-soft/60">Catégorie</dt>
+                  <dt className="text-ink-soft/75">Catégorie</dt>
                   <dd className="text-ink font-medium">
                     {produit.categorie_nom || "—"}
                   </dd>
-                  <dt className="text-ink-soft/60">Type d'offre</dt>
+                  <dt className="text-ink-soft/75">Type d'offre</dt>
                   <dd className="text-ink font-medium">
                     {isLocation ? "Location" : "Vente"}
                   </dd>
-                  <dt className="text-ink-soft/60">Quantité disponible</dt>
+                  <dt className="text-ink-soft/75">Quantité disponible</dt>
                   <dd className="text-ink font-medium">
                     {produit.quantite_disponible}
                   </dd>
-                  <dt className="text-ink-soft/60">Boutique</dt>
+                  <dt className="text-ink-soft/75">Boutique</dt>
                   <dd className="text-ink font-medium">
                     {produit.boutique_nom}
                   </dd>
                   {produit.boutique_zone_nom && (
                     <>
-                      <dt className="text-ink-soft/60">Localisation</dt>
+                      <dt className="text-ink-soft/75">Localisation</dt>
                       <dd className="text-ink font-medium">
                         {produit.boutique_zone_nom}
                       </dd>
@@ -721,7 +721,7 @@ export default function ProduitDetail() {
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-wide text-teal mb-1.5">
+                <p className="text-[11px] font-bold uppercase tracking-wide text-teal-dark mb-1.5">
                   Chez {produit.boutique_nom}
                 </p>
                 <h2 className="font-serif text-2xl text-ink">
@@ -730,7 +730,7 @@ export default function ProduitDetail() {
               </div>
               <Link
                 to={`/boutique/${produit.boutique_slug}`}
-                className="hidden sm:flex items-center gap-1.5 text-teal font-semibold text-sm hover:underline whitespace-nowrap"
+                className="hidden sm:flex items-center gap-1.5 text-teal-dark font-semibold text-sm hover:underline whitespace-nowrap"
               >
                 Voir la boutique
                 <svg
@@ -759,7 +759,7 @@ export default function ProduitDetail() {
         <div className="bg-white py-14">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <div className="mb-6">
-              <p className="text-[11px] font-bold uppercase tracking-wide text-teal mb-1.5">
+              <p className="text-[11px] font-bold uppercase tracking-wide text-teal-dark mb-1.5">
                 Vous pourriez aussi aimer
               </p>
               <h2 className="font-serif text-2xl text-ink">

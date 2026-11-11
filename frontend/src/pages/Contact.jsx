@@ -32,13 +32,13 @@ export default function Contact() {
           <Reveal>
             {envoye ? (
               <div className="bg-cream border border-line rounded-m p-10 text-center h-full flex flex-col items-center justify-center">
-                <div className="h-12 w-12 rounded-full bg-teal/10 text-teal flex items-center justify-center mb-4">
+                <div className="h-12 w-12 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center mb-4">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6">
                     <path d="M5 12l4.5 4.5L19 7" />
                   </svg>
                 </div>
                 <h3 className="font-serif text-xl text-ink mb-2">Message envoyé !</h3>
-                <p className="text-sm text-ink-soft/70">Nous vous répondons très vite sur WhatsApp.</p>
+                <p className="text-sm text-ink-soft/75">Nous vous répondons très vite sur WhatsApp.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="bg-cream border border-line rounded-m shadow-xl overflow-hidden">

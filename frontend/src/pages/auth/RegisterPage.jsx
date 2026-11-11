@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Logo from "../../components/ui/Logo";
 import Inscription from "./Inscription";
-import vendeuseImg from "../../assets/vendeuse.jpg";
+import vendeuseImg from "../../assets/vendeuse.webp";
 
 const PANELS = {
   acheteuse: {
@@ -44,7 +44,7 @@ export default function RegisterPage() {
           <div className="mb-8 text-center flex flex-col items-center">
             <Logo className="h-14 w-auto mb-6" />
             <h2 className="text-2xl font-serif italic font-bold text-ink tracking-tight">Créer un compte</h2>
-            <p className="text-xs text-ink-soft/70 mt-1.5">Rejoignez la communauté Yaay Vidé dès aujourd'hui.</p>
+            <p className="text-xs text-ink-soft/75 mt-1.5">Rejoignez la communauté Yaay Vidé dès aujourd'hui.</p>
           </div>
 
           <Inscription role={role} onRoleChange={setRole} />

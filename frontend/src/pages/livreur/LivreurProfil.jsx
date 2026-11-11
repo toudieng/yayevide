@@ -23,23 +23,23 @@ const TYPES_VEHICULE = [
 function DocumentLigne({ label, url, verifie, onUpload, enCours }) {
   return (
     <div className="flex items-center gap-3.5 py-3.5 border-b border-line last:border-0">
-      <span className={`h-9 w-9 rounded-full flex items-center justify-center shrink-0 ${url ? (verifie ? 'bg-teal/10 text-teal' : 'bg-orange/10 text-orange') : 'bg-line/50 text-ink-soft/40'}`}>
+      <span className={`h-9 w-9 rounded-full flex items-center justify-center shrink-0 ${url ? (verifie ? 'bg-teal/10 text-teal-dark' : 'bg-orange/10 text-orange') : 'bg-line/50 text-ink-soft/75'}`}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4.5 w-4.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><path d="M14 2v6h6" /></svg>
       </span>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-semibold text-ink">{label}</p>
         {url ? (
-          <p className={`text-[11.5px] font-bold ${verifie ? 'text-teal' : 'text-orange'}`}>{verifie ? 'Vérifié' : 'En attente de vérification'}</p>
+          <p className={`text-[11.5px] font-bold ${verifie ? 'text-teal-dark' : 'text-orange'}`}>{verifie ? 'Vérifié' : 'En attente de vérification'}</p>
         ) : (
-          <p className="text-[11.5px] text-ink-soft/50">Non fourni</p>
+          <p className="text-[11.5px] text-ink-soft/75">Non fourni</p>
         )}
       </div>
       {url && (
-        <a href={url} target="_blank" rel="noreferrer" className="text-[12px] font-bold text-teal hover:underline whitespace-nowrap">
+        <a href={url} target="_blank" rel="noreferrer" className="text-[12px] font-bold text-teal-dark hover:underline whitespace-nowrap">
           Voir
         </a>
       )}
-      <label className="text-[12px] font-bold text-ink-soft/60 hover:text-ink cursor-pointer whitespace-nowrap">
+      <label className="text-[12px] font-bold text-ink-soft/75 hover:text-ink cursor-pointer whitespace-nowrap">
         {enCours ? '...' : url ? 'Remplacer' : 'Ajouter'}
         <input type="file" accept="image/*,.pdf" className="hidden" disabled={enCours} onChange={onUpload} />
       </label>
@@ -121,7 +121,7 @@ export default function LivreurProfil() {
   return (
     <ShellLivreur active="profil" moi={moi} titre="Mon profil">
 
-      <p className="text-[13px] text-ink-soft/60 -mt-2">Gérez vos informations, votre véhicule et vos documents.</p>
+      <p className="text-[13px] text-ink-soft/75 -mt-2">Gérez vos informations, votre véhicule et vos documents.</p>
 
       <div className={`${GRADIENT_CARDS[0].bg} rounded-m ${SHADOW} p-6 flex items-center justify-between gap-4 flex-wrap`}>
         <div className="flex items-center gap-4">
@@ -143,23 +143,23 @@ export default function LivreurProfil() {
           <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-5">Informations personnelles</h3>
           <div className="space-y-4">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/50 mb-1">Nom d'utilisateur</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75 mb-1">Nom d'utilisateur</p>
               <p className="text-sm font-semibold text-ink">{profil.username}</p>
             </div>
             {profil.phone_number && (
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/50 mb-1">Téléphone</p>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75 mb-1">Téléphone</p>
                 <p className="text-sm font-semibold text-ink">{profil.phone_number}</p>
               </div>
             )}
             {profil.email && (
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/50 mb-1">Email</p>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75 mb-1">Email</p>
                 <p className="text-sm font-semibold text-ink">{profil.email}</p>
               </div>
             )}
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/50 mb-1">Membre depuis</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75 mb-1">Membre depuis</p>
               <p className="text-sm font-semibold text-ink">{formatDate(profil.date_joined)}</p>
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function LivreurProfil() {
             <option value="">Toutes zones (aucune préférence)</option>
             {zones.map((z) => <option key={z.code} value={z.code}>{z.nom}</option>)}
           </select>
-          <p className="text-[11.5px] text-ink-soft/50 mt-3 leading-relaxed">
+          <p className="text-[11.5px] text-ink-soft/75 mt-3 leading-relaxed">
             Les commandes de votre zone vous seront proposées en priorité, sur la page « Mes livraisons ».
           </p>
         </div>
@@ -185,7 +185,7 @@ export default function LivreurProfil() {
           <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-5">Véhicule</h3>
           <div className="space-y-4">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/50 mb-1.5">Type de véhicule</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75 mb-1.5">Type de véhicule</p>
               <select
                 value={profil.type_vehicule || ''}
                 disabled={champVehiculeEnCours === 'type_vehicule'}
@@ -196,7 +196,7 @@ export default function LivreurProfil() {
               </select>
             </div>
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/50 mb-1.5">Marque / modèle</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75 mb-1.5">Marque / modèle</p>
               <input
                 type="text"
                 defaultValue={profil.marque_modele_vehicule || ''}
@@ -206,7 +206,7 @@ export default function LivreurProfil() {
               />
             </div>
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/50 mb-1.5">Immatriculation</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75 mb-1.5">Immatriculation</p>
               <input
                 type="text"
                 defaultValue={profil.immatriculation || ''}
@@ -220,7 +220,7 @@ export default function LivreurProfil() {
 
         <div className={`bg-white rounded-m ${SHADOW} p-6`}>
           <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-2">Documents</h3>
-          <p className="text-[12px] text-ink-soft/50 mb-2">Vérifiés par l'équipe Yaay Vidé après envoi.</p>
+          <p className="text-[12px] text-ink-soft/75 mb-2">Vérifiés par l'équipe Yaay Vidé après envoi.</p>
           <div>
             <DocumentLigne
               label="Pièce d'identité"
@@ -246,25 +246,25 @@ export default function LivreurProfil() {
           <div className="flex items-center justify-between gap-4 py-3.5">
             <div>
               <p className="text-sm font-semibold text-ink">Modifier le mot de passe</p>
-              <p className="text-[11.5px] text-ink-soft/50">Contactez l'équipe Yaay Vidé pour le réinitialiser.</p>
+              <p className="text-[11.5px] text-ink-soft/75">Contactez l'équipe Yaay Vidé pour le réinitialiser.</p>
             </div>
-            <a href="https://wa.me/221771018991" target="_blank" rel="noreferrer" className="text-[12.5px] font-bold text-teal hover:underline whitespace-nowrap">
+            <a href="https://wa.me/221771018991" target="_blank" rel="noreferrer" className="text-[12.5px] font-bold text-teal-dark hover:underline whitespace-nowrap">
               Contacter →
             </a>
           </div>
           <div className="flex items-center justify-between gap-4 py-3.5">
             <div>
               <p className="text-sm font-semibold text-ink">Se déconnecter</p>
-              <p className="text-[11.5px] text-ink-soft/50">Fermer votre session sur cet appareil.</p>
+              <p className="text-[11.5px] text-ink-soft/75">Fermer votre session sur cet appareil.</p>
             </div>
-            <button type="button" onClick={seDeconnecter} className="text-[12.5px] font-bold text-ink-soft/70 hover:text-ink whitespace-nowrap">
+            <button type="button" onClick={seDeconnecter} className="text-[12.5px] font-bold text-ink-soft/75 hover:text-ink whitespace-nowrap">
               Se déconnecter
             </button>
           </div>
           <div className="flex items-center justify-between gap-4 py-3.5">
             <div>
               <p className="text-sm font-semibold text-red-500">Supprimer le compte</p>
-              <p className="text-[11.5px] text-ink-soft/50">Cette demande nécessite une vérification Yaay Vidé.</p>
+              <p className="text-[11.5px] text-ink-soft/75">Cette demande nécessite une vérification Yaay Vidé.</p>
             </div>
             <a href="https://wa.me/221771018991" target="_blank" rel="noreferrer" className="text-[12.5px] font-bold text-red-500 hover:underline whitespace-nowrap">
               Demander →

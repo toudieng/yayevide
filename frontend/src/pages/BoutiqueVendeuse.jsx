@@ -55,10 +55,10 @@ function AjouterAvisForm({ slug, onAjoute }) {
 
   if (!connecte) {
     return (
-      <p className="text-[13px] text-ink-soft/60 bg-cream border border-line rounded-btn px-5 py-4">
+      <p className="text-[13px] text-ink-soft/75 bg-cream border border-line rounded-btn px-5 py-4">
         <Link
           to="/connexion"
-          className="text-teal font-semibold hover:underline"
+          className="text-teal-dark font-semibold hover:underline"
         >
           Connectez-vous
         </Link>{" "}
@@ -147,7 +147,7 @@ export default function BoutiqueVendeuse() {
           </p>
           <Link
             to="/boutique"
-            className="text-teal font-semibold hover:underline"
+            className="text-teal-dark font-semibold hover:underline"
           >
             Retour à la boutique
           </Link>
@@ -201,12 +201,12 @@ export default function BoutiqueVendeuse() {
             </h1>
             <div className="flex items-center gap-3 mt-1.5 flex-wrap">
               {boutique.nb_avis > 0 ? (
-                <span className="flex items-center gap-1.5 text-[13px] text-ink-soft/70">
+                <span className="flex items-center gap-1.5 text-[13px] text-ink-soft/75">
                   <Stars note={boutique.note_moyenne} /> {boutique.note_moyenne}{" "}
                   ({boutique.nb_avis} avis)
                 </span>
               ) : (
-                <span className="flex items-center gap-1.5 text-[13px] text-ink-soft/50">
+                <span className="flex items-center gap-1.5 text-[13px] text-ink-soft/75">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -222,7 +222,7 @@ export default function BoutiqueVendeuse() {
               {boutique.zone_nom && (
                 <>
                   <span className="text-line">•</span>
-                  <span className="flex items-center gap-1.5 text-[13px] text-ink-soft/60">
+                  <span className="flex items-center gap-1.5 text-[13px] text-ink-soft/75">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -238,21 +238,21 @@ export default function BoutiqueVendeuse() {
                 </>
               )}
               <span className="text-line">•</span>
-              <span className="text-[13px] text-ink-soft/60">
+              <span className="text-[13px] text-ink-soft/75">
                 Membre depuis {anneeCreation}
               </span>
               <span className="text-line">•</span>
-              <span className="text-[13px] text-ink-soft/60">
+              <span className="text-[13px] text-ink-soft/75">
                 {boutique.produits.length} article
                 {boutique.produits.length !== 1 ? "s" : ""}
               </span>
               <span className="text-line">•</span>
-              <span className="text-[13px] text-ink-soft/60">
+              <span className="text-[13px] text-ink-soft/75">
                 {boutique.nb_ventes} vente{boutique.nb_ventes !== 1 ? "s" : ""}
               </span>
             </div>
             {boutique.description && (
-              <p className="text-[13.5px] text-ink-soft/70 mt-3 max-w-xl leading-relaxed">
+              <p className="text-[13.5px] text-ink-soft/75 mt-3 max-w-xl leading-relaxed">
                 {boutique.description}
               </p>
             )}
@@ -272,8 +272,8 @@ export default function BoutiqueVendeuse() {
               onClick={() => setTab(t.id)}
               className={`pb-3.5 text-[13.5px] font-semibold transition-colors border-b-2 -mb-px ${
                 tab === t.id
-                  ? "text-teal border-teal"
-                  : "text-ink-soft/50 border-transparent hover:text-ink"
+                  ? "text-teal-dark border-teal"
+                  : "text-ink-soft/75 border-transparent hover:text-ink"
               }`}
             >
               {t.label}
@@ -285,7 +285,7 @@ export default function BoutiqueVendeuse() {
           <div className="mt-8 pb-16">
             {boutique.produits.length === 0 ? (
               <div className="text-center py-16 border border-dashed border-line rounded-m">
-                <p className="text-ink-soft/60 text-sm">
+                <p className="text-ink-soft/75 text-sm">
                   Aucun article disponible pour le moment.
                 </p>
               </div>
@@ -306,7 +306,7 @@ export default function BoutiqueVendeuse() {
                       type="button"
                       onClick={() => changerPage(Math.max(1, pageCourante - 1))}
                       disabled={pageCourante === 1}
-                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal transition-colors"
+                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal-dark transition-colors"
                     >
                       Précédent
                     </button>
@@ -328,7 +328,7 @@ export default function BoutiqueVendeuse() {
                       type="button"
                       onClick={() => changerPage(Math.min(totalPages, pageCourante + 1))}
                       disabled={pageCourante === totalPages}
-                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal transition-colors"
+                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal-dark transition-colors"
                     >
                       Suivant
                     </button>
@@ -354,7 +354,7 @@ export default function BoutiqueVendeuse() {
                         « {a.commentaire} »
                       </p>
                     )}
-                    <p className="text-[12px] text-ink-soft/50 mt-3">
+                    <p className="text-[12px] text-ink-soft/75 mt-3">
                       {a.auteur_nom}
                     </p>
                   </div>
@@ -390,7 +390,7 @@ export default function BoutiqueVendeuse() {
               {boutique.description ||
                 "Cette vendeuse n'a pas encore ajouté de description."}
             </p>
-            <div className="mt-6 flex items-center gap-2 text-[13px] text-ink-soft/60">
+            <div className="mt-6 flex items-center gap-2 text-[13px] text-ink-soft/75">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"

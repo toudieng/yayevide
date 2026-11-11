@@ -72,7 +72,7 @@ export default function CommandesVendeuse() {
 
         {commandes.length === 0 ? (
           <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-            <p className="text-ink-soft/60 text-sm">Aucune demande en attente pour le moment.</p>
+            <p className="text-ink-soft/75 text-sm">Aucune demande en attente pour le moment.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -80,10 +80,10 @@ export default function CommandesVendeuse() {
               <div key={c.id} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 space-y-4">
                 <div className="flex items-start gap-3.5">
                   <div className="h-14 w-14 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                    {c.produit_image && <img src={c.produit_image} alt="" className="h-full w-full object-cover" />}
+                    {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[11px] font-bold uppercase tracking-wide text-teal mb-1">Nouvelle demande d'achat</p>
+                    <p className="text-[11px] font-bold uppercase tracking-wide text-teal-dark mb-1">Nouvelle demande d'achat</p>
                     <p className="text-sm font-semibold text-ink flex items-center gap-1.5">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 text-teal shrink-0">
                         <path d="M5 12l4.5 4.5L19 7" />
@@ -94,7 +94,7 @@ export default function CommandesVendeuse() {
                   </div>
                 </div>
 
-                <p className="text-[13px] text-ink-soft/70">Merci de confirmer sa disponibilité.</p>
+                <p className="text-[13px] text-ink-soft/75">Merci de confirmer sa disponibilité.</p>
 
                 <div className="flex items-center gap-2 text-[12px] font-semibold text-orange bg-orange/10 rounded-btn px-3 py-2 w-fit">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-3.5 w-3.5">
@@ -120,7 +120,7 @@ export default function CommandesVendeuse() {
                     type="button"
                     disabled={enCours === c.id}
                     onClick={() => repondre(c, false)}
-                    className="flex-1 flex items-center justify-center gap-1.5 border border-line hover:border-red-400 hover:text-red-500 text-ink-soft/70 font-bold text-[12.5px] uppercase tracking-wide py-3 rounded-btn transition-colors disabled:opacity-50"
+                    className="flex-1 flex items-center justify-center gap-1.5 border border-line hover:border-red-400 hover:text-red-500 text-ink-soft/75 font-bold text-[12.5px] uppercase tracking-wide py-3 rounded-btn transition-colors disabled:opacity-50"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
                       <path d="M6 6l12 12M18 6L6 18" />

@@ -1,6 +1,6 @@
 // frontend/src/components/home/VendeuseCTABanner.jsx
 import { Link } from "react-router-dom";
-import bannerBg from "../../assets/cta-banner-bg.png";
+import bannerBg from "../../assets/cta-banner-bg.webp";
 
 const POINTS = [
   {
@@ -24,7 +24,7 @@ export default function VendeuseCTABanner() {
   return (
     <section className="py-6">
       <div className="relative overflow-hidden bg-[#eef4fb]">
-        <img
+        <img loading="lazy" decoding="async"
           src={bannerBg}
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-right"

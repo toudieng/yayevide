@@ -23,7 +23,7 @@ function ChampMotDePasse({ label, name, value, onChange, placeholder }) {
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
-          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-soft/50 hover:text-teal transition-colors"
+          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-soft/75 hover:text-teal-dark transition-colors"
           aria-label={visible ? "Masquer le mot de passe" : "Afficher le mot de passe"}
         >
           {visible ? (
@@ -151,8 +151,8 @@ export default function Inscription({ role, onRoleChange }) {
             onClick={() => onRoleChange("acheteuse")}
             className={`pb-1 transition-all duration-200 uppercase text-xs font-bold tracking-widest cursor-pointer ${
               role === "acheteuse"
-                ? "text-teal border-b-2 border-teal"
-                : "text-ink-soft/50 hover:text-teal hover:border-b-2 hover:border-teal/40"
+                ? "text-teal-dark border-b-2 border-teal"
+                : "text-ink-soft/75 hover:text-teal-dark hover:border-b-2 hover:border-teal/40"
             }`}
           >
             Acheteuse
@@ -166,7 +166,7 @@ export default function Inscription({ role, onRoleChange }) {
             className={`pb-1 transition-all duration-200 uppercase text-xs font-bold tracking-widest cursor-pointer ${
               role === "vendeuse"
                 ? "text-orange border-b-2 border-orange"
-                : "text-ink-soft/50 hover:text-orange hover:border-b-2 hover:border-orange/40"
+                : "text-ink-soft/75 hover:text-orange hover:border-b-2 hover:border-orange/40"
             }`}
           >
             Vendeuse
@@ -246,7 +246,7 @@ export default function Inscription({ role, onRoleChange }) {
         {role === "vendeuse" && (
           <div>
             <label className="block text-[11px] font-bold text-ink mb-1.5">
-              Zone <span className="font-normal text-ink-soft/50">(facultatif — juste pour informer les acheteuses, pas votre adresse exacte)</span>
+              Zone <span className="font-normal text-ink-soft/75">(facultatif — juste pour informer les acheteuses, pas votre adresse exacte)</span>
             </label>
             <select
               name="zoneBoutique"
@@ -279,7 +279,7 @@ export default function Inscription({ role, onRoleChange }) {
                   className={`px-4 py-3 rounded-xl text-sm font-semibold border-2 transition-all ${
                     formData.notificationPreference === opt.value
                       ? "border-orange bg-orange/5 text-ink"
-                      : "border-line text-ink-soft/60 hover:border-ink/30"
+                      : "border-line text-ink-soft/75 hover:border-ink/30"
                   }`}
                 >
                   {opt.label}
@@ -315,8 +315,8 @@ export default function Inscription({ role, onRoleChange }) {
         </button>
       </form>
 
-      <p className="text-xs text-center text-ink-soft/70 mt-6">
-        Déjà un compte ? <a href="/connexion" className="text-teal font-semibold hover:underline">Se connecter</a>
+      <p className="text-xs text-center text-ink-soft/75 mt-6">
+        Déjà un compte ? <a href="/connexion" className="text-teal-dark font-semibold hover:underline">Se connecter</a>
       </p>
     </>
   );

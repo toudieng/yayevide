@@ -23,10 +23,10 @@ function joursRestants(iso) {
 
 const STATUT_STYLE = {
   en_attente_confirmation: { label: 'Demande', couleur: 'bg-orange/10 text-orange' },
-  confirme: { label: 'À venir', couleur: 'bg-teal/10 text-teal' },
+  confirme: { label: 'À venir', couleur: 'bg-teal/10 text-teal-dark' },
   en_cours_livraison: { label: 'En cours', couleur: 'bg-teal/15 text-teal-dark' },
   livre: { label: 'En cours', couleur: 'bg-teal/15 text-teal-dark' },
-  terminee: { label: 'Terminée', couleur: 'bg-line text-ink-soft/60' },
+  terminee: { label: 'Terminée', couleur: 'bg-line text-ink-soft/75' },
   indisponible: { label: 'Annulée', couleur: 'bg-red-50 text-red-500' },
   annule: { label: 'Annulée', couleur: 'bg-red-50 text-red-500' },
 };
@@ -108,7 +108,7 @@ export default function LocationsVendeuse() {
     <ShellVendeuse active="locations" moi={moi} titre="Locations">
 
       <div className="flex items-start justify-between gap-4 flex-wrap -mt-2">
-        <p className="text-[13px] text-ink-soft/60">Suivez les locations en toute sécurité : les échanges passent par la modération Yaay Vidé.</p>
+        <p className="text-[13px] text-ink-soft/75">Suivez les locations en toute sécurité : les échanges passent par la modération Yaay Vidé.</p>
         <Link
           to="/vendeuse/ajouter-produit"
           className="bg-orange hover:bg-orange-dark text-white font-bold text-sm px-5 py-2.5 rounded-btn transition-colors shrink-0 whitespace-nowrap"
@@ -148,7 +148,7 @@ export default function LocationsVendeuse() {
               key={o.id}
               onClick={() => setOnglet(o.id)}
               className={`px-3.5 py-2 rounded-btn text-[12.5px] font-bold transition-all whitespace-nowrap ${
-                onglet === o.id ? 'bg-teal text-white' : 'text-ink-soft/60 hover:text-ink'
+                onglet === o.id ? 'bg-teal text-white' : 'text-ink-soft/75 hover:text-ink'
               }`}
             >
               {o.label} <span className="opacity-70">({commandes.filter(o.test).length})</span>
@@ -167,13 +167,13 @@ export default function LocationsVendeuse() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold text-ink uppercase tracking-widest">Suivi des locations</h3>
-          <span className="text-[12px] text-ink-soft/50">{commandes.length} location{commandes.length > 1 ? 's' : ''} au total</span>
+          <span className="text-[12px] text-ink-soft/75">{commandes.length} location{commandes.length > 1 ? 's' : ''} au total</span>
         </div>
 
         {commandesFiltrees.length === 0 ? (
           <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-            <p className="text-ink-soft/60 text-sm mb-4">Aucune location dans cette catégorie pour le moment.</p>
-            <Link to="/vendeuse/ajouter-produit" className="text-teal font-semibold text-sm hover:underline">
+            <p className="text-ink-soft/75 text-sm mb-4">Aucune location dans cette catégorie pour le moment.</p>
+            <Link to="/vendeuse/ajouter-produit" className="text-teal-dark font-semibold text-sm hover:underline">
               Ajouter un article à louer
             </Link>
           </div>
@@ -188,7 +188,7 @@ export default function LocationsVendeuse() {
                   <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
                     <div className="flex items-center gap-3.5 min-w-0">
                       <div className="h-12 w-12 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                        {c.produit_image && <img src={c.produit_image} alt="" className="h-full w-full object-cover" />}
+                        {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -198,27 +198,27 @@ export default function LocationsVendeuse() {
                           )}
                         </div>
                         <p className="font-bold text-ink truncate">{c.produit_titre}</p>
-                        <p className="text-[11.5px] text-ink-soft/50">Location YV-L-{String(c.id).padStart(4, '0')} · {c.nb_jours_location || '—'} jours</p>
+                        <p className="text-[11.5px] text-ink-soft/75">Location YV-L-{String(c.id).padStart(4, '0')} · {c.nb_jours_location || '—'} jours</p>
                       </div>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide">Locataire</p>
+                      <p className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide">Locataire</p>
                       <p className="text-[13px] font-semibold text-ink">{c.acheteur_nom}</p>
-                      <p className="text-[10.5px] text-ink-soft/45">Coordonnées masquées</p>
+                      <p className="text-[10.5px] text-ink-soft/75">Coordonnées masquées</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-3 gap-3 bg-sable rounded-btn p-4 mb-4 text-center">
                     <div>
-                      <p className="text-[10px] font-bold text-ink-soft/50 uppercase tracking-wide mb-1">Début</p>
+                      <p className="text-[10px] font-bold text-ink-soft/75 uppercase tracking-wide mb-1">Début</p>
                       <p className="text-[12.5px] font-semibold text-ink">{formatDate(c.date_debut_location)}</p>
                     </div>
                     <div>
-                      <p className="text-[10px] font-bold text-ink-soft/50 uppercase tracking-wide mb-1">Aujourd'hui</p>
-                      <p className="text-[12.5px] font-semibold text-teal">{formatDate(new Date().toISOString())}</p>
+                      <p className="text-[10px] font-bold text-ink-soft/75 uppercase tracking-wide mb-1">Aujourd'hui</p>
+                      <p className="text-[12.5px] font-semibold text-teal-dark">{formatDate(new Date().toISOString())}</p>
                     </div>
                     <div>
-                      <p className="text-[10px] font-bold text-ink-soft/50 uppercase tracking-wide mb-1">Retour prévu</p>
+                      <p className="text-[10px] font-bold text-ink-soft/75 uppercase tracking-wide mb-1">Retour prévu</p>
                       <p className="text-[12.5px] font-semibold text-ink">{formatDate(c.date_fin_location)}</p>
                     </div>
                   </div>
@@ -226,16 +226,16 @@ export default function LocationsVendeuse() {
                   <div className="flex items-center justify-between gap-4 flex-wrap">
                     <div className="flex items-center gap-6 flex-wrap">
                       <div>
-                        <p className="text-[10px] font-bold text-ink-soft/50 uppercase tracking-wide">Montant location</p>
+                        <p className="text-[10px] font-bold text-ink-soft/75 uppercase tracking-wide">Montant location</p>
                         <p className="text-sm font-bold text-ink">{formatFCFA(c.prix_total_paye)}</p>
                       </div>
                       <div>
-                        <p className="text-[10px] font-bold text-ink-soft/50 uppercase tracking-wide">Caution</p>
+                        <p className="text-[10px] font-bold text-ink-soft/75 uppercase tracking-wide">Caution</p>
                         <p className="text-sm font-bold text-ink">{formatFCFA(c.caution_demandee)}</p>
                       </div>
                       <div>
-                        <p className="text-[10px] font-bold text-ink-soft/50 uppercase tracking-wide">Paiement</p>
-                        <p className={`text-sm font-bold ${c.statut_paiement === 'paye' ? 'text-teal' : 'text-orange'}`}>
+                        <p className="text-[10px] font-bold text-ink-soft/75 uppercase tracking-wide">Paiement</p>
+                        <p className={`text-sm font-bold ${c.statut_paiement === 'paye' ? 'text-teal-dark' : 'text-orange'}`}>
                           {c.statut_paiement === 'paye' ? 'Confirmé' : 'En attente'}
                         </p>
                       </div>
@@ -267,7 +267,7 @@ export default function LocationsVendeuse() {
           {FONCTIONNALITES_A_VENIR.map((f) => (
             <div key={f.titre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
               <p className="text-[13px] font-bold text-ink mb-1">{f.titre}</p>
-              <p className="text-[11.5px] text-ink-soft/55 leading-relaxed">{f.desc}</p>
+              <p className="text-[11.5px] text-ink-soft/75 leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>

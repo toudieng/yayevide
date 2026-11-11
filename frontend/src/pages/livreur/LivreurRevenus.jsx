@@ -59,7 +59,7 @@ export default function LivreurRevenus() {
   return (
     <ShellLivreur active="revenus" moi={moi} titre="Mes revenus">
 
-      <p className="text-[13px] text-ink-soft/60 -mt-2">Consultez vos frais de livraison et l'historique de vos revenus.</p>
+      <p className="text-[13px] text-ink-soft/75 -mt-2">Consultez vos frais de livraison et l'historique de vos revenus.</p>
 
       <div className={`bg-white rounded-m ${SHADOW} p-1.5 flex items-center gap-1 w-fit`}>
         {PERIODES.map((p) => (
@@ -67,7 +67,7 @@ export default function LivreurRevenus() {
             key={p.id}
             onClick={() => setPeriode(p.id)}
             className={`px-4 py-2 rounded-btn text-[12.5px] font-bold transition-all ${
-              periode === p.id ? 'bg-ink text-cream' : 'text-ink-soft/60 hover:text-ink'
+              periode === p.id ? 'bg-ink text-cream' : 'text-ink-soft/75 hover:text-ink'
             }`}
           >
             {p.label}
@@ -108,12 +108,12 @@ export default function LivreurRevenus() {
         </span>
         <div className="flex-1 min-w-[220px]">
           <p className="text-sm font-bold text-ink">Prochain versement indicatif</p>
-          <p className="text-[12.5px] text-ink-soft/60 mt-0.5">
+          <p className="text-[12.5px] text-ink-soft/75 mt-0.5">
             Les frais de livraison validés avant la clôture sont regroupés pour le prochain cycle — {formatDate(prochainVersement)} (estimation).
           </p>
         </div>
         <div className="text-right shrink-0">
-          <p className="text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wide">Montant en attente</p>
+          <p className="text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wide">Montant en attente</p>
           <p className="text-lg font-serif font-bold text-ink">{formatFCFA(stats.revenu_mois)}</p>
         </div>
       </div>
@@ -128,11 +128,11 @@ export default function LivreurRevenus() {
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Historique des revenus</h3>
         {livraisons.length === 0 ? (
           <div className={`bg-white rounded-m ${SHADOW} p-16 text-center`}>
-            <p className="text-ink-soft/60 text-sm">Aucune livraison effectuée pour le moment.</p>
+            <p className="text-ink-soft/75 text-sm">Aucune livraison effectuée pour le moment.</p>
           </div>
         ) : (
           <div className={`bg-white rounded-m ${SHADOW} overflow-hidden`}>
-            <div className="hidden md:grid grid-cols-[1.5fr_1fr_1fr_1fr] gap-4 px-5 py-3 border-b border-line text-[10.5px] font-bold text-ink-soft/50 uppercase tracking-wider">
+            <div className="hidden md:grid grid-cols-[1.5fr_1fr_1fr_1fr] gap-4 px-5 py-3 border-b border-line text-[10.5px] font-bold text-ink-soft/75 uppercase tracking-wider">
               <span>Livraison</span><span>Montant</span><span>Date</span><span>Statut</span>
             </div>
             <div className="divide-y divide-line">
@@ -140,13 +140,13 @@ export default function LivreurRevenus() {
                 <div key={c.id} className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-2 md:gap-4 items-center px-5 py-4">
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="h-10 w-10 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                      {c.produit_image && <img src={c.produit_image} alt="" className="h-full w-full object-cover" />}
+                      {c.produit_image && <img loading="lazy" decoding="async" src={c.produit_image} alt="" className="h-full w-full object-cover" />}
                     </div>
                     <p className="text-sm font-semibold text-ink truncate">{c.produit_titre}</p>
                   </div>
-                  <p className="text-sm font-bold text-teal">+{formatFCFA(c.part_livreur)}</p>
-                  <p className="text-[12.5px] text-ink-soft/60">{formatDate(c.date_paiement)}</p>
-                  <span className="inline-flex w-fit text-[11px] font-bold px-2.5 py-1 rounded-full bg-teal/10 text-teal">Livrée</span>
+                  <p className="text-sm font-bold text-teal-dark">+{formatFCFA(c.part_livreur)}</p>
+                  <p className="text-[12.5px] text-ink-soft/75">{formatDate(c.date_paiement)}</p>
+                  <span className="inline-flex w-fit text-[11px] font-bold px-2.5 py-1 rounded-full bg-teal/10 text-teal-dark">Livrée</span>
                 </div>
               ))}
             </div>

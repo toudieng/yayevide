@@ -1,6 +1,6 @@
 // frontend/src/pages/auth/LoginPage.jsx
 import Connexion from "./Connexion";
-import clientImg from "../../assets/client.png";
+import clientImg from "../../assets/client.webp";
 
 export default function LoginPage({ onLoginSuccess }) {
   return (

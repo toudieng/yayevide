@@ -37,7 +37,7 @@ export default function Panier() {
             </svg>
           </div>
           <h1 className="font-serif text-2xl text-ink mb-2">Votre panier est vide</h1>
-          <p className="text-sm text-ink-soft/60 mb-8">
+          <p className="text-sm text-ink-soft/75 mb-8">
             Découvrez des trésors pour bébés, enfants et mamans dans notre boutique.
           </p>
           <Link to="/boutique" className="inline-flex items-center gap-2 px-7 py-3.5 bg-ink text-cream rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-clay transition-colors">
@@ -52,7 +52,7 @@ export default function Panier() {
     <Layout>
       <Reveal className="max-w-[1100px] mx-auto px-6 md:px-12 py-12">
         <h1 className="font-serif text-[28px] text-ink mb-6">
-          Mon panier <span className="text-ink-soft/50 font-sans text-base font-normal">({items.length} article{items.length > 1 ? 's' : ''})</span>
+          Mon panier <span className="text-ink-soft/75 font-sans text-base font-normal">({items.length} article{items.length > 1 ? 's' : ''})</span>
         </h1>
 
         <div className="flex items-center gap-3 bg-teal/8 border border-teal/25 rounded-btn px-4 py-3.5 mb-7">
@@ -67,32 +67,32 @@ export default function Panier() {
         <div className="grid lg:grid-cols-[1fr_340px] gap-10">
 
           <div>
-            <div className="flex items-center gap-2 text-[12.5px] font-semibold text-ink-soft/70 mb-3">
+            <div className="flex items-center gap-2 text-[12.5px] font-semibold text-ink-soft/75 mb-3">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
                 <rect x="2" y="7" width="20" height="14" rx="2" />
                 <path d="M16 3l-4 4-4-4" />
               </svg>
               Envoyé par Yaay Vidé
-              <span className="text-ink-soft/50 font-normal">· Livraison estimée {periodeLivraisonEstimee()}</span>
+              <span className="text-ink-soft/75 font-normal">· Livraison estimée {periodeLivraisonEstimee()}</span>
             </div>
 
             <div className="divide-y divide-line border-t border-b border-line">
               {items.map((item) => (
                 <div key={item.cleId} className="flex items-center gap-5 py-5">
                   <Link to={`/produit/${item.id}`} className="h-20 w-20 rounded-btn overflow-hidden bg-line/40 shrink-0">
-                    {item.image && <img src={item.image} alt={item.titre} className="h-full w-full object-cover" />}
+                    {item.image && <img loading="lazy" decoding="async" src={item.image} alt={item.titre} className="h-full w-full object-cover" />}
                   </Link>
 
                   <div className="flex-1 min-w-0">
-                    <Link to={`/produit/${item.id}`} className="font-serif text-[15px] text-ink hover:text-teal transition-colors line-clamp-1">
+                    <Link to={`/produit/${item.id}`} className="font-serif text-[15px] text-ink hover:text-teal-dark transition-colors line-clamp-1">
                       {item.titre}
                     </Link>
                     {item.typeOffre === 'location' ? (
-                      <p className="text-[12px] text-teal font-semibold mt-1">
+                      <p className="text-[12px] text-teal-dark font-semibold mt-1">
                         Location · {item.dateDebut} → {item.dateFin} ({item.nbJours} jour{item.nbJours > 1 ? 's' : ''}) · Caution {formatFCFA(item.caution)}
                       </p>
                     ) : (
-                      <p className="text-[12px] text-ink-soft/55 mt-1">{item.categorieNom || 'Yaay Vidé'}</p>
+                      <p className="text-[12px] text-ink-soft/75 mt-1">{item.categorieNom || 'Yaay Vidé'}</p>
                     )}
                     <button
                       type="button"
@@ -104,13 +104,13 @@ export default function Panier() {
                   </div>
 
                   {item.typeOffre === 'location' ? (
-                    <span className="text-[12.5px] font-semibold text-ink-soft/60 whitespace-nowrap">1 article</span>
+                    <span className="text-[12.5px] font-semibold text-ink-soft/75 whitespace-nowrap">1 article</span>
                   ) : (
                     <div className="flex items-center border border-line rounded-btn">
                       <button
                         type="button"
                         onClick={() => updateQuantite(item.cleId, item.quantite - 1)}
-                        className="h-8 w-8 flex items-center justify-center text-ink-soft/70 hover:text-ink"
+                        className="h-8 w-8 flex items-center justify-center text-ink-soft/75 hover:text-ink"
                       >
                         −
                       </button>
@@ -118,7 +118,7 @@ export default function Panier() {
                       <button
                         type="button"
                         onClick={() => updateQuantite(item.cleId, item.quantite + 1)}
-                        className="h-8 w-8 flex items-center justify-center text-ink-soft/70 hover:text-ink"
+                        className="h-8 w-8 flex items-center justify-center text-ink-soft/75 hover:text-ink"
                       >
                         +
                       </button>
@@ -136,19 +136,19 @@ export default function Panier() {
           <div className="bg-cream border border-line rounded-m p-6 h-fit space-y-5">
             <h3 className="font-serif text-lg text-ink">Récapitulatif</h3>
             <div className="space-y-2.5 text-[13.5px]">
-              <div className="flex justify-between text-ink-soft/70">
+              <div className="flex justify-between text-ink-soft/75">
                 <span>Sous-total</span>
                 <span>{formatFCFA(subtotal)}</span>
               </div>
               {totalCaution > 0 && (
-                <div className="flex justify-between text-ink-soft/70">
+                <div className="flex justify-between text-ink-soft/75">
                   <span>Caution (remboursable)</span>
-                  <span className="text-teal font-medium">{formatFCFA(totalCaution)}</span>
+                  <span className="text-teal-dark font-medium">{formatFCFA(totalCaution)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-ink-soft/70">
+              <div className="flex justify-between text-ink-soft/75">
                 <span>Livraison</span>
-                <span className="text-teal font-medium">Calculée à l'étape suivante</span>
+                <span className="text-teal-dark font-medium">Calculée à l'étape suivante</span>
               </div>
             </div>
             <div className="flex justify-between text-[16px] font-bold text-ink pt-3 border-t border-line">
@@ -162,15 +162,15 @@ export default function Panier() {
             >
               Commander
             </button>
-            <Link to="/boutique" className="block text-center text-[12.5px] font-semibold text-ink-soft/60 hover:text-ink">
+            <Link to="/boutique" className="block text-center text-[12.5px] font-semibold text-ink-soft/75 hover:text-ink">
               Continuer mes achats
             </Link>
 
             <div className="pt-3 border-t border-line">
-              <p className="text-[11px] text-ink-soft/50 uppercase tracking-wide mb-2.5">Nous acceptons</p>
+              <p className="text-[11px] text-ink-soft/75 uppercase tracking-wide mb-2.5">Nous acceptons</p>
               <div className="flex flex-wrap gap-2">
                 {['Wave', 'Orange Money', 'Free Money', 'Espèces'].map((mode) => (
-                  <span key={mode} className="text-[11px] font-semibold text-ink-soft/70 bg-sable border border-line rounded-full px-2.5 py-1">
+                  <span key={mode} className="text-[11px] font-semibold text-ink-soft/75 bg-sable border border-line rounded-full px-2.5 py-1">
                     {mode}
                   </span>
                 ))}

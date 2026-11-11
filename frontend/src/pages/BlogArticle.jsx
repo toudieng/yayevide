@@ -13,7 +13,7 @@ export default function BlogArticle() {
       <Layout>
         <div className="max-w-[600px] mx-auto px-6 py-24 text-center">
           <p className="font-serif text-2xl text-ink mb-3">Article introuvable</p>
-          <Link to="/blog" className="text-teal font-semibold hover:underline">Retour au blog</Link>
+          <Link to="/blog" className="text-teal-dark font-semibold hover:underline">Retour au blog</Link>
         </div>
       </Layout>
     );
@@ -49,7 +49,7 @@ export default function BlogArticle() {
               {autres.map((a) => (
                 <Link key={a.slug} to={`/blog/${a.slug}`} className="group block rounded-m border border-line bg-sable overflow-hidden hover:shadow-md transition-shadow">
                   <div className="aspect-[4/3] overflow-hidden">
-                    <img src={a.image} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img loading="lazy" decoding="async" src={a.image} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
                   <div className="p-4">
                     <span className={`text-[10px] font-bold uppercase tracking-wide ${a.tagColor}`}>{a.tag}</span>

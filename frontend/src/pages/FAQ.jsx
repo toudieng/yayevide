@@ -73,7 +73,7 @@ function AccordionItem({ q, r }) {
         <span className="text-[14.5px] font-semibold text-ink">{q}</span>
         <svg
           viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-          className={`h-4 w-4 shrink-0 text-ink-soft/60 transition-transform duration-300 ${open ? 'rotate-45' : ''}`}
+          className={`h-4 w-4 shrink-0 text-ink-soft/75 transition-transform duration-300 ${open ? 'rotate-45' : ''}`}
         >
           <path d="M12 5v14M5 12h14" />
         </svg>
@@ -115,12 +115,12 @@ export default function FAQ() {
         />
 
         {filtered.length === 0 ? (
-          <p className="text-center text-ink-soft/60 text-sm">Aucune question ne correspond à votre recherche.</p>
+          <p className="text-center text-ink-soft/75 text-sm">Aucune question ne correspond à votre recherche.</p>
         ) : (
           <div className="space-y-10">
             {filtered.map((cat) => (
               <Reveal key={cat.categorie}>
-                <h2 className="text-[12px] font-bold uppercase tracking-wider text-teal mb-4">{cat.categorie}</h2>
+                <h2 className="text-[12px] font-bold uppercase tracking-wider text-teal-dark mb-4">{cat.categorie}</h2>
                 <div className="space-y-3">
                   {cat.questions.map((item) => (
                     <AccordionItem key={item.q} q={item.q} r={item.r} />

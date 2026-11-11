@@ -10,9 +10,9 @@ function formatDate(iso) {
 
 const STATUT_INFO = {
   nouvelle: { label: 'Nouvelle', couleur: 'bg-orange/10 text-orange' },
-  en_cours: { label: 'En cours', couleur: 'bg-teal/10 text-teal' },
+  en_cours: { label: 'En cours', couleur: 'bg-teal/10 text-teal-dark' },
   resolue: { label: 'Résolue', couleur: 'bg-green-50 text-green-600' },
-  rejetee: { label: 'Rejetée', couleur: 'bg-line text-ink-soft/60' },
+  rejetee: { label: 'Rejetée', couleur: 'bg-line text-ink-soft/75' },
 };
 
 const FILTRES = [
@@ -76,7 +76,7 @@ export default function AdminPlaintes() {
             type="button"
             onClick={() => setFiltre(f.id)}
             className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold transition-colors ${
-              filtre === f.id ? 'bg-ink text-cream' : 'bg-cream text-ink-soft/70 hover:bg-line/60'
+              filtre === f.id ? 'bg-ink text-cream' : 'bg-cream text-ink-soft/75 hover:bg-line/60'
             }`}
           >
             {f.label}
@@ -86,7 +86,7 @@ export default function AdminPlaintes() {
 
       {plaintes.length === 0 ? (
         <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-          <p className="text-ink-soft/60 text-sm">Aucune plainte dans cette catégorie.</p>
+          <p className="text-ink-soft/75 text-sm">Aucune plainte dans cette catégorie.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -97,7 +97,7 @@ export default function AdminPlaintes() {
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
                     <p className="text-sm font-bold text-ink">{p.sujet}</p>
-                    <p className="text-[12px] text-ink-soft/55 mt-0.5">
+                    <p className="text-[12px] text-ink-soft/75 mt-0.5">
                       {p.acheteur_username} · {formatDate(p.date_creation)}
                       {p.commande_produit_titre && ` · ${p.commande_produit_titre}`}
                     </p>
@@ -111,7 +111,7 @@ export default function AdminPlaintes() {
 
                 {p.reponse_admin && (
                   <div className="bg-sable rounded-btn p-3.5 mb-4">
-                    <p className="text-[11px] font-bold text-teal uppercase tracking-wide mb-1">Réponse envoyée</p>
+                    <p className="text-[11px] font-bold text-teal-dark uppercase tracking-wide mb-1">Réponse envoyée</p>
                     <p className="text-[13px] text-ink-soft">{p.reponse_admin}</p>
                   </div>
                 )}
@@ -121,7 +121,7 @@ export default function AdminPlaintes() {
                     <button
                       type="button" disabled={envoiEnCours === p.id}
                       onClick={() => traiter(p, { statut: 'en_cours' })}
-                      className="text-[11.5px] font-bold uppercase px-3 py-2 rounded-btn border border-teal text-teal hover:bg-teal hover:text-white transition-colors disabled:opacity-50"
+                      className="text-[11.5px] font-bold uppercase px-3 py-2 rounded-btn border border-teal text-teal-dark hover:bg-teal hover:text-white transition-colors disabled:opacity-50"
                     >
                       Prendre en charge
                     </button>
@@ -144,7 +144,7 @@ export default function AdminPlaintes() {
                     <button
                       type="button" disabled={envoiEnCours === p.id}
                       onClick={() => traiter(p, { statut: 'rejetee' })}
-                      className="text-[11.5px] font-bold uppercase px-3 py-2 rounded-btn border border-line text-ink-soft/60 hover:border-red-300 hover:text-red-500 transition-colors disabled:opacity-50"
+                      className="text-[11.5px] font-bold uppercase px-3 py-2 rounded-btn border border-line text-ink-soft/75 hover:border-red-300 hover:text-red-500 transition-colors disabled:opacity-50"
                     >
                       Rejeter
                     </button>

@@ -29,13 +29,13 @@ export default function APropos() {
             </p>
           </Reveal>
           <Reveal className="rounded-m overflow-hidden border border-line aspect-[4/5]">
-            <img src={IMG_TATA} alt="" className="h-full w-full object-cover" />
+            <img loading="lazy" decoding="async" src={IMG_TATA} alt="" className="h-full w-full object-cover" />
           </Reveal>
         </div>
 
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <Reveal className="rounded-m overflow-hidden border border-line aspect-[4/5] md:order-1">
-            <img src={IMG_BALKIS} alt="" className="h-full w-full object-cover" />
+            <img loading="lazy" decoding="async" src={IMG_BALKIS} alt="" className="h-full w-full object-cover" />
           </Reveal>
           <Reveal>
             <h2 className="font-serif text-2xl text-ink mb-4">L'histoire de Balkis</h2>

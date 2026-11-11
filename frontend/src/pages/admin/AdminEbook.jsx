@@ -107,7 +107,7 @@ export default function AdminEbook() {
     <ShellAdmin active="ebook" moi={moi} titre="E-book">
 
       {erreur && <div className="p-4 text-sm bg-red-50 text-red-600 rounded-btn border border-red-100">{erreur}</div>}
-      {message && <div className="p-4 text-sm bg-teal/10 text-teal rounded-btn border border-teal/20">{message}</div>}
+      {message && <div className="p-4 text-sm bg-teal/10 text-teal-dark rounded-btn border border-teal/20">{message}</div>}
 
       {!edition && (
         <button
@@ -191,7 +191,7 @@ export default function AdminEbook() {
             <button type="submit" disabled={envoiEnCours} className="bg-teal text-white px-5 py-2.5 rounded-btn text-sm font-bold hover:bg-teal-dark transition-colors disabled:opacity-50">
               {envoiEnCours ? 'Enregistrement...' : 'Enregistrer'}
             </button>
-            <button type="button" onClick={() => setEdition(null)} className="px-5 py-2.5 rounded-btn text-sm font-semibold text-ink-soft/70 hover:text-ink transition-colors">
+            <button type="button" onClick={() => setEdition(null)} className="px-5 py-2.5 rounded-btn text-sm font-semibold text-ink-soft/75 hover:text-ink transition-colors">
               Annuler
             </button>
           </div>
@@ -202,28 +202,28 @@ export default function AdminEbook() {
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">E-books</h3>
         {ebooks.length === 0 ? (
           <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-16 text-center">
-            <p className="text-ink-soft/60 text-sm">Aucun e-book pour le moment.</p>
+            <p className="text-ink-soft/75 text-sm">Aucun e-book pour le moment.</p>
           </div>
         ) : (
           <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] divide-y divide-line overflow-hidden">
             {ebooks.map((eb) => (
               <div key={eb.id} className="flex items-center gap-4 p-4 flex-wrap md:flex-nowrap">
                 <div className="h-14 w-11 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                  {eb.couverture && <img src={eb.couverture} alt="" className="h-full w-full object-cover" />}
+                  {eb.couverture && <img loading="lazy" decoding="async" src={eb.couverture} alt="" className="h-full w-full object-cover" />}
                 </div>
                 <div className="flex-1 min-w-[180px]">
                   <p className="text-sm font-semibold text-ink truncate">{eb.titre}</p>
-                  <p className="text-[12px] text-ink-soft/60">
+                  <p className="text-[12px] text-ink-soft/75">
                     {formatFCFA(eb.prix)} · {eb.fichier_complet ? 'PDF complet ✓' : 'PDF complet manquant'} · {eb.fichier_apercu ? 'Aperçu ✓' : 'Aperçu manquant'}
                   </p>
                 </div>
-                <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full whitespace-nowrap ${eb.actif ? 'bg-teal/10 text-teal' : 'bg-line text-ink-soft/60'}`}>
+                <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full whitespace-nowrap ${eb.actif ? 'bg-teal/10 text-teal-dark' : 'bg-line text-ink-soft/75'}`}>
                   {eb.actif ? 'En ligne' : 'Masqué'}
                 </span>
-                <button onClick={() => toggleActif(eb)} className="text-[11px] font-bold uppercase px-3 py-2 rounded-btn border border-line text-ink-soft/70 hover:border-teal hover:text-teal transition-colors whitespace-nowrap">
+                <button onClick={() => toggleActif(eb)} className="text-[11px] font-bold uppercase px-3 py-2 rounded-btn border border-line text-ink-soft/75 hover:border-teal hover:text-teal-dark transition-colors whitespace-nowrap">
                   {eb.actif ? 'Masquer' : 'Publier'}
                 </button>
-                <button onClick={() => ouvrirEdition(eb)} className="text-[11px] font-bold uppercase px-3 py-2 rounded-btn border border-line text-ink-soft/70 hover:border-teal hover:text-teal transition-colors whitespace-nowrap">
+                <button onClick={() => ouvrirEdition(eb)} className="text-[11px] font-bold uppercase px-3 py-2 rounded-btn border border-line text-ink-soft/75 hover:border-teal hover:text-teal-dark transition-colors whitespace-nowrap">
                   Modifier
                 </button>
               </div>
@@ -236,7 +236,7 @@ export default function AdminEbook() {
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Achats ({achats.length})</h3>
         {achats.length === 0 ? (
           <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-12 text-center">
-            <p className="text-ink-soft/60 text-sm">Aucun achat pour le moment.</p>
+            <p className="text-ink-soft/75 text-sm">Aucun achat pour le moment.</p>
           </div>
         ) : (
           <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] divide-y divide-line overflow-hidden">
@@ -244,7 +244,7 @@ export default function AdminEbook() {
               <div key={a.id} className="flex items-center gap-4 p-4 flex-wrap md:flex-nowrap">
                 <div className="flex-1 min-w-[180px]">
                   <p className="text-sm font-semibold text-ink truncate">{a.email}</p>
-                  <p className="text-[12px] text-ink-soft/60">{a.ebook_titre} · {formatDate(a.date_creation)}</p>
+                  <p className="text-[12px] text-ink-soft/75">{a.ebook_titre} · {formatDate(a.date_creation)}</p>
                 </div>
                 <p className="text-sm font-bold text-ink whitespace-nowrap">{formatFCFA(a.prix_paye)}</p>
                 <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full whitespace-nowrap ${a.statut_paiement === 'paye' ? 'bg-teal text-white' : 'bg-orange/10 text-orange'}`}>

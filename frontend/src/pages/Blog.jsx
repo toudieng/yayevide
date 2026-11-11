@@ -21,7 +21,7 @@ export default function Blog() {
               style={{ transitionDelay: `${i * 40}ms` }}
             >
               <div className="relative aspect-[4/3] overflow-hidden">
-                <img
+                <img loading="lazy" decoding="async"
                   src={article.image}
                   alt=""
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -30,8 +30,8 @@ export default function Blog() {
               <div className="p-5">
                 <span className={`text-[10.5px] font-bold uppercase tracking-wide ${article.tagColor}`}>{article.tag}</span>
                 <h3 className="font-serif text-[16.5px] leading-snug mt-2 mb-2.5">{article.title}</h3>
-                <p className="text-[13px] text-ink-soft/70 leading-relaxed line-clamp-2 mb-3">{article.excerpt}</p>
-                <p className="text-[11.5px] text-ink-soft/50">{article.date} · Lecture {article.readTime}</p>
+                <p className="text-[13px] text-ink-soft/75 leading-relaxed line-clamp-2 mb-3">{article.excerpt}</p>
+                <p className="text-[11.5px] text-ink-soft/75">{article.date} · Lecture {article.readTime}</p>
               </div>
             </Reveal>
           ))}

@@ -45,7 +45,7 @@ function CategoryCard({ cat, index }) {
           <path d={FLAG_PATH_BY_SLUG[cat.slug]} />
         </svg>
       </span>
-      <img
+      <img loading="lazy" decoding="async"
         src={cat.image}
         alt={cat.nom}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"

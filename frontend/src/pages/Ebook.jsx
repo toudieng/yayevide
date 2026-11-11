@@ -209,7 +209,7 @@ export default function Ebook() {
       <Layout>
         <div className="max-w-xl mx-auto px-6 py-24 text-center">
           <p className="font-serif text-xl text-ink mb-2">Aucun e-book disponible</p>
-          <p className="text-sm text-ink-soft/70">Reviens bientôt, un guide est en préparation !</p>
+          <p className="text-sm text-ink-soft/75">Reviens bientôt, un guide est en préparation !</p>
         </div>
       </Layout>
     );
@@ -222,7 +222,7 @@ export default function Ebook() {
         <div className="pointer-events-none absolute -bottom-32 -left-20 h-[360px] w-[360px] rounded-full bg-gradient-to-tr from-orange/25 to-transparent blur-3xl" />
         <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <div>
-            <span className="inline-flex items-center gap-2 bg-teal/10 text-teal text-[12px] font-bold uppercase tracking-wide px-4 py-2 rounded-full mb-6">
+            <span className="inline-flex items-center gap-2 bg-teal/10 text-teal-dark text-[12px] font-bold uppercase tracking-wide px-4 py-2 rounded-full mb-6">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8z" /></svg>
               {ebook.nb_pages ? `${ebook.nb_pages} pages pensées à Dakar` : 'Pensé à Dakar'}
             </span>
@@ -240,7 +240,7 @@ export default function Ebook() {
                 Découvrir le contenu
               </a>
             </div>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-[13px] font-semibold text-ink-soft/70">
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-[13px] font-semibold text-ink-soft/75">
               {ebook.nb_pages && (
                 <span className="flex items-center gap-1.5">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><path d="M6 22a2 2 0 01-2-2V4a2 2 0 012-2h8a2.4 2.4 0 011.7.706l3.6 3.588A2.4 2.4 0 0120 8v12a2 2 0 01-2 2z" /><path d="M14 2v5a1 1 0 001 1h5" /></svg>
@@ -277,7 +277,7 @@ export default function Ebook() {
                 <svg key={i} viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M11.525 2.295a.53.53 0 01.95 0l2.31 4.679a2.123 2.123 0 001.595 1.16l5.166.756a.53.53 0 01.294.904l-3.736 3.638a2.123 2.123 0 00-.611 1.878l.882 5.14a.53.53 0 01-.771.56l-4.618-2.428a2.122 2.122 0 00-1.973 0L6.396 21.01a.53.53 0 01-.77-.56l.881-5.139a2.122 2.122 0 00-.611-1.879L2.16 9.795a.53.53 0 01.294-.906l5.165-.755a2.122 2.122 0 001.597-1.16z" /></svg>
               ))}
             </div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">Une parole proche des mamans</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Une parole proche des mamans</p>
             <h2 className="font-serif text-[28px] sm:text-[36px] leading-[1.15] text-ink mb-4">Né de conversations vraies, pas d'un discours médical froid.</h2>
             <p className="text-ink-soft text-[15px] leading-relaxed">Le guide se présente comme une boîte à outils éditoriale. Il ne remplace jamais l'avis d'un professionnel de santé.</p>
           </Reveal>
@@ -290,13 +290,13 @@ export default function Ebook() {
               { titre: 'Pensé depuis Dakar', desc: 'Les réalités locales, la famille et le quotidien dakarois ne sont pas laissés de côté.', icone: 'pin' },
             ].map((c) => (
               <Reveal key={c.titre} className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
-                <span className="h-10 w-10 rounded-full bg-teal/15 text-teal flex items-center justify-center mb-4">
+                <span className="h-10 w-10 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center mb-4">
                   {c.icone === 'coche' && <CheckIcon className="h-5 w-5" />}
                   {c.icone === 'bouclier' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 01-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 011-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 011.52 0C14.51 3.81 17 5 19 5a1 1 0 011 1z" /><path d="m9 12 2 2 4-4" /></svg>}
                   {(c.icone === 'feuille' || c.icone === 'pin') && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5"><path d={ICONES[c.icone === 'feuille' ? 'feuille' : 'pin']} /></svg>}
                 </span>
                 <p className="text-[15px] font-bold text-ink mb-1.5">{c.titre}</p>
-                <p className="text-[13px] text-ink-soft/70 leading-relaxed">{c.desc}</p>
+                <p className="text-[13px] text-ink-soft/75 leading-relaxed">{c.desc}</p>
               </Reveal>
             ))}
           </div>
@@ -306,7 +306,7 @@ export default function Ebook() {
       <section id="sommaire" className="bg-sable py-20 md:py-28">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal>
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">Au sommaire</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Au sommaire</p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink mb-5 max-w-2xl">
               14 chapitres pour traverser la maternité avec plus de repères
             </h2>
@@ -320,14 +320,14 @@ export default function Ebook() {
               <Reveal key={c.n} className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
                 <div className="flex items-start justify-between mb-8">
                   <span className="font-serif text-2xl font-bold text-orange">{c.n}</span>
-                  <span className="h-8 w-8 rounded-full bg-teal/15 text-teal flex items-center justify-center">
+                  <span className="h-8 w-8 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
                       <path d={ICONES[c.icone]} />
                     </svg>
                   </span>
                 </div>
                 <p className="text-[15px] font-bold text-ink leading-snug mb-1.5">{c.titre}</p>
-                <p className="text-[12.5px] text-ink-soft/70 leading-snug">{c.desc}</p>
+                <p className="text-[12.5px] text-ink-soft/75 leading-snug">{c.desc}</p>
               </Reveal>
             ))}
           </div>
@@ -367,7 +367,7 @@ export default function Ebook() {
           </div>
 
           <Reveal className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <img key={apercuIndex} src={APERCUS[apercuIndex].image} alt={APERCUS[apercuIndex].titre} className="w-full" />
+            <img loading="lazy" decoding="async" key={apercuIndex} src={APERCUS[apercuIndex].image} alt={APERCUS[apercuIndex].titre} className="w-full" />
           </Reveal>
           <div className="mt-5 flex items-center justify-between flex-wrap gap-3">
             <div>
@@ -393,17 +393,17 @@ export default function Ebook() {
       <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-12">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">Pourquoi ce guide ?</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Pourquoi ce guide ?</p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink">Des conseils qui parlent aussi de votre réalité</h2>
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Reveal className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-8">
-              <p className="text-[11px] font-bold uppercase tracking-wide text-ink-soft/50 mb-3">Guides généralistes</p>
+              <p className="text-[11px] font-bold uppercase tracking-wide text-ink-soft/75 mb-3">Guides généralistes</p>
               <h3 className="font-serif text-xl text-ink mb-5">{COMPARAISON.generaliste.titre}</h3>
               <ul className="space-y-3">
                 {COMPARAISON.generaliste.points.map((p) => (
-                  <li key={p} className="text-[14px] text-ink-soft/70">{p}</li>
+                  <li key={p} className="text-[14px] text-ink-soft/75">{p}</li>
                 ))}
               </ul>
             </Reveal>
@@ -427,7 +427,7 @@ export default function Ebook() {
         <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <Reveal className="relative">
             {ebook.couverture ? (
-              <img src={ebook.couverture} alt="" className="w-full rounded-2xl shadow-xl" />
+              <img loading="lazy" decoding="async" src={ebook.couverture} alt="" className="w-full rounded-2xl shadow-xl" />
             ) : (
               <div className="w-full aspect-[4/3] rounded-2xl bg-cream shadow-xl flex items-center justify-center text-ink-soft/30 text-sm">
                 Photo à venir
@@ -437,14 +437,14 @@ export default function Ebook() {
           </Reveal>
           <div>
             <Reveal className="mb-8">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">La voix du guide</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">La voix du guide</p>
               <h2 className="font-serif text-[28px] sm:text-[34px] leading-[1.15] text-ink">Comme une grande sœur qui vous parle franchement</h2>
             </Reveal>
             <div className="space-y-6">
               {CITATIONS.map((c) => (
                 <Reveal key={c.texte} className="border-l-4 border-orange pl-5">
                   <p className="font-serif text-[17px] text-ink italic leading-relaxed mb-2">« {c.texte} »</p>
-                  <p className="text-[12px] text-ink-soft/50 uppercase tracking-wide font-bold">{c.source}</p>
+                  <p className="text-[12px] text-ink-soft/75 uppercase tracking-wide font-bold">{c.source}</p>
                 </Reveal>
               ))}
             </div>
@@ -455,7 +455,7 @@ export default function Ebook() {
       <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-16">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">Votre chemin de lecture</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Votre chemin de lecture</p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink mb-5">Ouvrez le guide là où vous en êtes</h2>
             <p className="text-ink-soft text-[15.5px] leading-relaxed">
               Il n'est pas nécessaire de tout lire d'un coup : chaque chapitre peut devenir un repère au bon moment.
@@ -471,9 +471,9 @@ export default function Ebook() {
                   </span>
                   {i < PHASES.length - 1 && <div className="hidden lg:block h-px flex-1 bg-line ml-4" />}
                 </div>
-                <p className="text-[11px] font-bold uppercase tracking-wide text-teal mb-2">{p.eyebrow}</p>
+                <p className="text-[11px] font-bold uppercase tracking-wide text-teal-dark mb-2">{p.eyebrow}</p>
                 <p className="font-serif text-xl text-ink mb-2 leading-snug">{p.titre}</p>
-                <p className="text-[13.5px] text-ink-soft/70 leading-relaxed">{p.desc}</p>
+                <p className="text-[13.5px] text-ink-soft/75 leading-relaxed">{p.desc}</p>
               </Reveal>
             ))}
           </div>
@@ -483,7 +483,7 @@ export default function Ebook() {
       <section className="bg-sable py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal className="max-w-2xl mb-12">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">Pour qui ?</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Pour qui ?</p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink">Un guide pour toute la bulle qui entoure bébé</h2>
           </Reveal>
 
@@ -494,7 +494,7 @@ export default function Ebook() {
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5"><path d={ICONES[a.icone]} /></svg>
                 </span>
                 <p className="text-[15px] font-bold text-ink mb-1.5">{a.titre}</p>
-                <p className="text-[13px] text-ink-soft/70 leading-relaxed">{a.desc}</p>
+                <p className="text-[13px] text-ink-soft/75 leading-relaxed">{a.desc}</p>
               </Reveal>
             ))}
           </div>
@@ -504,7 +504,7 @@ export default function Ebook() {
       <section className="bg-white py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <Reveal>
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">
               Inclus dans les {ebook.nb_pages || 'toutes les'} pages
             </p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink mb-5">
@@ -519,12 +519,12 @@ export default function Ebook() {
             {OUTILS.map((o) => (
               <Reveal key={o.titre} className="bg-white rounded-2xl shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
                 <div className="flex items-start gap-2.5">
-                  <span className="h-6 w-6 rounded-full bg-teal/15 text-teal flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="h-6 w-6 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center shrink-0 mt-0.5">
                     <CheckIcon className="h-3 w-3" />
                   </span>
                   <div>
                     <p className="text-[14px] font-bold text-ink leading-snug mb-1">{o.titre}</p>
-                    <p className="text-[12.5px] text-ink-soft/70 leading-snug">{o.desc}</p>
+                    <p className="text-[12.5px] text-ink-soft/75 leading-snug">{o.desc}</p>
                   </div>
                 </div>
               </Reveal>
@@ -538,13 +538,13 @@ export default function Ebook() {
         <div className="pointer-events-none absolute -bottom-24 -right-16 h-[320px] w-[320px] rounded-full bg-gradient-to-tr from-orange/20 to-transparent blur-3xl" />
         <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-14 items-start">
           <Reveal>
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">Un compagnon à garder près de soi</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Un compagnon à garder près de soi</p>
             <h2 className="font-serif text-[28px] sm:text-[36px] leading-[1.15] text-ink mb-4">
               {ebook.nb_pages ? `${ebook.nb_pages} pages de repères` : 'Des repères concrets'} pour {formatFCFA(ebook.prix)}
             </h2>
             <p className="text-ink-soft text-[15px] leading-relaxed mb-8">Un prix unique pour la version PDF actuelle du Guide Yaay to Yaay.</p>
 
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-[13px] font-semibold text-ink-soft/70 mb-8">
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-[13px] font-semibold text-ink-soft/75 mb-8">
               <span className="flex items-center gap-1.5">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
                 Téléphone
@@ -563,27 +563,27 @@ export default function Ebook() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6 text-teal shrink-0"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 01-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 011-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 011.52 0C14.51 3.81 17 5 19 5a1 1 0 011 1z" /><path d="m9 12 2 2 4-4" /></svg>
               <div>
                 <p className="text-[13.5px] font-bold text-ink">Achat sécurisé</p>
-                <p className="text-[12.5px] text-ink-soft/60">Le lien de téléchargement vous est envoyé par email dès le paiement confirmé.</p>
+                <p className="text-[12.5px] text-ink-soft/75">Le lien de téléchargement vous est envoyé par email dès le paiement confirmé.</p>
               </div>
             </div>
           </Reveal>
 
           <Reveal className="bg-white rounded-2xl p-7 shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)]">
             {ebook.couverture ? (
-              <img src={ebook.couverture} alt="" className="w-full aspect-[3/2] object-cover rounded-xl mb-5" />
+              <img loading="lazy" decoding="async" src={ebook.couverture} alt="" className="w-full aspect-[3/2] object-cover rounded-xl mb-5" />
             ) : (
               <div className="w-full aspect-[3/2] rounded-xl bg-cream mb-5 flex items-center justify-center text-ink-soft/30 text-sm">
                 Couverture à venir
               </div>
             )}
-            <p className="text-[11px] font-bold uppercase tracking-wide text-teal mb-1">Guide numérique</p>
+            <p className="text-[11px] font-bold uppercase tracking-wide text-teal-dark mb-1">Guide numérique</p>
             <h3 className="font-serif text-xl text-ink mb-1">{ebook.titre}</h3>
-            <p className="text-[13px] text-ink-soft/60 mb-4">De maman à maman, à la dakaroise</p>
+            <p className="text-[13px] text-ink-soft/75 mb-4">De maman à maman, à la dakaroise</p>
             <p className="font-serif text-3xl font-bold text-[#3D1B36] mb-5">{formatFCFA(ebook.prix)}</p>
             <ul className="space-y-2 mb-6">
               {[`PDF${ebook.nb_pages ? ` de ${ebook.nb_pages} pages` : ''}`, '14 chapitres réels', 'Téléchargement après paiement confirmé'].map((f) => (
                 <li key={f} className="flex items-center gap-2 text-[13.5px] text-ink-soft">
-                  <CheckIcon className="h-4 w-4 text-teal shrink-0" /> {f}
+                  <CheckIcon className="h-4 w-4 text-teal-dark shrink-0" /> {f}
                 </li>
               ))}
             </ul>
@@ -645,8 +645,8 @@ export default function Ebook() {
                   </svg>
                 </div>
                 <p className="font-serif text-base text-ink">Paiement en attente</p>
-                <p className="text-[13px] text-ink-soft/70">Montant : <strong>{formatFCFA(achat.prix_paye)}</strong></p>
-                <p className="text-[11px] text-ink-soft/50">
+                <p className="text-[13px] text-ink-soft/75">Montant : <strong>{formatFCFA(achat.prix_paye)}</strong></p>
+                <p className="text-[11px] text-ink-soft/75">
                   L'intégration InTouch n'est pas encore branchée — ce bouton simule une confirmation de paiement réussie, uniquement disponible en développement.
                 </p>
                 <button
@@ -660,18 +660,18 @@ export default function Ebook() {
 
             {etape === 'succes' && achat && (
               <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 text-center space-y-3">
-                <div className="h-12 w-12 mx-auto rounded-full bg-teal/10 flex items-center justify-center text-teal">
+                <div className="h-12 w-12 mx-auto rounded-full bg-teal/10 flex items-center justify-center text-teal-dark">
                   <CheckIcon className="h-5 w-5" />
                 </div>
                 <p className="font-serif text-base text-ink">Paiement confirmé !</p>
-                <p className="text-[13px] text-ink-soft/70">Votre e-book vous attend juste ici :</p>
+                <p className="text-[13px] text-ink-soft/75">Votre e-book vous attend juste ici :</p>
                 <a
                   href={`${API_BASE}/ebook/telecharger/${achat.token_telechargement}/`}
                   className="inline-flex items-center gap-2 bg-[#3D1B36] hover:bg-[#2c1327] text-white font-bold px-5 py-2.5 rounded-btn text-[13px] transition-colors"
                 >
                   Télécharger mon e-book
                 </a>
-                <p className="text-[11px] text-ink-soft/50">Gardez ce lien, il reste valable pour retélécharger votre e-book.</p>
+                <p className="text-[11px] text-ink-soft/75">Gardez ce lien, il reste valable pour retélécharger votre e-book.</p>
               </div>
             )}
           </Reveal>
@@ -681,7 +681,7 @@ export default function Ebook() {
       <section className="bg-white py-20 md:py-24">
         <div className="max-w-[820px] mx-auto px-6">
           <Reveal className="mb-12">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">Questions fréquentes</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Questions fréquentes</p>
             <h2 className="font-serif text-[28px] sm:text-[36px] leading-[1.15] text-ink mb-4">Tout savoir avant de télécharger</h2>
             <p className="text-ink-soft text-[14.5px] leading-relaxed">Des réponses simples sur le format, la lecture et la version proposée.</p>
           </Reveal>
@@ -695,7 +695,7 @@ export default function Ebook() {
                   className="w-full flex items-center justify-between gap-4 px-6 py-4.5 text-left"
                 >
                   <span className="font-semibold text-[14.5px] text-ink">{f.q}</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`h-4 w-4 shrink-0 text-ink-soft/50 transition-transform ${faqOuvert === i ? 'rotate-180' : ''}`}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`h-4 w-4 shrink-0 text-ink-soft/75 transition-transform ${faqOuvert === i ? 'rotate-180' : ''}`}>
                     <path d="m6 9 6 6 6-6" />
                   </svg>
                 </button>

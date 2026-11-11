@@ -51,7 +51,7 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
                         accent === 'teal' ? 'bg-teal/12' : 'bg-orange/12'
                       }`} />
                       <div className="relative rounded-[24px] overflow-hidden shadow-xl">
-                        <img src={step.image} alt={step.title} className="w-full aspect-[4/3.1] object-cover" />
+                        <img loading="lazy" decoding="async" src={step.image} alt={step.title} className="w-full aspect-[4/3.1] object-cover" />
                       </div>
                       <div className={`absolute -top-6 -right-6 h-20 w-20 rounded-full flex items-center justify-center text-white font-serif text-2xl font-bold shadow-lg ${
                         accent === 'teal' ? 'bg-teal' : 'bg-orange'
@@ -63,11 +63,11 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
 
                   <div className={impair ? 'md:order-1' : 'md:order-2'}>
                     <div className="flex items-center gap-3 mb-4 text-[12.5px] font-bold uppercase tracking-[0.1em]">
-                      <span className={accent === 'teal' ? 'text-teal' : 'text-orange'}>Étape {i + 1}</span>
+                      <span className={accent === 'teal' ? 'text-teal-dark' : 'text-orange'}>Étape {i + 1}</span>
                       {step.tag && (
                         <>
                           <span className="h-3.5 w-px bg-line" />
-                          <span className="text-ink-soft/50">{step.tag}</span>
+                          <span className="text-ink-soft/75">{step.tag}</span>
                         </>
                       )}
                     </div>
@@ -79,7 +79,7 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
                         {step.points.map((point) => (
                           <div key={point} className="flex items-start gap-2.5">
                             <span className={`h-5 w-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                              accent === 'teal' ? 'bg-teal/15 text-teal' : 'bg-orange/15 text-orange'
+                              accent === 'teal' ? 'bg-teal/15 text-teal-dark' : 'bg-orange/15 text-orange'
                             }`}>
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="h-3 w-3">
                                 <path d="M5 12l4.5 4.5L19 7" />
@@ -96,7 +96,7 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
                         accent === 'teal' ? 'bg-teal/8' : 'bg-orange/8'
                       }`}>
                         <span className={`h-9 w-9 rounded-full flex items-center justify-center shrink-0 ${
-                          accent === 'teal' ? 'bg-teal/15 text-teal' : 'bg-orange/15 text-orange'
+                          accent === 'teal' ? 'bg-teal/15 text-teal-dark' : 'bg-orange/15 text-orange'
                         }`}>
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4.5 w-4.5">
                             <path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0012 2z" />
@@ -162,7 +162,7 @@ export default function GuideSteps({ badge, title, titleAccent, subtitle, heroIm
           <div className="max-w-[1080px] mx-auto px-6 md:px-12 py-16">
             <Reveal className="text-center bg-sable border border-line rounded-m p-10 md:p-14">
               <h3 className="font-serif text-2xl text-ink mb-2">{cta.title}</h3>
-              <p className="text-sm text-ink-soft/70 mb-7">{cta.subtitle}</p>
+              <p className="text-sm text-ink-soft/75 mb-7">{cta.subtitle}</p>
               <Link
                 to={cta.to}
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-orange text-white rounded-btn text-sm font-bold uppercase tracking-wide hover:bg-orange-dark transition-colors"

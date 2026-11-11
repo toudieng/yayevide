@@ -53,7 +53,7 @@ export default function ShellLivreur({ active, moi, titre, children }) {
       <aside className="w-64 bg-white border-r border-line hidden md:flex flex-col">
         <div className="p-8">
           <Logo className="h-9 w-auto mb-2" />
-          <p className="text-[10px] text-ink-soft/60 uppercase tracking-widest mt-1">Espace Livreur</p>
+          <p className="text-[10px] text-ink-soft/75 uppercase tracking-widest mt-1">Espace Livreur</p>
         </div>
 
         <nav className="flex-1 px-4 space-y-1.5">
@@ -62,7 +62,7 @@ export default function ShellLivreur({ active, moi, titre, children }) {
               key={item.id}
               onClick={() => navigate(item.path)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-btn text-sm font-semibold transition-all ${
-                active === item.id ? 'bg-teal/10 text-teal' : 'text-ink-soft/70 hover:bg-sable hover:text-ink'
+                active === item.id ? 'bg-teal/10 text-teal-dark' : 'text-ink-soft/75 hover:bg-sable hover:text-ink'
               }`}
             >
               <LivreurIcon id={item.id} />

@@ -36,7 +36,7 @@ export default function CartDrawer() {
             type="button"
             onClick={fermerDrawer}
             aria-label="Fermer"
-            className="h-8 w-8 rounded-full flex items-center justify-center text-ink-soft/60 hover:bg-line/50 hover:text-ink transition-colors"
+            className="h-8 w-8 rounded-full flex items-center justify-center text-ink-soft/75 hover:bg-line/50 hover:text-ink transition-colors"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
               <path d="M6 6l12 12M18 6L6 18" />
@@ -46,8 +46,8 @@ export default function CartDrawer() {
 
         {items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
-            <p className="text-sm text-ink-soft/60 mb-4">Votre panier est vide.</p>
-            <button onClick={fermerDrawer} className="text-teal font-semibold text-sm hover:underline">
+            <p className="text-sm text-ink-soft/75 mb-4">Votre panier est vide.</p>
+            <button onClick={fermerDrawer} className="text-teal-dark font-semibold text-sm hover:underline">
               Continuer mes achats
             </button>
           </div>
@@ -57,26 +57,26 @@ export default function CartDrawer() {
               {items.map((item) => (
                 <div key={item.cleId} className="flex gap-3.5 py-4 first:pt-0">
                   <div className="h-16 w-16 rounded-btn bg-line/40 overflow-hidden shrink-0">
-                    {item.image && <img src={item.image} alt="" className="h-full w-full object-cover" />}
+                    {item.image && <img loading="lazy" decoding="async" src={item.image} alt="" className="h-full w-full object-cover" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[13.5px] font-semibold text-ink truncate">{item.titre}</p>
                     {item.typeOffre === 'location' ? (
-                      <p className="text-[11.5px] text-teal font-semibold mb-2">
+                      <p className="text-[11.5px] text-teal-dark font-semibold mb-2">
                         Location · {item.dateDebut} → {item.dateFin} ({item.nbJours} j)
                       </p>
                     ) : (
-                      <p className="text-[11.5px] text-ink-soft/50 mb-2">{item.categorieNom}</p>
+                      <p className="text-[11.5px] text-ink-soft/75 mb-2">{item.categorieNom}</p>
                     )}
                     <div className="flex items-center justify-between">
                       {item.typeOffre === 'location' ? (
-                        <span className="text-[11px] text-ink-soft/50">Caution {formatFCFA(item.caution)}</span>
+                        <span className="text-[11px] text-ink-soft/75">Caution {formatFCFA(item.caution)}</span>
                       ) : (
                         <div className="flex items-center border border-line rounded-full">
                           <button
                             type="button"
                             onClick={() => updateQuantite(item.cleId, item.quantite - 1)}
-                            className="h-6 w-6 flex items-center justify-center text-ink-soft/70 hover:text-ink"
+                            className="h-6 w-6 flex items-center justify-center text-ink-soft/75 hover:text-ink"
                           >
                             −
                           </button>
@@ -84,7 +84,7 @@ export default function CartDrawer() {
                           <button
                             type="button"
                             onClick={() => updateQuantite(item.cleId, item.quantite + 1)}
-                            className="h-6 w-6 flex items-center justify-center text-ink-soft/70 hover:text-ink"
+                            className="h-6 w-6 flex items-center justify-center text-ink-soft/75 hover:text-ink"
                           >
                             +
                           </button>
@@ -97,7 +97,7 @@ export default function CartDrawer() {
                     type="button"
                     onClick={() => removeItem(item.cleId)}
                     aria-label="Retirer"
-                    className="text-ink-soft/40 hover:text-red-500 transition-colors self-start"
+                    className="text-ink-soft/75 hover:text-red-500 transition-colors self-start"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
                       <path d="M6 6l12 12M18 6L6 18" />
@@ -109,16 +109,16 @@ export default function CartDrawer() {
 
             <div className="px-6 py-5 border-t border-line space-y-4">
               <div className="flex justify-between text-sm">
-                <span className="text-ink-soft/70">Sous-total</span>
+                <span className="text-ink-soft/75">Sous-total</span>
                 <span className="font-bold text-ink">{formatFCFA(subtotal)}</span>
               </div>
               {totalCaution > 0 && (
                 <div className="flex justify-between text-sm">
-                  <span className="text-ink-soft/70">Caution (remboursable)</span>
-                  <span className="font-bold text-teal">{formatFCFA(totalCaution)}</span>
+                  <span className="text-ink-soft/75">Caution (remboursable)</span>
+                  <span className="font-bold text-teal-dark">{formatFCFA(totalCaution)}</span>
                 </div>
               )}
-              <p className="text-[11.5px] text-ink-soft/50">Frais de livraison calculés à l'étape suivante.</p>
+              <p className="text-[11.5px] text-ink-soft/75">Frais de livraison calculés à l'étape suivante.</p>
               <Link
                 to="/checkout"
                 onClick={fermerDrawer}
@@ -129,7 +129,7 @@ export default function CartDrawer() {
               <Link
                 to="/panier"
                 onClick={fermerDrawer}
-                className="block text-center text-teal font-semibold text-sm hover:underline"
+                className="block text-center text-teal-dark font-semibold text-sm hover:underline"
               >
                 Voir le panier complet
               </Link>

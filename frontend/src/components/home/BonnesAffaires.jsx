@@ -39,7 +39,7 @@ export default function BonnesAffaires() {
                 to="/boutique?bonne_affaire=true"
                 className="group relative shrink-0 w-50 aspect-square overflow-hidden rounded-m border border-white/14"
               >
-                <img
+                <img loading="lazy" decoding="async"
                   src={chip.img}
                   alt={chip.name}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"

@@ -52,7 +52,7 @@ export default function Connexion({ onLoginSuccess }) {
       <div className="mb-8 flex flex-col items-center">
         <Logo className="h-14 w-auto mb-6" />
         <h2 className="text-3xl font-serif italic font-bold text-ink tracking-tight">Bon retour !</h2>
-        <p className="text-sm text-ink-soft/70 mt-2">Connectez-vous pour vendre et louer vos articles.</p>
+        <p className="text-sm text-ink-soft/75 mt-2">Connectez-vous pour vendre et louer vos articles.</p>
       </div>
 
       {erreur && (
@@ -97,7 +97,7 @@ export default function Connexion({ onLoginSuccess }) {
             <button
               type="button"
               onClick={() => setAfficherMotDePasse((v) => !v)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-soft/50 hover:text-orange transition-colors"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-soft/75 hover:text-orange transition-colors"
               aria-label={afficherMotDePasse ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
             >
               {afficherMotDePasse ? (
@@ -122,11 +122,11 @@ export default function Connexion({ onLoginSuccess }) {
               type="checkbox"
               className="h-4 w-4 text-orange border-line rounded focus:ring-orange"
             />
-            <label htmlFor="remember_me" className="ml-2 text-xs text-ink-soft/70 select-none">
+            <label htmlFor="remember_me" className="ml-2 text-xs text-ink-soft/75 select-none">
               Se souvenir de moi
             </label>
           </div>
-          <a href="#" className="text-xs text-ink-soft/70 hover:text-orange underline underline-offset-2 font-medium">
+          <a href="#" className="text-xs text-ink-soft/75 hover:text-orange underline underline-offset-2 font-medium">
             Mot de passe perdu ?
           </a>
         </div>
@@ -139,8 +139,8 @@ export default function Connexion({ onLoginSuccess }) {
         </button>
       </form>
 
-      <p className="text-xs text-center text-ink-soft/70 mt-8">
-        Pas encore de compte ? <a href="/inscription" className="text-teal font-semibold hover:underline">S'inscrire</a>
+      <p className="text-xs text-center text-ink-soft/75 mt-8">
+        Pas encore de compte ? <a href="/inscription" className="text-teal-dark font-semibold hover:underline">S'inscrire</a>
       </p>
     </div>
   );

@@ -241,7 +241,7 @@ export default function AjouterProduit() {
       titre={isLocation ? "Ajouter à louer" : "Ajouter un article"}
     >
       <div className="flex items-start justify-between gap-4 flex-wrap">
-        <p className="text-[13px] text-ink-soft/60 max-w-md">
+        <p className="text-[13px] text-ink-soft/75 max-w-md">
           {isLocation
             ? "Préparez une annonce de location claire et encadrée."
             : "Créez une annonce claire et sécurisée pour vendre plus facilement."}
@@ -254,7 +254,7 @@ export default function AjouterProduit() {
               type_offre: isLocation ? "vente" : "location",
             })
           }
-          className="text-[12.5px] font-bold px-4 py-2 rounded-full border border-line text-ink-soft/70 hover:border-teal hover:text-teal transition-colors whitespace-nowrap"
+          className="text-[12.5px] font-bold px-4 py-2 rounded-full border border-line text-ink-soft/75 hover:border-teal hover:text-teal-dark transition-colors whitespace-nowrap"
         >
           {isLocation ? "Passer à la vente" : "Passer à la location"}
         </button>
@@ -275,7 +275,7 @@ export default function AjouterProduit() {
                     ? "bg-teal text-white cursor-pointer"
                     : etatEtape === "actif"
                       ? "bg-ink text-white"
-                      : "bg-line text-ink-soft/50"
+                      : "bg-line text-ink-soft/75"
                 }`}
               >
                 {etatEtape === "fait" ? (
@@ -293,7 +293,7 @@ export default function AjouterProduit() {
                 )}
               </button>
               <span
-                className={`text-[12.5px] font-semibold hidden sm:block ${etatEtape === "a_venir" ? "text-ink-soft/40" : "text-ink"}`}
+                className={`text-[12.5px] font-semibold hidden sm:block ${etatEtape === "a_venir" ? "text-ink-soft/75" : "text-ink"}`}
               >
                 {label}
               </span>
@@ -517,7 +517,7 @@ export default function AjouterProduit() {
                   </select>
                 </div>
               </div>
-              <p className="text-[11px] text-ink-soft/50 -mt-2 italic">
+              <p className="text-[11px] text-ink-soft/75 -mt-2 italic">
                 La taille du colis sert à estimer les frais de livraison
                 affichés à l'acheteuse.
               </p>
@@ -529,7 +529,7 @@ export default function AjouterProduit() {
               <h3 className="font-serif text-lg text-ink">
                 Photos de l'article
               </h3>
-              <p className="text-[12.5px] text-ink-soft/60 -mt-3">
+              <p className="text-[12.5px] text-ink-soft/75 -mt-3">
                 Ajoutez des photos nettes et récentes. La première deviendra la
                 photo principale.
               </p>
@@ -557,7 +557,7 @@ export default function AjouterProduit() {
                     : "border-line hover:border-teal hover:bg-sable/60"
                 }`}
               >
-                <div className="h-10 w-10 mx-auto mb-3 rounded-full bg-teal/10 text-teal flex items-center justify-center">
+                <div className="h-10 w-10 mx-auto mb-3 rounded-full bg-teal/10 text-teal-dark flex items-center justify-center">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -573,7 +573,7 @@ export default function AjouterProduit() {
                     ? "Déposez vos photos ici"
                     : "Cliquez ou glissez-déposez vos photos ici"}
                 </p>
-                <p className="text-[11px] text-ink-soft/50 mt-1.5">
+                <p className="text-[11px] text-ink-soft/75 mt-1.5">
                   Jusqu'à 5 photos · Formats JPG ou PNG
                 </p>
               </div>
@@ -591,7 +591,7 @@ export default function AjouterProduit() {
                         className="w-full h-full object-cover"
                       />
                       {index === 0 && (
-                        <span className="absolute bottom-1 left-1 bg-ink/80 text-cream text-[9px] uppercase tracking-wide px-1.5 py-0.5 rounded">
+                        <span className="absolute bottom-1 left-1 bg-ink/80 text-cream text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded">
                           Principale
                         </span>
                       )}
@@ -649,7 +649,7 @@ export default function AjouterProduit() {
                       placeholder="Ex: 25000"
                       className="w-full px-4 py-3 bg-sable border border-line rounded-btn text-sm focus:outline-none focus:border-orange transition-colors"
                     />
-                    <p className="text-[10.5px] text-ink-soft/50 mt-1.5 italic">
+                    <p className="text-[10.5px] text-ink-soft/75 mt-1.5 italic">
                       Rendue à la locataire à la fin de la location.
                     </p>
                   </div>
@@ -658,7 +658,7 @@ export default function AjouterProduit() {
 
               {prixAffiche && (
                 <div className="bg-sable border border-line rounded-btn px-5 py-4 flex items-center justify-between">
-                  <p className="text-xs text-ink-soft/70">
+                  <p className="text-xs text-ink-soft/75">
                     Prix affiché à l'acheteuse{" "}
                     <span className="italic">
                       (commission{" "}
@@ -672,7 +672,7 @@ export default function AjouterProduit() {
               )}
 
               <div className="bg-teal/5 border border-teal/20 rounded-btn p-4 space-y-1.5">
-                <p className="text-[11px] font-bold text-teal uppercase tracking-wide">
+                <p className="text-[11px] font-bold text-teal-dark uppercase tracking-wide">
                   Avant de publier
                 </p>
                 <p className="text-[12.5px] text-ink-soft">
@@ -693,7 +693,7 @@ export default function AjouterProduit() {
               <button
                 type="button"
                 onClick={() => setStep(step - 1)}
-                className="px-6 py-3 text-sm font-bold text-ink-soft/60 hover:text-ink transition-colors"
+                className="px-6 py-3 text-sm font-bold text-ink-soft/75 hover:text-ink transition-colors"
               >
                 ← Retour
               </button>
@@ -728,7 +728,7 @@ export default function AjouterProduit() {
             <h3 className="font-serif text-base text-ink">
               Résumé de l'annonce
             </h3>
-            <span className="text-[10px] font-bold uppercase tracking-wide bg-sable text-ink-soft/60 px-2.5 py-1 rounded-full">
+            <span className="text-[10px] font-bold uppercase tracking-wide bg-sable text-ink-soft/75 px-2.5 py-1 rounded-full">
               Brouillon
             </span>
           </div>
@@ -749,7 +749,7 @@ export default function AjouterProduit() {
               <p className="text-sm font-bold text-ink truncate">
                 {formData.titre || "Titre de votre annonce"}
               </p>
-              <p className="text-[11.5px] text-ink-soft/55 mt-0.5">
+              <p className="text-[11.5px] text-ink-soft/75 mt-0.5">
                 {isLocation ? "Location" : "Vente"} ·{" "}
                 {sousCategorieNom || categorieNom || "—"} ·{" "}
                 {moi?.nom_boutique || "Votre boutique"}
@@ -757,14 +757,14 @@ export default function AjouterProduit() {
               <p className="font-serif text-lg font-bold text-ink mt-2">
                 {prixAffiche ? formatFCFA(prixAffiche) : "— FCFA"}
                 {isLocation && (
-                  <span className="text-ink-soft/50 font-sans font-normal text-xs">
+                  <span className="text-ink-soft/75 font-sans font-normal text-xs">
                     {" "}
                     /jour
                   </span>
                 )}
               </p>
               {isLocation && formData.caution && (
-                <p className="text-[11px] text-ink-soft/50">
+                <p className="text-[11px] text-ink-soft/75">
                   Caution : {formatFCFA(formData.caution)}
                 </p>
               )}
@@ -775,13 +775,13 @@ export default function AjouterProduit() {
             <p className="text-[11px] font-bold text-ink uppercase tracking-wide mb-1">
               Bien démarrer votre annonce
             </p>
-            <p className="text-[12px] text-ink-soft/70">
+            <p className="text-[12px] text-ink-soft/75">
               • Un titre précis facilite la recherche.
             </p>
-            <p className="text-[12px] text-ink-soft/70">
+            <p className="text-[12px] text-ink-soft/75">
               • Décrivez honnêtement l'état et les défauts.
             </p>
-            <p className="text-[12px] text-ink-soft/70">
+            <p className="text-[12px] text-ink-soft/75">
               • Choisissez la catégorie la plus pertinente.
             </p>
           </div>

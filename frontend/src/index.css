@@ -46,9 +46,16 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  :focus-visible {
-    outline: 2px solid var(--color-clay);
-    outline-offset: 3px;
+  /* Tailwind v4 ne met plus de curseur main sur les boutons : on le rétablit */
+  button:not(:disabled),
+  [role="button"],
+  summary,
+  select,
+  label[for] {
+    cursor: pointer;
+  }
+  :disabled {
+    cursor: not-allowed;
   }
 
   input:-webkit-autofill,
@@ -222,5 +229,31 @@
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* ==========================================================
+   4. ACCESSIBILITÉ — focus clavier toujours visible
+   Hors @layer volontairement : prime sur les `focus:outline-none`
+   présents dans les composants, sans avoir à les modifier un par un.
+   ========================================================== */
+:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 3px;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-teal-dark);
+  outline-offset: 1px;
+}
+
+/* Mouvement réduit : transitions quasi instantanées, pas de défilement animé */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

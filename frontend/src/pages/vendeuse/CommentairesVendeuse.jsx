@@ -75,19 +75,19 @@ export default function CommentairesVendeuse() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
         <div className="bg-white border-l-4 border-l-orange rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
           <p className="text-2xl font-serif font-bold text-ink">{noteMoyenne}</p>
-          <p className="text-[11.5px] text-ink-soft/55 uppercase tracking-wide font-bold mt-0.5">Note moyenne</p>
+          <p className="text-[11.5px] text-ink-soft/75 uppercase tracking-wide font-bold mt-0.5">Note moyenne</p>
         </div>
         <div className="bg-white border-l-4 border-l-teal rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
           <p className="text-2xl font-serif font-bold text-ink">{avis.length}</p>
-          <p className="text-[11.5px] text-ink-soft/55 uppercase tracking-wide font-bold mt-0.5">Avis reçus</p>
+          <p className="text-[11.5px] text-ink-soft/75 uppercase tracking-wide font-bold mt-0.5">Avis reçus</p>
         </div>
         <div className="bg-white border-l-4 border-l-orange rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
           <p className="text-2xl font-serif font-bold text-ink">{aRepondre}</p>
-          <p className="text-[11.5px] text-ink-soft/55 uppercase tracking-wide font-bold mt-0.5">À répondre</p>
+          <p className="text-[11.5px] text-ink-soft/75 uppercase tracking-wide font-bold mt-0.5">À répondre</p>
         </div>
         <div className="bg-white border-l-4 border-l-teal rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-4">
           <p className="text-2xl font-serif font-bold text-ink">{avis.length > 0 ? Math.round(((avis.length - aRepondre) / avis.length) * 100) : 0}%</p>
-          <p className="text-[11.5px] text-ink-soft/55 uppercase tracking-wide font-bold mt-0.5">Taux de réponse</p>
+          <p className="text-[11.5px] text-ink-soft/75 uppercase tracking-wide font-bold mt-0.5">Taux de réponse</p>
         </div>
       </div>
 
@@ -102,7 +102,7 @@ export default function CommentairesVendeuse() {
             type="button"
             onClick={() => setFiltre(f.id)}
             className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold transition-colors ${
-              filtre === f.id ? 'bg-ink text-cream' : 'bg-cream text-ink-soft/70 hover:bg-line/60'
+              filtre === f.id ? 'bg-ink text-cream' : 'bg-cream text-ink-soft/75 hover:bg-line/60'
             }`}
           >
             {f.label}
@@ -112,7 +112,7 @@ export default function CommentairesVendeuse() {
 
       {avisFiltres.length === 0 ? (
         <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-          <p className="text-ink-soft/60 text-sm">Aucun avis dans cette catégorie pour le moment.</p>
+          <p className="text-ink-soft/75 text-sm">Aucun avis dans cette catégorie pour le moment.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -120,12 +120,12 @@ export default function CommentairesVendeuse() {
             <div key={a.id} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2.5">
-                  <div className="h-9 w-9 rounded-full bg-teal/15 text-teal font-bold text-[13px] flex items-center justify-center shrink-0">
+                  <div className="h-9 w-9 rounded-full bg-teal/15 text-teal-dark font-bold text-[13px] flex items-center justify-center shrink-0">
                     {a.auteur_nom.charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-ink">{a.auteur_nom}</p>
-                    <p className="text-[11.5px] text-ink-soft/50">{formatDate(a.date_creation)}</p>
+                    <p className="text-[11.5px] text-ink-soft/75">{formatDate(a.date_creation)}</p>
                   </div>
                 </div>
                 <Etoiles note={a.note} />
@@ -137,7 +137,7 @@ export default function CommentairesVendeuse() {
 
               {a.reponse_vendeuse ? (
                 <div className="bg-sable rounded-btn p-3.5 mt-2">
-                  <p className="text-[11px] font-bold text-teal uppercase tracking-wide mb-1">Votre réponse</p>
+                  <p className="text-[11px] font-bold text-teal-dark uppercase tracking-wide mb-1">Votre réponse</p>
                   <p className="text-[13px] text-ink-soft">{a.reponse_vendeuse}</p>
                 </div>
               ) : (

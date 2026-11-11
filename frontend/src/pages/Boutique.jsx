@@ -264,7 +264,7 @@ export default function Boutique() {
                 className="w-full sm:max-w-xs px-4 py-2.5 bg-cream border border-line rounded-btn text-sm focus:outline-none focus:border-teal transition-colors"
               />
               <div className="flex items-center gap-3">
-                <span className="text-[13px] text-ink-soft/70 whitespace-nowrap">
+                <span className="text-[13px] text-ink-soft/75 whitespace-nowrap">
                   {nbArticlesAffiche} article
                   {nbArticlesAffiche !== 1 ? "s" : ""}
                 </span>
@@ -318,7 +318,7 @@ export default function Boutique() {
                 <p className="font-serif text-xl text-ink mb-2">
                   Aucun article pour le moment
                 </p>
-                <p className="text-sm text-ink-soft/70 mb-6">
+                <p className="text-sm text-ink-soft/75 mb-6">
                   Soyez la première à publier dans cette catégorie.
                 </p>
                 <a
@@ -332,7 +332,7 @@ export default function Boutique() {
               <div>
                 {modeDecouverte &&
                   (recentes.length > 0 || frequentes.length > 0) && (
-                    <h3 className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/60 mb-3.5">
+                    <h3 className="text-[11px] font-bold uppercase tracking-wider text-ink-soft/75 mb-3.5">
                       Tout le catalogue
                     </h3>
                   )}
@@ -351,7 +351,7 @@ export default function Boutique() {
                       type="button"
                       onClick={() => changerPage(Math.max(1, pageCourante - 1))}
                       disabled={pageCourante === 1}
-                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal transition-colors"
+                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal-dark transition-colors"
                     >
                       Précédent
                     </button>
@@ -373,7 +373,7 @@ export default function Boutique() {
                       type="button"
                       onClick={() => changerPage(Math.min(totalPages, pageCourante + 1))}
                       disabled={pageCourante === totalPages}
-                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal transition-colors"
+                      className="px-3.5 py-2 rounded-full text-[13px] font-semibold border border-line text-ink-soft disabled:opacity-40 hover:border-teal hover:text-teal-dark transition-colors"
                     >
                       Suivant
                     </button>

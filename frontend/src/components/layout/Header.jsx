@@ -159,7 +159,7 @@ export default function Header() {
                 moi ? setCompteOuvert((o) => !o) : navigate("/connexion")
               }
               aria-label="Mon compte"
-              className="h-9.5 w-9.5 flex items-center justify-center rounded-btn text-ink hover:text-teal hover:-translate-y-0.5 transition-all"
+              className="h-9.5 w-9.5 flex items-center justify-center rounded-btn text-ink hover:text-teal-dark hover:-translate-y-0.5 transition-all"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -179,7 +179,7 @@ export default function Header() {
                   <p className="text-sm font-bold text-ink truncate">
                     {moi.first_name || moi.username}
                   </p>
-                  <p className="text-[11.5px] text-ink-soft/50 truncate">
+                  <p className="text-[11.5px] text-ink-soft/75 truncate">
                     {moi.username}
                   </p>
                 </div>
@@ -196,7 +196,7 @@ export default function Header() {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.6"
-                        className="h-4 w-4 text-ink-soft/60"
+                        className="h-4 w-4 text-ink-soft/75"
                       >
                         <circle cx="12" cy="8" r="4" />
                         <path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" />
@@ -213,7 +213,7 @@ export default function Header() {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.6"
-                        className="h-4 w-4 text-ink-soft/60"
+                        className="h-4 w-4 text-ink-soft/75"
                       >
                         <rect x="3" y="7" width="18" height="14" rx="2" />
                         <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" />
@@ -234,7 +234,7 @@ export default function Header() {
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="1.6"
-                      className="h-4 w-4 text-ink-soft/60"
+                      className="h-4 w-4 text-ink-soft/75"
                     >
                       <path d="M4 4h7v7H4zM13 4h7v4h-7zM13 11h7v9h-7zM4 14h7v6H4z" />
                     </svg>
@@ -267,7 +267,7 @@ export default function Header() {
           <Link
             to="/panier"
             aria-label="Panier"
-            className="relative flex items-center gap-2 text-ink hover:text-teal hover:-translate-y-0.5 transition-all"
+            className="relative flex items-center gap-2 text-ink hover:text-teal-dark hover:-translate-y-0.5 transition-all"
           >
             <span className="relative h-9.5 w-9.5 flex items-center justify-center">
               <svg

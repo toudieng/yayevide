@@ -85,7 +85,7 @@ export default function MaBoutique() {
     return (
       <ShellVendeuse active="boutique" moi={moi} titre="Ma boutique">
         <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-14 text-center">
-          <p className="text-ink-soft/60 text-sm">Aucune boutique associée à ce compte.</p>
+          <p className="text-ink-soft/75 text-sm">Aucune boutique associée à ce compte.</p>
         </div>
       </ShellVendeuse>
     );
@@ -95,7 +95,7 @@ export default function MaBoutique() {
     <ShellVendeuse active="boutique" moi={moi} titre="Ma boutique">
 
       {erreur && <div className="p-4 text-sm bg-red-50 text-red-600 rounded-btn border border-red-100">{erreur}</div>}
-      {message && <div className="p-4 text-sm bg-teal/10 text-teal rounded-btn border border-teal/20">{message}</div>}
+      {message && <div className="p-4 text-sm bg-teal/10 text-teal-dark rounded-btn border border-teal/20">{message}</div>}
 
       <form onSubmit={enregistrer} className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-6">
 
@@ -142,7 +142,7 @@ export default function MaBoutique() {
 
           <div>
             <label className="block text-[11px] font-bold text-ink uppercase tracking-wider mb-1.5">
-              Zone <span className="font-normal normal-case text-ink-soft/50">(pas votre adresse exacte, juste pour informer les acheteuses)</span>
+              Zone <span className="font-normal normal-case text-ink-soft/75">(pas votre adresse exacte, juste pour informer les acheteuses)</span>
             </label>
             <select
               value={form.zone}
@@ -158,7 +158,7 @@ export default function MaBoutique() {
 
           <div className="pt-2 border-t border-line space-y-3.5">
             <label className="flex items-center justify-between cursor-pointer">
-              <span className="text-[13.5px] font-semibold text-ink">Boutique visible <span className="block text-[11.5px] font-normal text-ink-soft/50">Afficher la boutique au public</span></span>
+              <span className="text-[13.5px] font-semibold text-ink">Boutique visible <span className="block text-[11.5px] font-normal text-ink-soft/75">Afficher la boutique au public</span></span>
               <input
                 type="checkbox"
                 checked={form.visible}
@@ -167,7 +167,7 @@ export default function MaBoutique() {
               />
             </label>
             <label className="flex items-center justify-between cursor-pointer">
-              <span className="text-[13.5px] font-semibold text-ink">Locations activées <span className="block text-[11.5px] font-normal text-ink-soft/50">Accepter les demandes de location</span></span>
+              <span className="text-[13.5px] font-semibold text-ink">Locations activées <span className="block text-[11.5px] font-normal text-ink-soft/75">Accepter les demandes de location</span></span>
               <input
                 type="checkbox"
                 checked={form.locations_activees}
@@ -185,7 +185,7 @@ export default function MaBoutique() {
               href={`/boutique/${boutique.slug}`}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3 rounded-btn text-sm font-bold border border-line text-ink-soft/70 hover:border-teal hover:text-teal transition-colors"
+              className="px-6 py-3 rounded-btn text-sm font-bold border border-line text-ink-soft/75 hover:border-teal hover:text-teal-dark transition-colors"
             >
               Aperçu public
             </a>
@@ -206,8 +206,8 @@ export default function MaBoutique() {
             </div>
             <div className="p-4">
               <p className="font-serif text-lg text-ink">{form.nom_boutique || 'Nom de la boutique'}</p>
-              {form.zone && <p className="text-[12px] text-teal font-semibold mt-0.5">{zones.find((z) => z.code === form.zone)?.nom}</p>}
-              <p className="text-[13px] text-ink-soft/70 mt-2 leading-relaxed">{form.description || 'Aucune bio renseignée pour le moment.'}</p>
+              {form.zone && <p className="text-[12px] text-teal-dark font-semibold mt-0.5">{zones.find((z) => z.code === form.zone)?.nom}</p>}
+              <p className="text-[13px] text-ink-soft/75 mt-2 leading-relaxed">{form.description || 'Aucune bio renseignée pour le moment.'}</p>
               {!form.visible && (
                 <p className="text-[11.5px] font-bold text-red-500 mt-3 bg-red-50 rounded-full px-3 py-1 w-fit">Boutique masquée au public</p>
               )}
@@ -219,7 +219,7 @@ export default function MaBoutique() {
 
       <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 max-w-md">
         <h3 className="font-serif text-lg text-ink mb-1">Notifications de commande</h3>
-        <p className="text-[12.5px] text-ink-soft/60 mb-4">Comment souhaitez-vous être prévenue d'une nouvelle commande ?</p>
+        <p className="text-[12.5px] text-ink-soft/75 mb-4">Comment souhaitez-vous être prévenue d'une nouvelle commande ?</p>
         <div className="grid grid-cols-2 gap-2.5">
           {[
             { value: 'email', label: 'Par email' },
@@ -232,7 +232,7 @@ export default function MaBoutique() {
               className={`px-4 py-3 rounded-btn text-sm font-semibold border-2 transition-all ${
                 notifPref === opt.value
                   ? 'border-teal bg-teal/5 text-ink'
-                  : 'border-line text-ink-soft/60 hover:border-ink/30'
+                  : 'border-line text-ink-soft/75 hover:border-ink/30'
               }`}
             >
               {opt.label}

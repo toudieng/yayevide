@@ -72,7 +72,7 @@ export default function AdminDashboard() {
   const COULEURS = {
     orange: { bg: 'bg-orange/10', border: 'border-orange/30', hover: 'hover:bg-orange/15', icon: 'bg-orange', text: 'text-orange' },
     red: { bg: 'bg-red-50', border: 'border-red-200', hover: 'hover:bg-red-100/70', icon: 'bg-red-500', text: 'text-red-500' },
-    teal: { bg: 'bg-teal/10', border: 'border-teal/30', hover: 'hover:bg-teal/15', icon: 'bg-teal', text: 'text-teal' },
+    teal: { bg: 'bg-teal/10', border: 'border-teal/30', hover: 'hover:bg-teal/15', icon: 'bg-teal', text: 'text-teal-dark' },
   };
 
   return (
@@ -122,39 +122,39 @@ export default function AdminDashboard() {
         <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Vue d'ensemble</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
-            <div className="text-xs text-ink-soft/60 uppercase font-bold tracking-wider">GMV total</div>
+            <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">GMV total</div>
             <div className="text-2xl font-serif font-bold mt-1 text-ink">{formatFCFA(stats?.gmv_total)}</div>
           </div>
           <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
-            <div className="text-xs text-ink-soft/60 uppercase font-bold tracking-wider">Commission totale</div>
-            <div className="text-2xl font-serif font-bold mt-1 text-teal">{formatFCFA(stats?.commission_totale)}</div>
+            <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Commission totale</div>
+            <div className="text-2xl font-serif font-bold mt-1 text-teal-dark">{formatFCFA(stats?.commission_totale)}</div>
           </div>
           <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
-            <div className="text-xs text-ink-soft/60 uppercase font-bold tracking-wider">GMV (ce mois)</div>
+            <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">GMV (ce mois)</div>
             <div className="text-2xl font-serif font-bold mt-1 text-ink">{formatFCFA(stats?.gmv_mois)}</div>
           </div>
           <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
-            <div className="text-xs text-ink-soft/60 uppercase font-bold tracking-wider">Commission (ce mois)</div>
-            <div className="text-2xl font-serif font-bold mt-1 text-teal">{formatFCFA(stats?.commission_mois)}</div>
+            <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Commission (ce mois)</div>
+            <div className="text-2xl font-serif font-bold mt-1 text-teal-dark">{formatFCFA(stats?.commission_mois)}</div>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
-          <div className="text-xs text-ink-soft/60 uppercase font-bold tracking-wider">Commandes (ce mois)</div>
+          <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Commandes (ce mois)</div>
           <div className="text-2xl font-serif font-bold mt-1 text-ink">{stats?.nb_commandes_mois ?? 0}</div>
         </div>
         <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
-          <div className="text-xs text-ink-soft/60 uppercase font-bold tracking-wider">Commandes en attente</div>
+          <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Commandes en attente</div>
           <div className="text-2xl font-serif font-bold mt-1 text-orange">{stats?.nb_commandes_en_attente ?? 0}</div>
         </div>
         <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
-          <div className="text-xs text-ink-soft/60 uppercase font-bold tracking-wider">Boutiques actives</div>
+          <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Boutiques actives</div>
           <div className="text-2xl font-serif font-bold mt-1 text-ink">{stats?.nb_boutiques ?? 0}</div>
         </div>
         <div className="bg-white p-6 rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)]">
-          <div className="text-xs text-ink-soft/60 uppercase font-bold tracking-wider">Articles en ligne</div>
+          <div className="text-xs text-ink-soft/75 uppercase font-bold tracking-wider">Articles en ligne</div>
           <div className="text-2xl font-serif font-bold mt-1 text-ink">{stats?.nb_produits_en_ligne ?? 0}</div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export default function BlogPreview() {
 
         <Reveal as="div" className="grid gap-10 lg:grid-cols-[1.3fr_1fr]">
           <Link to={`/blog/${FEATURED.slug}`} className="group relative block aspect-[4/3] overflow-hidden rounded-m border border-line">
-            <img
+            <img loading="lazy" decoding="async"
               src={FEATURED.image}
               alt=""
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -44,7 +44,7 @@ export default function BlogPreview() {
                   i === 0 ? 'pt-0' : ''
                 }`}
               >
-                <img src={p.image} alt="" className="h-21 w-21 shrink-0 rounded-btn border border-line object-cover" />
+                <img loading="lazy" decoding="async" src={p.image} alt="" className="h-21 w-21 shrink-0 rounded-btn border border-line object-cover" />
                 <div>
                   <span className={`text-[10.5px] font-semibold uppercase tracking-wide ${p.tagColor}`}>
                     {p.tag}
