@@ -5,13 +5,54 @@ const CARD_BACK_IMAGE =
   'https://images.unsplash.com/photo-1519689680058-324335c77eba?fm=jpg&q=80&w=600&auto=format&fit=crop';
 const CARD_FRONT_IMAGE =
   'https://images.unsplash.com/photo-1522771930-78848d9293e8?fm=jpg&q=80&w=600&auto=format&fit=crop';
+// Même photo en miniature pour la version compacte (petits écrans) : ~5 Ko
+const CARD_THUMB_IMAGE =
+  'https://images.unsplash.com/photo-1522771930-78848d9293e8?fm=jpg&q=75&w=144&h=144&auto=format&fit=crop';
+
+/**
+ * Version compacte pour les écrans < 1280 px (téléphone, tablette, petit
+ * portable) : une petite carte produit qui flotte doucement au-dessus du
+ * titre, dans le flux — elle ne peut donc jamais recouvrir le texte.
+ * Animation coupée si l'utilisatrice préfère moins de mouvement.
+ */
+export function HeroShowcaseCompact() {
+  return (
+    <div className="xl:hidden mb-6 sm:mb-8 animate-float" aria-hidden="true">
+      <div className="relative -rotate-2 flex items-center gap-3 rounded-m bg-cream/95 backdrop-blur-sm pl-2 pr-4 py-2 shadow-[0_14px_34px_-12px_rgba(0,0,0,0.55)] border border-white/40">
+        <img
+          src={CARD_THUMB_IMAGE}
+          alt=""
+          width="56"
+          height="56"
+          decoding="async"
+          className="h-14 w-14 rounded-btn object-cover shrink-0 bg-line/40"
+        />
+        <div className="text-left min-w-0">
+          <p className="text-[13px] font-semibold text-ink leading-tight">Ensemble pyjama bébé</p>
+          <p className="text-[13px] font-bold text-clay-dark mt-0.5">4 800 FCFA</p>
+        </div>
+        <span className="ml-1 flex items-center gap-1 text-[11px] font-bold text-ink bg-white rounded-full px-2 py-1 border border-line shrink-0">
+          ★ 4.9
+        </span>
+        <span className="absolute -top-3 -left-2 flex items-center gap-1 bg-teal-dark text-white text-[10.5px] font-bold px-2.5 py-1 rounded-full shadow-md">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="h-3 w-3">
+            <path d="M5 12l4.5 4.5L19 7" />
+          </svg>
+          Vérifié
+        </span>
+      </div>
+    </div>
+  );
+}
 
 /**
  * Petite scène "3D" en pur CSS (perspective + translateZ), pas de WebGL —
  * deux cartes produit empilées qui basculent doucement selon la position de
  * la souris sur le hero. Reste léger (aucune dépendance ajoutée, aucun
- * rendu 3D réel à charger), pensé pour du mobile en priorité : masqué en
- * dessous de lg et figé si la personne préfère moins d'animations.
+ * rendu 3D réel à charger). Affichée à partir de 1280 px, collée au bord
+ * droit (à l'écart des flèches du carrousel) et dimensionnée pour ne jamais
+ * toucher le titre ; en dessous, HeroShowcaseCompact prend le relais.
+ * Figée si la personne préfère moins d'animations.
  */
 export default function Hero3DShowcase({ trackRef }) {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -56,8 +97,9 @@ export default function Hero3DShowcase({ trackRef }) {
 
   return (
     <div
-      className="hidden xl:block absolute z-[3] pointer-events-none"
-      style={{ top: '10%', right: '6%', width: 180, perspective: '1400px' }}
+      className="hidden xl:block absolute z-[3] pointer-events-none top-[12%] right-[84px] w-[150px] 2xl:w-[180px] 2xl:right-[96px]"
+      style={{ perspective: '1400px' }}
+      aria-hidden="true"
     >
       <div
         className="relative transition-transform duration-300 ease-out"
@@ -85,7 +127,7 @@ export default function Hero3DShowcase({ trackRef }) {
           className="relative rounded-m overflow-hidden border border-white/25 shadow-2xl bg-cream"
           style={{ transform: 'translateZ(30px)' }}
         >
-          <img src={CARD_FRONT_IMAGE} alt="Article pour bébé mis en ligne sur Yaay Vidé" className="h-36 w-full object-cover" />
+          <img src={CARD_FRONT_IMAGE} alt="" className="h-30 2xl:h-36 w-full object-cover bg-line/40" />
           <div className="p-3.5">
             <p className="text-[13px] font-semibold text-ink truncate">Ensemble pyjama bébé</p>
             <p className="text-[13px] font-bold text-clay-dark mt-0.5">4 800 FCFA</p>
@@ -94,7 +136,7 @@ export default function Hero3DShowcase({ trackRef }) {
 
         {/* badge "vérifié" détaché devant tout le reste */}
         <div
-          className="absolute -top-3.5 -left-3.5 flex items-center gap-1.5 bg-teal text-white text-[10.5px] font-bold px-3 py-1.5 rounded-full shadow-lg"
+          className="absolute -top-3.5 -left-3.5 flex items-center gap-1.5 bg-teal-dark text-white text-[10.5px] font-bold px-3 py-1.5 rounded-full shadow-lg"
           style={{ transform: 'translateZ(60px)' }}
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="h-3 w-3">
