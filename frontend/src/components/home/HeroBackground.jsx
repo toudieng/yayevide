@@ -28,16 +28,25 @@ export default function HeroBackground({ mediaRef }) {
 
   return (
     <>
-      <div ref={ref} className="absolute -inset-x-[2%] -inset-y-[4%] will-change-transform">
+      {/* Téléphone : photo entière (format d'origine 1504 × 992) posée en haut,
+          le texte passe dessous. Dès 640 px : photo en fond derrière le texte. */}
+      <div
+        ref={ref}
+        className="relative w-full aspect-[1504/992] overflow-hidden sm:overflow-visible sm:aspect-auto sm:w-auto sm:absolute sm:-inset-x-[2%] sm:-inset-y-[4%] sm:will-change-transform"
+      >
         <img
           src={HERO_IMAGE}
           alt=""
+          width="1504"
+          height="992"
           fetchPriority="high"
           decoding="async"
-          className="h-full w-full object-cover animate-kenburns [filter:saturate(.85)_contrast(1.05)]"
+          className="h-full w-full object-cover animate-kenburns max-sm:[animation:none]! [filter:saturate(.85)_contrast(1.05)]"
         />
+        {/* fondu vers le fond du texte, sur téléphone seulement */}
+        <div aria-hidden="true" className="sm:hidden absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-b from-transparent to-ink" />
         <div
-          className="absolute inset-0"
+          className="hidden sm:block absolute inset-0"
           style={{
             background:
               'linear-gradient(180deg, rgba(27,36,48,.55) 0%, rgba(27,36,48,.45) 40%, rgba(27,36,48,.58) 100%)',

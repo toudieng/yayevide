@@ -7,17 +7,17 @@ import HeroSlideExpress from './HeroSlideExpress';
 
 function SlideActuel({ sectionRef, mediaRef }) {
   return (
-    <div className="relative h-full w-full flex items-center overflow-hidden bg-ink">
+    <div className="relative h-full w-full flex flex-col sm:flex-row sm:items-center overflow-hidden bg-ink">
       <HeroBackground mediaRef={mediaRef} />
 
       <Hero3DShowcase trackRef={sectionRef} />
 
       {/* Titre toujours centré : entre 1024 et 1279 px, sa taille suit la
           largeur de l'écran pour laisser la place au bloc produit à droite */}
-      <div className="relative z-[2] w-full mx-auto max-w-[1280px] px-6 md:px-12">
+      <div className="relative z-[2] w-full mx-auto max-w-[1280px] px-6 md:px-12 pt-4 pb-12 sm:py-0">
         <div className="flex flex-col items-center text-center">
           <HeroShowcaseCompact />
-          <h1 className="font-impact font-extrabold text-cream leading-[1.06] text-[38px] sm:text-[52px] lg:text-[clamp(40px,calc(8vw-42px),56px)] xl:text-[56px] 2xl:text-[68px]">
+          <h1 className="font-impact font-extrabold text-cream leading-[1.06] text-[31px] sm:text-[52px] lg:text-[clamp(40px,calc(8vw-42px),56px)] xl:text-[56px] 2xl:text-[68px]">
             La première marketplace
             <br />
             pour mamans
@@ -27,7 +27,7 @@ function SlideActuel({ sectionRef, mediaRef }) {
               <span aria-hidden="true" className="absolute left-1/2 bottom-0 -translate-x-1/2 h-px w-20 sm:w-24 bg-gradient-to-r from-transparent via-peche to-transparent" />
             </span>
           </h1>
-          <p className="text-cream/80 text-[17px] leading-relaxed max-w-md my-6.5">
+          <p className="text-cream/80 text-[15px] sm:text-[17px] leading-relaxed max-w-md my-4 sm:my-6.5">
             Achetez, vendez et louez des articles pour bébés, enfants et mamans en toute sécurité.
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
@@ -63,7 +63,10 @@ export default function Hero() {
       ticking = true;
       requestAnimationFrame(() => {
         if (mediaRef.current) {
-          mediaRef.current.style.transform = `translateY(${window.scrollY * 0.18}px)`;
+          // Sur téléphone, la photo est posée au-dessus du texte : pas de
+          // parallaxe, sinon elle glisserait sur le titre.
+          mediaRef.current.style.transform =
+            window.innerWidth < 640 ? '' : `translateY(${window.scrollY * 0.18}px)`;
         }
         ticking = false;
       });
@@ -89,7 +92,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[96vh]"
+      className="relative grid sm:block sm:min-h-[96vh]"
       onMouseEnter={() => setPause(true)}
       onMouseLeave={() => setPause(false)}
     >
@@ -100,7 +103,7 @@ export default function Hero() {
       ].map((content, i) => (
         <div
           key={i}
-          className={`absolute inset-0 transition-opacity duration-700 ease-out ${
+          className={`col-start-1 row-start-1 sm:absolute sm:inset-0 transition-opacity duration-700 ease-out ${
             i === slide ? 'opacity-100 z-[1]' : 'opacity-0 pointer-events-none z-0'
           }`}
         >
