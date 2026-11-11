@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
+import imgTenues from '../../assets/categories/tenues-de-fete.webp';
+import imgChaussures from '../../assets/categories/chaussures-de-fete.webp';
+import imgDeguisements from '../../assets/categories/deguisements.webp';
 
 const CHIPS = [
-  { name: 'Tenues de fête', img: 'https://images.unsplash.com/photo-1684244160171-97f5dac39204?fm=jpg&q=70&w=500&auto=format&fit=crop' },
-  { name: 'Chaussures de fête', img: 'https://images.unsplash.com/photo-1622290291720-ac961c43ee30?fm=jpg&q=70&w=500&auto=format&fit=crop' },
+  { name: 'Tenues de fête', img: imgTenues },
+  { name: 'Chaussures de fête', img: imgChaussures },
   { name: 'Sacs & accessoires', img: 'https://images.unsplash.com/photo-1635874714425-c342060a4c58?fm=jpg&q=70&w=500&auto=format&fit=crop' },
-  { name: 'Déguisements', img: 'https://images.unsplash.com/photo-1642379831634-1eb6a4e2788d?fm=jpg&q=70&w=500&auto=format&fit=crop' },
+  { name: 'Déguisements', img: imgDeguisements },
   { name: "Décorations d'occasion", img: 'https://images.unsplash.com/photo-1632337948797-ba161d29532b?fm=jpg&q=70&w=500&auto=format&fit=crop' },
 ];
 

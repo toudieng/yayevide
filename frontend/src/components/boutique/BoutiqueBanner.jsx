@@ -1,7 +1,9 @@
 // frontend/src/components/boutique/BoutiqueBanner.jsx
 import { findCategoryBySlug } from '../../data/categories';
 import Reveal from '../ui/Reveal';
-// Même photo que l'accueil (locale, WebP ~80 Ko) pour « Tous les articles »
+// Même photo que l'accueil (locale, WebP ~80 Ko) pour toutes les bannières :
+// les photos de catégorie sont trop petites pour une bannière pleine largeur
+// (elles restent sur les cartes de catégories de l'accueil).
 import DEFAULT_IMG from '../../assets/hero-maman-bebe.webp';
 
 export default function BoutiqueBanner({ categorieSlug }) {
@@ -11,9 +13,9 @@ export default function BoutiqueBanner({ categorieSlug }) {
     <div className="relative h-[220px] sm:h-[280px] overflow-hidden">
       <img
         key={categorieSlug || 'all'}
-        src={cat ? cat.img : DEFAULT_IMG}
+        src={DEFAULT_IMG}
         alt={cat ? cat.name : 'Tous les articles'}
-        className={`absolute inset-0 h-full w-full object-cover animate-kenburns ${cat ? "" : "object-[50%_22%]"}`}
+        className="absolute inset-0 h-full w-full object-cover object-[50%_22%] animate-kenburns"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/35 to-ink/10" />
       <Reveal className="relative z-10 h-full flex flex-col items-start justify-end max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 pb-9">

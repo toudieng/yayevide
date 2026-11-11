@@ -13,6 +13,11 @@ import { apiFetch } from '../../utils/api';
 const VITRINES = CATEGORIES.filter((c) => c.href).map((c) => ({ nom: c.name, slug: c.slug, image: c.img, href: c.href }));
 // Image de secours (par slug) si la photo d'une catégorie ne se charge pas
 const IMAGE_SECOURS = Object.fromEntries(CATEGORIES.map((c) => [c.slug, c.img]));
+// Photos officielles livrées avec le site (assets/categories) : elles passent
+// avant la photo saisie dans l'admin pour la catégorie correspondante.
+const IMAGE_SITE = Object.fromEntries(
+  CATEGORIES.filter((c) => !String(c.img).startsWith('http')).map((c) => [c.slug, c.img]),
+);
 
 function CategoryCard({ cat }) {
   const ref = useRef(null);
@@ -80,7 +85,8 @@ export default function Categories() {
         const data = await res.json();
         if (data.length > 0) {
           const slugs = new Set(data.map((c) => c.slug));
-          setCategories([...data, ...VITRINES.filter((v) => !slugs.has(v.slug))]);
+          const reelles = data.map((c) => ({ ...c, image: IMAGE_SITE[c.slug] || c.image }));
+          setCategories([...reelles, ...VITRINES.filter((v) => !slugs.has(v.slug))]);
         }
       })
       .catch(() => {});
