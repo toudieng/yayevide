@@ -91,6 +91,7 @@ Sections : `py-12` mobile → `py-16`/`py-20` desktop. Écart entre cartes : `ga
 
 ### États (composants partagés)
 - `components/ui/EtatVide.jsx` : état vide (icône douce + titre + texte + action), `compact` / `bordure={false}` dans les blocs.
+- `components/home/TringleProduits.jsx` : produits populaires de l'accueil en étiquettes suspendues (balancement physique maison, glisser, clavier, coupé en mouvement réduit).
 - `components/ui/SqueletteTableau.jsx` : chargement des tableaux de bord (silhouette menu + stats + blocs, `role="status"`).
 - Chargement : squelettes `bg-line/40 animate-pulse` à la forme du contenu (pas de spinner plein écran quand une mise en page est connue).
 - Vide : icône SVG douce + phrase chaleureuse + action (lien/bouton).

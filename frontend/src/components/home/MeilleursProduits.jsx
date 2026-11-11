@@ -1,13 +1,13 @@
 // frontend/src/components/home/MeilleursProduits.jsx
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ProductCard from '../boutique/ProductCard';
+import TringleProduits from './TringleProduits';
 import { apiFetch } from '../../utils/api';
 
 export default function MeilleursProduits() {
   const [produits, setProduits] = useState([]);
   const [chargement, setChargement] = useState(true);
-  const scrollerRef = useRef(null);
+  const tringleRef = useRef(null);
 
   useEffect(() => {
     apiFetch('/produits/?tri=tendance&limit=10')
@@ -16,18 +16,14 @@ export default function MeilleursProduits() {
       .finally(() => setChargement(false));
   }, []);
 
-  const scroll = (direction) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollBy({ left: direction * el.clientWidth * 0.85, behavior: 'smooth' });
-  };
+  const scroll = (direction) => tringleRef.current?.defiler(direction);
 
   if (!chargement && produits.length === 0) return null;
 
   return (
     <section className="py-12" aria-busy={chargement}>
-      <div className="mx-auto max-w-[1280px] px-6 md:px-12">
-        <div className="flex items-end justify-between mb-9">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 md:px-12">
+        <div className="flex items-end justify-between mb-6">
           <div>
             <h2 className="font-impact font-extrabold text-ink text-[30px] sm:text-[40px] lg:text-[48px] leading-tight text-balance">
               Nos meilleurs produits
@@ -61,31 +57,9 @@ export default function MeilleursProduits() {
           </div>
         </div>
 
-        <div ref={scrollerRef} className="flex gap-5 overflow-x-auto pb-2 no-scrollbar scroll-smooth snap-x snap-mandatory">
-          {chargement && Array.from({ length: 4 }).map((_, i) => (
-            <div key={`sq-${i}`} className="w-[62%] sm:w-[42%] lg:w-[23%] shrink-0" aria-hidden="true">
-              <div className="rounded-[18px] overflow-hidden bg-white shadow-[0_4px_14px_-6px_rgba(27,36,48,0.18)]">
-                <div className="aspect-[4/3] bg-line/40 animate-pulse" />
-                <div className="px-3 pt-2.5 pb-3 space-y-2">
-                  <div className="h-3 w-16 rounded-full bg-line/50 animate-pulse" />
-                  <div className="flex justify-between gap-3">
-                    <div className="h-4 w-1/2 rounded bg-line/50 animate-pulse" />
-                    <div className="h-4 w-1/4 rounded bg-line/50 animate-pulse" />
-                  </div>
-                  <div className="h-3 w-3/4 rounded bg-line/40 animate-pulse" />
-                  <div className="h-9 w-full rounded-full bg-line/40 animate-pulse mt-1" />
-                </div>
-              </div>
-            </div>
-          ))}
-          {produits.map((p, i) => (
-            <div key={p.id} className="w-[62%] sm:w-[42%] lg:w-[23%] shrink-0 snap-start">
-              <ProductCard produit={p} index={i} compacte />
-            </div>
-          ))}
-        </div>
+        <TringleProduits ref={tringleRef} produits={produits} chargement={chargement} />
 
-        <div className="text-center mt-9">
+        <div className="text-center mt-6">
           <Link
             to="/boutique"
             className="inline-flex items-center gap-2 bg-white text-teal-dark border-2 border-teal font-bold text-sm px-7 py-3.5 rounded-full hover:bg-teal hover:text-white transition-colors"

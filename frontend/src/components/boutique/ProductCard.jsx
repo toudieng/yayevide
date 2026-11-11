@@ -3,24 +3,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { apiFetch } from "../../utils/api";
-
-const ETAT_LABELS = {
-  neuf: "Neuf avec étiquette",
-  excellent: "Excellent état",
-  bon: "Bon état",
-};
-
-const ETAT_BADGE = {
-  // Fonds assez foncés pour un texte blanc lisible (contraste AA)
-  neuf: "bg-green-700",
-  excellent: "bg-teal-dark",
-  bon: "bg-clay-dark",
-};
-
-function formatFCFA(value) {
-  if (value === null || value === undefined) return "—";
-  return Number(value).toLocaleString("fr-FR") + " FCFA";
-}
+import { ETAT_BADGE, ETAT_LABELS, formatFCFA } from "../../utils/produit";
 
 function formatDatePublication(iso) {
   if (!iso) return null;
@@ -62,7 +45,7 @@ function VerifiedIcon({ className }) {
   );
 }
 
-export default function ProductCard({ produit, index = 0, compacte = false }) {
+export default function ProductCard({ produit, index = 0 }) {
   const ref = useRef(null);
   const { addItem } = useCart();
   const [ajoute, setAjoute] = useState(false);
@@ -113,140 +96,6 @@ export default function ProductCard({ produit, index = 0, compacte = false }) {
     setFavoriEnCours(false);
   };
 
-  // ---------------------------------------------------------------
-  // Variante compacte (accueil « Nos meilleurs produits ») : même
-  // contenu et mêmes couleurs de badges, mais disposition resserrée —
-  // image 4/3, titre et prix sur la même ligne, lieu + date sur une
-  // seule ligne avec le bouclier « vérifié » à droite.
-  // ---------------------------------------------------------------
-  if (compacte) {
-    return (
-      <Link
-        to={`/produit/${produit.id}`}
-        ref={ref}
-        onMouseMove={handleMove}
-        onMouseLeave={handleLeave}
-        style={{ animationDelay: `${Math.min(index, 8) * 60}ms`, height: "100%" }}
-        className="group flex flex-col h-full rounded-[18px] bg-cream overflow-hidden shadow-[0_4px_14px_-6px_rgba(27,36,48,0.18)] transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-14px_rgba(27,36,48,0.32)] animate-card-in"
-      >
-        <div className="relative aspect-[4/3] overflow-hidden bg-line/40 shrink-0">
-          {image ? (
-            <img
-              loading="lazy"
-              decoding="async"
-              src={image}
-              alt={produit.titre}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-ink-soft/30">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="h-10 w-10">
-                <rect x="3" y="5" width="18" height="14" rx="1" />
-                <path d="M3 15l5-5 4 4 3-3 6 6" />
-                <circle cx="8.5" cy="9" r="1.3" />
-              </svg>
-            </div>
-          )}
-
-          <div className="absolute top-2 left-2 right-12 flex flex-col items-start gap-1">
-            <span
-              className={`max-w-full leading-tight px-1.5 py-0.5 rounded-[10px] text-[10px] font-bold uppercase tracking-wide text-white shadow-sm ${ETAT_BADGE[produit.etat] || "bg-clay-dark"}`}
-            >
-              {ETAT_LABELS[produit.etat] || "Bon état"}
-            </span>
-            {produit.bonne_affaire && (
-              <span className="max-w-full leading-tight px-1.5 py-0.5 rounded-[10px] text-[10px] font-bold uppercase tracking-wide text-white bg-clay-dark shadow-sm">
-                Bonne affaire
-              </span>
-            )}
-            {estOccasionSpeciale && (
-              <span className="max-w-full leading-tight px-1.5 py-0.5 rounded-[10px] text-[10px] font-bold uppercase tracking-wide text-ink bg-orange shadow-sm">
-                Occasion spéciale
-              </span>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={toggleFavori}
-            disabled={favoriEnCours}
-            aria-label={favori ? "Retirer des favoris" : "Ajouter aux favoris"}
-            className="absolute top-2 right-2 h-9 w-9 rounded-full bg-white/95 shadow-sm flex items-center justify-center hover:scale-110 transition-transform disabled:opacity-50"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill={favori ? "#C4602F" : "none"}
-              stroke={favori ? "#C4602F" : "currentColor"}
-              strokeWidth="1.8"
-              className="h-4 w-4 text-ink"
-            >
-              <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.3 1.6 6.9 4.4 5.4 6.5 4.3 9 5 12 8c3-3 5.5-3.7 7.6-2.6 2.8 1.5 3.4 4.9 1.7 7.5C18.7 16.65 12 21 12 21z" />
-            </svg>
-          </button>
-
-          {produit.taille && (
-            <span className="absolute bottom-2 right-2 bg-white/95 text-ink text-[10.5px] font-bold px-2 py-1 rounded-full shadow-sm">
-              {produit.taille}
-            </span>
-          )}
-        </div>
-
-        <div className="px-3 pt-2.5 pb-3 flex flex-col flex-1 gap-1.5">
-          <span className="self-start max-w-full truncate text-[10px] font-bold uppercase tracking-wide text-teal-dark bg-teal/10 px-2 py-0.5 rounded-full">
-            {produit.categorie_racine_nom || produit.categorie_nom || "Yaay Vidé"}
-          </span>
-
-          <div className="flex items-baseline justify-between gap-2">
-            <h3 className="min-w-0 truncate font-serif font-semibold text-[15px] leading-snug text-ink">
-              {produit.titre}
-            </h3>
-            <p className="shrink-0 font-sans font-bold text-clay-dark text-[14px] whitespace-nowrap">
-              {formatFCFA(produit.prix_final_public)}
-              {isLocation && (
-                <span className="text-ink-soft/75 font-medium text-[11px]"> /jour</span>
-              )}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-1.5 text-[11px] text-ink-soft/75 min-w-0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3 shrink-0" aria-hidden="true">
-              <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 01-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0116 0z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            <span className="truncate">
-              {[
-                // affichage court : « Zone 1 - Dakar Centre » → « Dakar Centre »
-                produit.boutique_zone_nom?.replace(/^zone\s*\d+\s*[-–]\s*/i, ""),
-                formatDatePublication(produit.date_ajout),
-              ]
-                .filter(Boolean)
-                .join(" · ")}
-            </span>
-            {produit.boutique_verifiee && (
-              <span className="ml-auto shrink-0 text-teal-dark" title="Produit vérifié">
-                <VerifiedIcon className="h-4 w-4" />
-                <span className="sr-only">Produit vérifié</span>
-              </span>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={handleCta}
-            className={`mt-auto w-full min-h-[36px] rounded-full py-2 text-[11.5px] font-bold uppercase tracking-wide transition-colors ${
-              ajoute
-                ? "bg-teal-dark text-white"
-                : isLocation
-                  ? "bg-ink text-cream group-hover:bg-teal-dark"
-                  : "bg-clay-dark text-white group-hover:bg-ink"
-            }`}
-          >
-            {ajoute ? "Ajouté au panier" : isLocation ? "Louer le produit" : "Ajouter au panier"}
-          </button>
-        </div>
-      </Link>
-    );
-  }
   return (
     <Link
       to={`/produit/${produit.id}`}
