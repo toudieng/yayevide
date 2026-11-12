@@ -577,7 +577,8 @@ class Commande(models.Model):
 # ==========================================
 class Ebook(models.Model):
     titre = models.CharField(max_length=200)
-    description = models.TextField()
+    # Facultative : si elle est vide, la page e-book affiche un texte par défaut.
+    description = models.TextField(blank=True)
     prix = models.DecimalField(max_digits=10, decimal_places=0, verbose_name="Prix (FCFA)")
     couverture = models.ImageField(upload_to='ebook/couverture/', null=True, blank=True)
     fichier_apercu = models.FileField(

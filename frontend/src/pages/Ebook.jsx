@@ -81,6 +81,10 @@ const CITATIONS = [
   { texte: "Parce qu'on est meilleures ensemble.", source: 'Conclusion du guide' },
 ];
 
+// Affiché quand l'équipe laisse la description vide dans l'admin.
+const DESCRIPTION_PAR_DEFAUT =
+  "Grossesse, arrivée de bébé, premiers mois : tout ce qu'on aurait aimé savoir, raconté par des mamans de Dakar. Des conseils pratiques, des adresses et des astuces pour vivre ces moments plus sereinement, sans se ruiner.";
+
 const COMPARAISON = {
   generaliste: {
     titre: 'Des repères parfois éloignés du quotidien',
@@ -232,7 +236,7 @@ export default function Ebook() {
               {ebook.titre}
             </h1>
             <p className="text-orange-dark font-bold text-[22px] mb-6">De maman à maman, à la dakaroise.</p>
-            <p className="text-ink-soft text-[16px] leading-relaxed max-w-md mb-9">{ebook.description}</p>
+            <p className="text-ink-soft text-[16px] leading-relaxed max-w-md mb-9">{ebook.description?.trim() || DESCRIPTION_PAR_DEFAUT}</p>
             <div className="flex flex-wrap gap-3.5 mb-9">
               <a href="#acheter" className="inline-flex items-center gap-2 bg-[#3D1B36] hover:bg-[#2c1327] text-white px-7 py-3.5 rounded-full text-sm font-bold transition-colors">
                 Acheter le guide
