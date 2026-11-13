@@ -1,4 +1,10 @@
+import hashlib
+import mimetypes
+import os
+
 from django.contrib.auth import authenticate, login, logout
+from django.http import FileResponse, Http404
+from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
@@ -96,9 +102,9 @@ class MoiView(APIView):
             "type_vehicule": user.type_vehicule,
             "marque_modele_vehicule": user.marque_modele_vehicule,
             "immatriculation": user.immatriculation,
-            "piece_identite": request.build_absolute_uri(user.piece_identite.url) if user.piece_identite else None,
+            "piece_identite": url_document_livreur(request, user, 'piece_identite'),
             "piece_identite_verifiee": user.piece_identite_verifiee,
-            "permis_conduire": request.build_absolute_uri(user.permis_conduire.url) if user.permis_conduire else None,
+            "permis_conduire": url_document_livreur(request, user, 'permis_conduire'),
             "permis_conduire_verifie": user.permis_conduire_verifie,
         }, status=status.HTTP_200_OK)
 
@@ -119,6 +125,55 @@ class MoiView(APIView):
                     setattr(user, champ, request.data.get(champ) or '')
                 user.save(update_fields=a_modifier)
         return Response({'zone_livreur': user.zone_livreur}, status=status.HTTP_200_OK)
+
+
+DOCUMENTS_LIVREUR = ('piece_identite', 'permis_conduire')
+# Types affichés directement dans le navigateur ; tout le reste est téléchargé
+# (un fichier HTML ou SVG envoyé comme « document » ne doit jamais s'exécuter).
+TYPES_AFFICHABLES = {'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'application/pdf'}
+
+
+def url_document_livreur(request, user, champ):
+    """Lien vers le document via DocumentLivreurView (jamais l'adresse du
+    fichier). `v` change à chaque nouvel envoi, pour ne pas réafficher
+    l'ancien document depuis le cache."""
+    fichier = getattr(user, champ)
+    if not fichier:
+        return None
+    version = hashlib.sha256(fichier.name.encode()).hexdigest()[:10]
+    chemin = reverse('api_document_livreur', args=[user.pk, champ])
+    return request.build_absolute_uri(f"{chemin}?v={version}")
+
+
+class DocumentLivreurView(APIView):
+    """Sert la pièce d'identité ou le permis d'un livreur, uniquement au
+    livreur lui-même et à l'équipe (admin). Pour toute autre personne :
+    404, sans révéler si le document existe."""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk, champ):
+        moi = request.user
+        autorise = moi.pk == pk or moi.role == 'admin' or moi.is_staff
+        if champ not in DOCUMENTS_LIVREUR or not autorise:
+            raise Http404
+        livreur = User.objects.filter(pk=pk, role='livreur').first()
+        fichier = getattr(livreur, champ, None) if livreur else None
+        if not fichier:
+            raise Http404
+        try:
+            flux = fichier.open('rb')
+        except FileNotFoundError:
+            raise Http404
+        type_mime = mimetypes.guess_type(fichier.name)[0] or 'application/octet-stream'
+        reponse = FileResponse(
+            flux,
+            content_type=type_mime,
+            as_attachment=type_mime not in TYPES_AFFICHABLES,
+            filename=os.path.basename(fichier.name),
+        )
+        reponse['Cache-Control'] = 'private, no-store'
+        reponse['X-Content-Type-Options'] = 'nosniff'
+        return reponse
 
 
 class LivreurDocumentsView(APIView):
@@ -143,9 +198,9 @@ class LivreurDocumentsView(APIView):
             user.save(update_fields=['permis_conduire', 'permis_conduire_verifie'])
 
         return Response({
-            "piece_identite": request.build_absolute_uri(user.piece_identite.url) if user.piece_identite else None,
+            "piece_identite": url_document_livreur(request, user, 'piece_identite'),
             "piece_identite_verifiee": user.piece_identite_verifiee,
-            "permis_conduire": request.build_absolute_uri(user.permis_conduire.url) if user.permis_conduire else None,
+            "permis_conduire": url_document_livreur(request, user, 'permis_conduire'),
             "permis_conduire_verifie": user.permis_conduire_verifie,
         }, status=status.HTTP_200_OK)
 

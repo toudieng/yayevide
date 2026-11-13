@@ -31,3 +31,4 @@ db.sqlite3
 
 # Photos uploadées (inutiles pour le code)
 backend/media/
+backend/media_prive/

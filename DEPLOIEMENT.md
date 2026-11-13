@@ -167,6 +167,21 @@ sudo chmod 755 /srv/yaayvide
 nginx (utilisateur `www-data`) doit pouvoir lire `frontend/dist`,
 `backend/staticfiles` et `backend/media`.
 
+Les documents des livreurs (pièce d'identité, permis) sont rangés à part,
+dans `backend/media_prive`, que **seul Django** doit pouvoir lire. nginx n'y
+a pas accès : ils ne s'ouvrent que par l'API, pour le livreur concerné et
+l'équipe.
+
+```bash
+sudo -u yaayvide mkdir -p /srv/yaayvide/backend/media_prive
+sudo chown -R yaayvide:yaayvide /srv/yaayvide/backend/media_prive
+sudo chmod -R 700 /srv/yaayvide/backend/media_prive
+```
+
+Si tu reprends des données de l'ordinateur (étape 6), copie aussi
+`backend/media_prive/` (et `backend/media/livreurs/` s'il existe encore :
+la migration `0034` le déplace automatiquement dans `media_prive`).
+
 ## 8. Site React
 
 ```bash
@@ -227,6 +242,7 @@ sudo systemctl start yaayvide-sauvegarde.service && ls -lh /srv/sauvegardes
 - [ ] Commande de test, puis suivi côté vendeuse et livreur.
 - [ ] « Une question ? » : message envoyé, réponse depuis `/admin/questions`.
 - [ ] E-book : l'aperçu s'affiche, `https://yaayvide.com/media/ebook/complet/…` renvoie **403**.
+- [ ] Livreur : sa pièce d'identité s'ouvre depuis son profil ; le même lien ouvert dans une fenêtre privée (non connectée) est **refusé**.
 - [ ] Admin Django sur `/gestion-technique/` ; `/admin` affiche bien le tableau de bord React.
 - [ ] Après quelques jours sans problème de HTTPS : `DJANGO_HSTS_SECONDS=31536000`, puis `sudo systemctl restart yaayvide`.
 
@@ -257,18 +273,17 @@ Restaurer une sauvegarde :
 ```bash
 pg_restore -h localhost -U yaayvide -d yaayvide --clean /srv/sauvegardes/base-AAAA-MM-JJ.dump
 tar -xzf /srv/sauvegardes/media-AAAA-MM-JJ.tar.gz -C /srv/yaayvide/backend
+sudo chmod -R 700 /srv/yaayvide/backend/media_prive
 ```
 
 ---
 
 ## À corriger ou décider avant la mise en ligne
 
-1. **Documents des livreurs (pièce d'identité, permis)** : ils sont rangés dans
-   `media/livreurs/documents/` et donc accessibles à toute personne qui
-   connaît l'adresse du fichier. Le profil livreur affiche un lien vers ces
-   fichiers, donc les bloquer dans nginx casserait ce lien. Il faudrait les
-   servir par une vue Django réservée au livreur concerné et à l'équipe, comme
-   pour le PDF de l'e-book. À faire avant d'accueillir de vrais livreurs.
+1. ~~**Documents des livreurs**~~ : **fait.** Ils sont rangés dans
+   `backend/media_prive` (hors du dossier public) et ne s'ouvrent que par
+   `/api/livreurs/<id>/documents/<piece_identite|permis_conduire>/`, pour le
+   livreur concerné et l'équipe.
 2. **Domaine** : choisir `.com` ou `.sn` et corriger les documents légaux (CGV,
    confidentialité, retours), qui mélangent les deux.
 3. **Copie des sauvegardes hors du serveur** : `/srv/sauvegardes` est sur le

@@ -222,6 +222,9 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 # Gestion des images des produits
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.environ.get('DJANGO_MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
+# Fichiers privés (documents des livreurs) : hors de MEDIA_ROOT, jamais
+# servis publiquement (voir marketplace/stockage.py).
+PRIVATE_MEDIA_ROOT = os.environ.get('DJANGO_PRIVATE_MEDIA_ROOT', os.path.join(BASE_DIR, 'media_prive'))
 
 # ==========================================
 # SÉCURITÉ EN PRODUCTION (HTTPS) — inactif en local (DEBUG=True)

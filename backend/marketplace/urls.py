@@ -10,6 +10,7 @@ from .views import (
     MoiView,
     MonAdresseView,
     LivreurDocumentsView,
+    DocumentLivreurView,
     DeconnexionView,
     MesProduitsView,
     MesVentesView,
@@ -93,6 +94,8 @@ urlpatterns = [
     path('moi/', MoiView.as_view(), name='api_moi'),
     path('mon-adresse/', MonAdresseView.as_view(), name='api_mon_adresse'),
     path('livreur/documents/', LivreurDocumentsView.as_view(), name='api_livreur_documents'),
+    # Lecture protégée d'un document (le livreur lui-même ou l'équipe)
+    path('livreurs/<int:pk>/documents/<str:champ>/', DocumentLivreurView.as_view(), name='api_document_livreur'),
     path('statut-boutique/<str:username>/', VerifierStatutBoutiqueView.as_view(), name='api_statut_boutique'),
     path('verifier-email/<str:username>/<str:token>/', VerifierEmailView.as_view(), name='api_verifier_email'),
     path('renvoyer-verification-email/', RenvoyerEmailVerificationView.as_view(), name='api_renvoyer_verification'),

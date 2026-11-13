@@ -6,6 +6,8 @@ from django.utils.text import slugify
 from decimal import Decimal
 import uuid
 
+from .stockage import stockage_prive
+
 # ==========================================
 # ZONES DE LIVRAISON — paiement à la livraison, frais estimés à la commande
 # et encaissés par le livreur (plus de paiement en ligne via InTouch).
@@ -136,9 +138,11 @@ class User(AbstractUser):
     marque_modele_vehicule = models.CharField(max_length=100, blank=True, verbose_name="Marque / modèle")
     immatriculation = models.CharField(max_length=20, blank=True)
 
-    piece_identite = models.FileField(upload_to='livreurs/documents/', null=True, blank=True)
+    # Documents privés : stockés hors du dossier media public, lisibles
+    # seulement par le livreur et l'équipe (DocumentLivreurView).
+    piece_identite = models.FileField(upload_to='livreurs/documents/', storage=stockage_prive, null=True, blank=True)
     piece_identite_verifiee = models.BooleanField(default=False)
-    permis_conduire = models.FileField(upload_to='livreurs/documents/', null=True, blank=True)
+    permis_conduire = models.FileField(upload_to='livreurs/documents/', storage=stockage_prive, null=True, blank=True)
     permis_conduire_verifie = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):

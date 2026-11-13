@@ -298,3 +298,73 @@ class LocationTests(TestCase):
         self.assertEqual(nb_rappels, 1)
         self.assertIn('se termine demain', mail.outbox[0].subject)
         self.assertEqual(traitement_quotidien(date.fromisoformat(self.j(2)))[0], 0)  # pas de doublon
+
+
+class DocumentsLivreurTests(TestCase):
+    """Les pièces d'identité et permis des livreurs ne sont lisibles que par
+    le livreur concerné et par l'équipe, et ne sont jamais dans media."""
+
+    def setUp(self):
+        import tempfile
+        self.dossier_public = tempfile.mkdtemp()
+        self.dossier_prive = tempfile.mkdtemp()
+        self.reglages = override_settings(MEDIA_ROOT=self.dossier_public, PRIVATE_MEDIA_ROOT=self.dossier_prive)
+        self.reglages.enable()
+        self.livreur = User.objects.create_user('livreur1', 'l1@test.sn', 'MotDePasse!2026', role='livreur', phone_number='771110001')
+        self.autre = User.objects.create_user('livreur2', 'l2@test.sn', 'MotDePasse!2026', role='livreur', phone_number='771110002')
+        self.admin = User.objects.create_user('equipe', 'eq@test.sn', 'MotDePasse!2026', role='admin', phone_number='771110003')
+        self.client = APIClient()
+
+    def tearDown(self):
+        import shutil
+        self.reglages.disable()
+        shutil.rmtree(self.dossier_public, ignore_errors=True)
+        shutil.rmtree(self.dossier_prive, ignore_errors=True)
+
+    def envoyer_piece(self):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        self.client.force_authenticate(self.livreur)
+        fichier = SimpleUploadedFile('cni.png', b'\x89PNG\r\n\x1a\n-test-', content_type='image/png')
+        res = self.client.patch('/api/livreur/documents/', {'piece_identite': fichier}, format='multipart')
+        self.assertEqual(res.status_code, 200)
+        return res.json()['piece_identite']
+
+    def test_fichier_hors_du_dossier_public_et_lien_protege(self):
+        import os
+        url = self.envoyer_piece()
+        self.assertIn(f'/api/livreurs/{self.livreur.pk}/documents/piece_identite/', url)
+        self.assertNotIn('/media/', url)
+        self.livreur.refresh_from_db()
+        self.assertTrue(os.path.exists(os.path.join(self.dossier_prive, self.livreur.piece_identite.name)))
+        self.assertFalse(os.path.exists(os.path.join(self.dossier_public, self.livreur.piece_identite.name)))
+
+    def test_le_livreur_et_l_equipe_peuvent_lire(self):
+        self.envoyer_piece()
+        chemin = f'/api/livreurs/{self.livreur.pk}/documents/piece_identite/'
+        for qui in (self.livreur, self.admin):
+            self.client.force_authenticate(qui)
+            res = self.client.get(chemin)
+            self.assertEqual(res.status_code, 200)
+            self.assertEqual(res['Content-Type'], 'image/png')
+            self.assertIn('no-store', res['Cache-Control'])
+            self.assertEqual(b''.join(res.streaming_content), b'\x89PNG\r\n\x1a\n-test-')
+
+    def test_les_autres_n_ont_pas_acces(self):
+        self.envoyer_piece()
+        chemin = f'/api/livreurs/{self.livreur.pk}/documents/piece_identite/'
+        self.client.force_authenticate(self.autre)
+        self.assertEqual(self.client.get(chemin).status_code, 404)
+        self.client.force_authenticate(None)
+        self.assertIn(self.client.get(chemin).status_code, (401, 403))
+        self.client.force_authenticate(self.livreur)
+        self.assertEqual(self.client.get(f'/api/livreurs/{self.livreur.pk}/documents/mot_de_passe/').status_code, 404)
+
+    def test_fichier_non_image_telecharge(self):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        self.client.force_authenticate(self.livreur)
+        fichier = SimpleUploadedFile('piege.html', b'<script>alert(1)</script>', content_type='text/html')
+        self.client.patch('/api/livreur/documents/', {'permis_conduire': fichier}, format='multipart')
+        res = self.client.get(f'/api/livreurs/{self.livreur.pk}/documents/permis_conduire/')
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(res['Content-Disposition'].startswith('attachment'))
+        self.assertEqual(res['X-Content-Type-Options'], 'nosniff')

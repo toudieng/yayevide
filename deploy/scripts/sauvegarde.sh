@@ -12,7 +12,8 @@ mkdir -p "$DOSSIER"
 
 PGPASSWORD="$DB_PASSWORD" pg_dump -h "${DB_HOST:-localhost}" -U "$DB_USER" -Fc "$DB_NAME" \
   > "$DOSSIER/base-$DATE.dump"
-tar -czf "$DOSSIER/media-$DATE.tar.gz" -C /srv/yaayvide/backend media
+# media = photos publiques ; media_prive = documents des livreurs
+tar -czf "$DOSSIER/media-$DATE.tar.gz" -C /srv/yaayvide/backend media media_prive
 
 find "$DOSSIER" -type f -mtime +14 -delete
 echo "Sauvegarde du $DATE terminée."
