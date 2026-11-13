@@ -4,6 +4,19 @@ Guide pas à pas pour installer le site sur un **VPS OVHcloud** (Ubuntu 24.04).
 Un seul serveur porte tout : le site React, l'API Django, la base PostgreSQL
 et les photos, sur un seul domaine en HTTPS.
 
+**Déploiement automatique** : une fois le serveur installé, chaque `git push`
+sur `main` met le site à jour tout seul, comme sur Vercel (GitHub Actions,
+fichier `.github/workflows/deploiement.yml`). GitHub vérifie les tests,
+construit le site React et l'envoie sur le serveur par SSH. Le serveur n'a
+**aucun accès** au dépôt GitHub ni à son historique.
+
+```
+git push main ──▶ GitHub Actions : tests Django + construction React
+                         │ (si DEPLOIEMENT_ACTIF = oui)
+                         ▼ rsync par SSH
+                  VPS OVH : dépendances, migrations, redémarrage, contrôle
+```
+
 ```
 Navigateur ──HTTPS──▶ nginx ─┬─ /            → site React (frontend/dist)
                              ├─ /api/        → gunicorn → Django
@@ -23,7 +36,8 @@ Fichiers prêts à l'emploi dans `deploy/` :
 | `deploy/systemd/yaayvide-locations.*` | Tâche quotidienne des locations (7 h) | `/etc/systemd/system/` |
 | `deploy/systemd/yaayvide-sauvegarde.*` | Sauvegarde chaque nuit (3 h) | `/etc/systemd/system/` |
 | `deploy/scripts/sauvegarde.sh` | Sauvegarde base + photos (14 jours) | lancé par le timer |
-| `deploy/scripts/mettre-a-jour.sh` | Mise à jour après un `git push` | lancé à la main |
+| `deploy/scripts/apres-envoi.sh` | Fin de déploiement (migrations, redémarrage, contrôle) | lancé par GitHub Actions |
+| `.github/workflows/deploiement.yml` | Déploiement automatique à chaque push sur `main` | reste sur GitHub |
 | `backend/requirements-prod.txt` | Dépendances du serveur (gunicorn, PostgreSQL) | — |
 
 En local, **rien ne change** : sans variables d'environnement, Django reste en
@@ -63,33 +77,83 @@ se connecter **avant** de fermer le premier.
 ## 2. Installer les logiciels
 
 ```bash
-sudo apt install -y git nginx postgresql python3-venv python3-dev build-essential certbot python3-certbot-nginx
+sudo apt install -y nginx postgresql python3-venv python3-dev build-essential rsync curl certbot python3-certbot-nginx
 ```
 
-Node.js 22 (Vite 8 ne fonctionne pas avec le Node 18 d'Ubuntu) :
+Ni Git ni Node.js ne sont nécessaires sur le serveur : le site React est
+construit par GitHub, et le code arrive par `rsync`.
 
-```bash
-curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-sudo apt install -y nodejs
-node -v
-```
+## 3. Utilisateur et déploiement automatique
 
-## 3. Utilisateur et code
+### 3.1 L'utilisateur du site, sur le serveur
 
 ```bash
 sudo adduser --system --group --home /srv/yaayvide --shell /bin/bash yaayvide
 sudo usermod -aG www-data yaayvide
-sudo -u yaayvide ssh-keygen -t ed25519 -N "" -f /srv/yaayvide/.ssh/id_ed25519
-sudo cat /srv/yaayvide/.ssh/id_ed25519.pub
+sudo -u yaayvide mkdir -p /srv/yaayvide/backend /srv/yaayvide/frontend/dist /srv/yaayvide/deploy /srv/yaayvide/.ssh
+sudo chmod 700 /srv/yaayvide/.ssh
 ```
 
-Ajouter cette clé publique dans GitHub : dépôt → **Settings → Deploy keys →
-Add deploy key** (sans cocher « Allow write access »). Puis :
+Autoriser cet utilisateur à redémarrer Django, **et rien d'autre** :
 
 ```bash
-sudo -u yaayvide git clone git@github.com:toudieng/yayevide.git /srv/yaayvide/app-tmp
-sudo -u yaayvide bash -c 'shopt -s dotglob; mv /srv/yaayvide/app-tmp/* /srv/yaayvide/ && rmdir /srv/yaayvide/app-tmp'
+echo 'yaayvide ALL=(root) NOPASSWD: /usr/bin/systemctl restart yaayvide' | sudo tee /etc/sudoers.d/yaayvide
+sudo chmod 440 /etc/sudoers.d/yaayvide
+sudo visudo -c
 ```
+
+### 3.2 La clé de déploiement (sur TON ordinateur)
+
+Une paire de clés réservée au déploiement, sans mot de passe :
+
+```bash
+ssh-keygen -t ed25519 -N "" -C "deploiement-yaayvide" -f ~/.ssh/yaayvide_deploiement
+```
+
+Copier la clé **publique** sur le serveur :
+
+```bash
+cat ~/.ssh/yaayvide_deploiement.pub
+```
+
+```bash
+sudo -u yaayvide nano /srv/yaayvide/.ssh/authorized_keys
+sudo chmod 600 /srv/yaayvide/.ssh/authorized_keys
+```
+
+(coller la ligne affichée, enregistrer). Vérifier depuis ton ordinateur :
+
+```bash
+ssh -i ~/.ssh/yaayvide_deploiement yaayvide@IP_DU_SERVEUR "echo connexion ok"
+```
+
+Récupérer l'empreinte du serveur (pour que GitHub soit sûr de parler au bon serveur) :
+
+```bash
+ssh-keyscan -H IP_DU_SERVEUR
+```
+
+### 3.3 Les secrets dans GitHub
+
+Dépôt GitHub → **Settings → Secrets and variables → Actions** :
+
+| Onglet | Nom | Valeur |
+|---|---|---|
+| Secrets | `OVH_HOST` | Adresse IP du VPS (ou le domaine) |
+| Secrets | `OVH_USER` | `yaayvide` |
+| Secrets | `OVH_SSH_KEY` | Tout le contenu de `~/.ssh/yaayvide_deploiement` (la clé **privée**, lignes BEGIN/END comprises) |
+| Secrets | `OVH_KNOWN_HOSTS` | Le résultat de `ssh-keyscan -H IP_DU_SERVEUR` |
+| Variables | `DEPLOIEMENT_ACTIF` | `oui` |
+
+Tant que `DEPLOIEMENT_ACTIF` ne vaut pas `oui`, GitHub lance seulement les
+tests et la construction, sans rien envoyer.
+
+### 3.4 Premier envoi
+
+GitHub → onglet **Actions** → « Déploiement OVH » → **Run workflow** (branche
+`main`). Les fichiers arrivent dans `/srv/yaayvide`. Le journal se termine par
+« `/etc/yaayvide/yaayvide.env` est absent » : c'est normal, on le crée à
+l'étape 5.
 
 ## 4. Base PostgreSQL
 
@@ -102,7 +166,7 @@ sudo -u postgres psql -c "CREATE DATABASE yaayvide OWNER yaayvide ENCODING 'UTF8
 
 ```bash
 sudo mkdir -p /etc/yaayvide
-sudo cp /srv/yaayvide/deploy/env.exemple /etc/yaayvide/yaayvide.env
+sudo cp /srv/yaayvide/deploy/env.exemple /etc/yaayvide/yaayvide.env   # arrivé au premier envoi
 sudo nano /etc/yaayvide/yaayvide.env
 sudo chown root:yaayvide /etc/yaayvide/yaayvide.env
 sudo chmod 640 /etc/yaayvide/yaayvide.env
@@ -118,18 +182,15 @@ Sans `DJANGO_SECRET_KEY`, Django refuse volontairement de démarrer en productio
 
 ## 6. Django
 
-```bash
-sudo -u yaayvide python3 -m venv /srv/yaayvide/venv
-sudo -u yaayvide /srv/yaayvide/venv/bin/pip install -r /srv/yaayvide/backend/requirements-prod.txt
-sudo -u yaayvide bash -c 'set -a; . /etc/yaayvide/yaayvide.env; set +a; cd /srv/yaayvide/backend && \
-  ../venv/bin/python manage.py migrate && \
-  ../venv/bin/python manage.py collectstatic --noinput && \
-  ../venv/bin/python manage.py check --deploy'
-```
+Relancer le déploiement : GitHub → **Actions** → « Déploiement OVH » → **Run
+workflow**. Cette fois, le serveur crée l'environnement Python, installe les
+dépendances, crée les tables (`migrate`), rassemble les fichiers de l'admin
+(`collectstatic`) et lance `check --deploy`. Le journal indique « Service
+yaayvide pas encore installé » : il le sera à l'étape 9.
 
-`check --deploy` peut encore signaler `W005`, `W008` et `W021` (HSTS sur les
-sous-domaines, redirection HTTPS, préchargement HSTS) : c'est normal, nginx et
-Certbot s'occupent de la redirection HTTPS.
+`check --deploy` peut afficher `W005`, `W008` et `W021` (HSTS sur les
+sous-domaines, redirection HTTPS, préchargement HSTS) : ce ne sont que des
+avertissements, nginx et Certbot s'occupent de la redirection HTTPS.
 
 Créer le compte administrateur :
 
@@ -184,11 +245,9 @@ la migration `0034` le déplace automatiquement dans `media_prive`).
 
 ## 8. Site React
 
-```bash
-sudo -u yaayvide bash -c 'cd /srv/yaayvide/frontend && npm ci --no-audit --no-fund && npm run build'
-```
-
-Le site appelle déjà l'API sur `/api` (même domaine) : aucune adresse à changer.
+Rien à faire : GitHub construit le site et l'envoie dans
+`/srv/yaayvide/frontend/dist` à chaque déploiement. Le site appelle l'API sur
+`/api` (même domaine) : aucune adresse à changer.
 
 ## 9. Démarrer Django (gunicorn)
 
@@ -248,20 +307,29 @@ sudo systemctl start yaayvide-sauvegarde.service && ls -lh /srv/sauvegardes
 
 ## 13. Mettre à jour le site
 
-Après un `git push` sur `main` :
+Il suffit de pousser sur `main` :
 
 ```bash
-sudo -u yaayvide /srv/yaayvide/deploy/scripts/mettre-a-jour.sh
-sudo systemctl restart yaayvide
+git push origin main
 ```
 
-Le script récupère le code, installe les dépendances, applique les migrations,
-rassemble les fichiers de l'admin et reconstruit le site React.
+Suivre le déploiement dans l'onglet **Actions** du dépôt (2 à 4 minutes). Si
+les tests échouent, rien n'est envoyé et le site en ligne ne change pas. En
+cas d'échec sur le serveur, le journal de l'étape « Mise à jour sur le
+serveur » indique la commande qui a échoué.
+
+Pour suspendre les déploiements (par exemple pendant une maintenance du
+serveur) : passer la variable `DEPLOIEMENT_ACTIF` à `non`.
+
+Remarque : le dernier contrôle (« Le site répond ») n'aboutit qu'une fois le
+HTTPS en place (étape 10). Avant cela, cette dernière étape peut échouer, sans
+conséquence.
 
 ## 14. En cas de problème
 
 | Symptôme | Où regarder |
 |---|---|
+| Déploiement GitHub en échec | Onglet Actions → l'étape en rouge ; « Permission denied (publickey) » = secrets `OVH_*` ou `authorized_keys` |
 | Erreur 502 | `sudo systemctl status yaayvide` puis `journalctl -u yaayvide -n 50` |
 | Erreur 500 sur l'API | `journalctl -u yaayvide -n 50` (les erreurs Django y sont écrites) |
 | Photos absentes | droits du dossier `media` (étape 7), `sudo tail /var/log/nginx/error.log` |

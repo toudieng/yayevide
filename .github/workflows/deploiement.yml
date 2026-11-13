@@ -1,0 +1,119 @@
+# Déploiement automatique de Yaay Vidé sur le VPS OVHcloud.
+#
+# À chaque push sur main (ou à la main : onglet Actions → « Run workflow ») :
+#   1. vérification : tests Django + construction du site React ;
+#   2. envoi : le backend, le site construit et les scripts partent sur le
+#      serveur par SSH (rsync) — le serveur n'a ni accès au dépôt GitHub ni
+#      copie de son historique ;
+#   3. sur le serveur : dépendances, migrations, fichiers de l'admin,
+#      redémarrage de Django, puis contrôle que le site répond.
+#
+# Le déploiement ne part que si la variable de dépôt DEPLOIEMENT_ACTIF vaut
+# « oui » (Settings → Secrets and variables → Actions → Variables) : tant que
+# le serveur n'est pas prêt, seule la vérification tourne.
+# Secrets nécessaires (même page, onglet Secrets) : OVH_HOST, OVH_USER,
+# OVH_SSH_KEY, OVH_KNOWN_HOSTS — voir DEPLOIEMENT.md, étape 3.
+
+name: Déploiement OVH
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Jamais deux déploiements en même temps
+concurrency:
+  group: deploiement-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    name: Vérifier (tests + construction)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'  # même version que le serveur (Ubuntu 24.04)
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Tests Django
+        working-directory: backend
+        run: |
+          pip install -r requirements.txt
+          python manage.py test marketplace
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Construction du site React
+        working-directory: frontend
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-react
+          path: frontend/dist
+          retention-days: 7
+
+  deployer:
+    name: Envoyer sur le serveur
+    needs: verifier
+    if: vars.DEPLOIEMENT_ACTIF == 'oui' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-react
+          path: frontend/dist
+
+      - name: Clé SSH
+        env:
+          OVH_SSH_KEY: ${{ secrets.OVH_SSH_KEY }}
+          OVH_KNOWN_HOSTS: ${{ secrets.OVH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$OVH_SSH_KEY" > ~/.ssh/id_deploiement
+          chmod 600 ~/.ssh/id_deploiement
+          printf '%s\n' "$OVH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Envoi des fichiers
+        env:
+          CIBLE: ${{ secrets.OVH_USER }}@${{ secrets.OVH_HOST }}
+        run: |
+          SSH="ssh -i $HOME/.ssh/id_deploiement -o StrictHostKeyChecking=yes"
+          # Backend : jamais les photos, les documents privés, la base locale
+          rsync -az --delete -e "$SSH" \
+            --exclude 'media/' --exclude 'media_prive/' --exclude 'staticfiles/' \
+            --exclude 'db.sqlite3' --exclude '*.sqlite3' --exclude '__pycache__/' \
+            --exclude '*.pyc' --exclude '.env' \
+            backend/ "$CIBLE:/srv/yaayvide/backend/"
+          # Site React : les nouveaux fichiers sont mis en place d'un coup
+          rsync -az --delete-after --delay-updates -e "$SSH" \
+            frontend/dist/ "$CIBLE:/srv/yaayvide/frontend/dist/"
+          # Configuration du serveur et scripts
+          rsync -az --delete -e "$SSH" deploy/ "$CIBLE:/srv/yaayvide/deploy/"
+
+      - name: Mise à jour sur le serveur
+        env:
+          CIBLE: ${{ secrets.OVH_USER }}@${{ secrets.OVH_HOST }}
+        run: |
+          ssh -i ~/.ssh/id_deploiement -o StrictHostKeyChecking=yes "$CIBLE" \
+            'bash /srv/yaayvide/deploy/scripts/apres-envoi.sh'
+
+      - name: Nettoyage de la clé
+        if: always()
+        run: rm -f ~/.ssh/id_deploiement
