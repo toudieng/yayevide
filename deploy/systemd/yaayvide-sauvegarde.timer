@@ -1,0 +1,10 @@
+# /etc/systemd/system/yaayvide-sauvegarde.timer — toutes les nuits à 3 h
+[Unit]
+Description=Sauvegarde quotidienne de Yaay Vidé
+
+[Timer]
+OnCalendar=*-*-* 03:00:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,5 @@
+# Dépendances du serveur (OVHcloud) en plus de celles du développement.
+# En local, requirements.txt suffit.
+-r requirements.txt
+gunicorn==23.0.0
+psycopg[binary]==3.2.9

@@ -1,0 +1,21 @@
+# /etc/systemd/system/yaayvide.service — Django servi par gunicorn
+[Unit]
+Description=Yaay Vidé (Django + gunicorn)
+After=network.target postgresql.service
+
+[Service]
+User=yaayvide
+Group=www-data
+WorkingDirectory=/srv/yaayvide/backend
+EnvironmentFile=/etc/yaayvide/yaayvide.env
+RuntimeDirectory=yaayvide
+ExecStart=/srv/yaayvide/venv/bin/gunicorn core.wsgi:application \
+    --bind unix:/run/yaayvide/gunicorn.sock \
+    --umask 007 \
+    --workers 3 \
+    --timeout 60 \
+    --access-logfile -
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

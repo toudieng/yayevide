@@ -4,7 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # /admin/ en local ; déplacée en production (DJANGO_ADMIN_PATH), car /admin
+    # est le tableau de bord React de l'équipe sur le même domaine
+    path(settings.DJANGO_ADMIN_PATH, admin.site.urls),
     path('api/', include('marketplace.urls')),
 ]
 

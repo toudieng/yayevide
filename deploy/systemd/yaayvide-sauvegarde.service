@@ -1,0 +1,9 @@
+# /etc/systemd/system/yaayvide-sauvegarde.service
+[Unit]
+Description=Yaay Vidé : sauvegarde de la base et des photos
+
+[Service]
+Type=oneshot
+User=yaayvide
+EnvironmentFile=/etc/yaayvide/yaayvide.env
+ExecStart=/srv/yaayvide/deploy/scripts/sauvegarde.sh

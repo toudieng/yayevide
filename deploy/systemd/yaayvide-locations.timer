@@ -1,0 +1,10 @@
+# /etc/systemd/system/yaayvide-locations.timer — tous les jours à 7 h (heure de Dakar = UTC)
+[Unit]
+Description=Lance le traitement des locations chaque matin
+
+[Timer]
+OnCalendar=*-*-* 07:00:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

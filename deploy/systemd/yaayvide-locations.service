@@ -1,0 +1,11 @@
+# /etc/systemd/system/yaayvide-locations.service
+# Tâche quotidienne de la location (rappels, retours à récupérer)
+[Unit]
+Description=Yaay Vidé : traitement quotidien des locations
+
+[Service]
+Type=oneshot
+User=yaayvide
+WorkingDirectory=/srv/yaayvide/backend
+EnvironmentFile=/etc/yaayvide/yaayvide.env
+ExecStart=/srv/yaayvide/venv/bin/python manage.py locations_quotidien

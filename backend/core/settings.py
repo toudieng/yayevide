@@ -13,6 +13,27 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 
+from django.core.exceptions import ImproperlyConfigured
+
+
+def env_liste(nom, defaut):
+    """Liste séparée par des virgules dans une variable d'environnement
+    (ex. DJANGO_ALLOWED_HOSTS=yaayvide.com,www.yaayvide.com)."""
+    valeur = os.environ.get(nom, '').strip()
+    return [v.strip() for v in valeur.split(',') if v.strip()] if valeur else defaut
+
+
+def env_bool(nom, defaut):
+    return os.environ.get(nom, str(defaut)).strip().lower() in ('1', 'true', 'oui', 'yes')
+
+# ------------------------------------------------------------------
+# PRODUCTION (OVHcloud) : tout ce qui change entre l'ordinateur et le
+# serveur se règle par des variables d'environnement (fichier
+# /etc/yaayvide/yaayvide.env sur le serveur, voir deploy/env.exemple).
+# Sans ces variables, rien ne change en local : DEBUG activé, SQLite,
+# localhost / ngrok autorisés.
+# ------------------------------------------------------------------
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +42,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qg)@hk1bq95248$y*4)d&gxn_aml^q_2=&#q#k0o2e1g96q77+'
+CLE_DE_DEVELOPPEMENT = 'django-insecure-qg)@hk1bq95248$y*4)d&gxn_aml^q_2=&#q#k0o2e1g96q77+'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', CLE_DE_DEVELOPPEMENT)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env_bool('DJANGO_DEBUG', True)
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".ngrok-free.dev", ".ngrok-free.app", ".trycloudflare.com",]
+if not DEBUG and SECRET_KEY == CLE_DE_DEVELOPPEMENT:
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY doit être défini en production (voir deploy/env.exemple)."
+    )
+
+ALLOWED_HOSTS = env_liste(
+    'DJANGO_ALLOWED_HOSTS',
+    ["localhost", "127.0.0.1", ".ngrok-free.dev", ".ngrok-free.app", ".trycloudflare.com"],
+)
 
 
 # Application definition
@@ -81,12 +111,26 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Local : SQLite. Serveur : PostgreSQL dès que DB_NAME est défini.
+if os.environ.get('DB_NAME'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['DB_NAME'],
+            'USER': os.environ.get('DB_USER', ''),
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', 'localhost'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+            'CONN_MAX_AGE': 60,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -124,9 +168,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# Fichiers de l'interface d'administration Django, rassemblés par
+# « python manage.py collectstatic » et servis par nginx en production.
+STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', BASE_DIR / 'staticfiles')
+
+# Adresse de l'administration Django. En local : /admin/. En production, on la
+# déplace (DJANGO_ADMIN_PATH=gestion-technique/, par exemple) car /admin est
+# déjà le tableau de bord React de l'équipe, servi sur le même domaine.
+DJANGO_ADMIN_PATH = os.environ.get('DJANGO_ADMIN_PATH', 'admin/')
 
 # Autoriser React (qui tourne sur le port 5173 par défaut) à parler à Django
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = env_liste('DJANGO_CORS_ALLOWED_ORIGINS', [
     "http://192.168.1.57:5173",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -136,18 +188,18 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.1.57:5175",
     "http://localhost:5175",
     "http://127.0.0.1:5175",
-]
+])
 
 # Mêmes origines côté CSRF (Django 4+ vérifie séparément CORS et CSRF pour
 # les requêtes POST/PUT/PATCH/DELETE) — sans ça, connexion/inscription/ajout
 # de produit renvoient un 403 dès que le frontend n'est pas ouvert en
 # localhost strict (ex: accès depuis le réseau local via 192.168.x.x pour
 # tester sur téléphone).
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS + [
+CSRF_TRUSTED_ORIGINS = env_liste('DJANGO_CSRF_TRUSTED_ORIGINS', CORS_ALLOWED_ORIGINS + [
     "https://*.ngrok-free.dev",
     "https://*.ngrok-free.app",
     "https://*.trycloudflare.com",
-]
+])
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
@@ -168,9 +220,30 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 # Gestion des images des produits
-import os
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.environ.get('DJANGO_MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
+
+# ==========================================
+# SÉCURITÉ EN PRODUCTION (HTTPS) — inactif en local (DEBUG=True)
+# ==========================================
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'same-origin'
+    # Commencer à 0, puis passer à 31536000 (1 an) une fois le HTTPS validé
+    SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_HSTS_SECONDS', 0))
+    # Taille maximale d'un envoi hors fichiers (formulaires), les photos
+    # passent par FILE_UPLOAD : nginx limite le total (client_max_body_size)
+    DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
+
+    # Les erreurs serveur sont écrites dans le journal (journalctl -u yaayvide)
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {'console': {'class': 'logging.StreamHandler'}},
+        'root': {'handlers': ['console'], 'level': 'WARNING'},
+    }
 
 # Spécifier à Django qu'on va utiliser notre modèle User personnalisé (qu'on va écrire après)
 AUTH_USER_MODEL = 'marketplace.User'
