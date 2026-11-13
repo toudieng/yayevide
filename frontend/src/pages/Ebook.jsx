@@ -226,13 +226,13 @@ export default function Ebook() {
       <section className="relative overflow-hidden bg-gradient-to-br from-peche to-creme">
         <div className="pointer-events-none absolute -top-24 -right-24 h-[420px] w-[420px] rounded-full bg-gradient-to-br from-teal/25 to-transparent blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -left-20 h-[360px] w-[360px] rounded-full bg-gradient-to-tr from-orange/25 to-transparent blur-3xl" />
-        <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+        <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 py-10 sm:py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-14 items-center">
           <div>
             <span className="inline-flex items-center gap-2 bg-teal/10 text-teal-dark text-[12px] font-bold uppercase tracking-wide px-4 py-2 rounded-full mb-6">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8z" /></svg>
               {ebook.nb_pages ? `${ebook.nb_pages} pages pensées à Dakar` : 'Pensé à Dakar'}
             </span>
-            <h1 className="font-serif italic text-[#3D1B36] text-[52px] sm:text-[68px] leading-[0.95] mb-6">
+            <h1 className="font-serif italic text-[#3D1B36] text-[44px] sm:text-[68px] leading-[0.95] mb-5 sm:mb-6">
               {ebook.titre}
             </h1>
             <p className="text-orange-dark font-bold text-[22px] mb-6">De maman à maman, à la dakaroise.</p>
@@ -262,9 +262,9 @@ export default function Ebook() {
 
           <div className="relative flex justify-center">
             {ebook.couverture ? (
-              <img src={ebook.couverture} alt={ebook.titre} className="w-full max-w-[340px] rounded-m shadow-2xl rotate-1" />
+              <img src={ebook.couverture} alt={ebook.titre} className="w-full max-w-[240px] sm:max-w-[340px] rounded-m shadow-2xl rotate-1" />
             ) : (
-              <div className="w-full max-w-[340px] aspect-[3/4] rounded-m bg-cream shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)] flex items-center justify-center text-ink-soft/40 text-sm">
+              <div className="w-full max-w-[240px] sm:max-w-[340px] aspect-[3/4] rounded-m bg-cream shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)] flex items-center justify-center text-ink-soft/40 text-sm">
                 Couverture à venir
               </div>
             )}
@@ -275,9 +275,9 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 sm:py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
-          <Reveal className="max-w-2xl mb-14">
+          <Reveal className="max-w-2xl mb-8 sm:mb-14">
             <div className="flex gap-0.5 text-orange mb-5">
               {[...Array(5)].map((_, i) => (
                 <svg key={i} viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M11.525 2.295a.53.53 0 01.95 0l2.31 4.679a2.123 2.123 0 001.595 1.16l5.166.756a.53.53 0 01.294.904l-3.736 3.638a2.123 2.123 0 00-.611 1.878l.882 5.14a.53.53 0 01-.771.56l-4.618-2.428a2.122 2.122 0 00-1.973 0L6.396 21.01a.53.53 0 01-.77-.56l.881-5.139a2.122 2.122 0 00-.611-1.879L2.16 9.795a.53.53 0 01.294-.906l5.165-.755a2.122 2.122 0 001.597-1.16z" /></svg>
@@ -288,14 +288,14 @@ export default function Ebook() {
             <p className="text-ink-soft text-[15px] leading-relaxed">Le guide se présente comme une boîte à outils éditoriale. Il ne remplace jamais l'avis d'un professionnel de santé.</p>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="-mx-6 px-6 flex overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pt-1 pb-6 sm:mx-0 sm:px-0 sm:pt-0 sm:pb-0 sm:overflow-visible sm:grid gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5">
             {[
               { titre: 'Conseils pratiques', desc: 'Des listes, repères et gestes conçus pour être consultés au moment où vous en avez besoin.', icone: 'coche' },
               { titre: 'Traditions expliquées', desc: 'Les remèdes et rituels sénégalais sont présentés avec leur contexte et leurs précautions.', icone: 'feuille' },
               { titre: 'Repères santé responsables', desc: "Le guide indique quand demander l'avis d'un médecin, d'une sage-femme ou d'un pédiatre.", icone: 'bouclier' },
               { titre: 'Pensé depuis Dakar', desc: 'Les réalités locales, la famille et le quotidien dakarois ne sont pas laissés de côté.', icone: 'pin' },
             ].map((c) => (
-              <Reveal key={c.titre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+              <Reveal key={c.titre} className="shrink-0 w-[78%] snap-start sm:w-auto bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
                 <span className="h-10 w-10 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center mb-4">
                   {c.icone === 'coche' && <CheckIcon className="h-5 w-5" />}
                   {c.icone === 'bouclier' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 01-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 011-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 011.52 0C14.51 3.81 17 5 19 5a1 1 0 011 1z" /><path d="m9 12 2 2 4-4" /></svg>}
@@ -309,22 +309,22 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section id="sommaire" className="bg-white py-20 md:py-28">
+      <section id="sommaire" className="bg-white py-12 sm:py-20 md:py-28">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Au sommaire</p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink mb-5 max-w-2xl">
               14 chapitres pour traverser la maternité avec plus de repères
             </h2>
-            <p className="text-ink-soft text-[15.5px] leading-relaxed max-w-xl mb-12">
+            <p className="text-ink-soft text-[15.5px] leading-relaxed max-w-xl mb-8 sm:mb-12">
               Le sommaire ci-dessous reprend le contenu du PDF, de la préparation de la valise aux questions que l'on n'ose pas toujours poser.
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="-mx-6 px-6 flex overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pt-1 pb-6 sm:mx-0 sm:px-0 sm:pt-0 sm:pb-0 sm:overflow-visible sm:grid gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
             {CHAPITRES.map((c) => (
-              <Reveal key={c.n} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
-                <div className="flex items-start justify-between mb-8">
+              <Reveal key={c.n} className="shrink-0 w-[62%] snap-start sm:w-auto bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5 sm:p-6">
+                <div className="flex items-start justify-between mb-4 sm:mb-8">
                   <span className="font-serif text-2xl font-bold text-orange-dark">{c.n}</span>
                   <span className="h-8 w-8 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
@@ -423,15 +423,15 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 sm:py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
-          <Reveal className="max-w-2xl mb-12">
+          <Reveal className="max-w-2xl mb-8 sm:mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Pourquoi ce guide ?</p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink">Des conseils qui parlent aussi de votre réalité</h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Reveal className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-8">
+          <div className="-mx-6 px-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pt-1 pb-6 sm:mx-0 sm:px-0 sm:pt-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-1 md:grid-cols-2 sm:gap-6">
+            <Reveal className="shrink-0 w-[85%] snap-start sm:w-auto bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 sm:p-8">
               <p className="text-[11px] font-bold uppercase tracking-wide text-ink-soft/75 mb-3">Guides généralistes</p>
               <h3 className="font-serif text-xl text-ink mb-5">{COMPARAISON.generaliste.titre}</h3>
               <ul className="space-y-3">
@@ -440,7 +440,7 @@ export default function Ebook() {
                 ))}
               </ul>
             </Reveal>
-            <Reveal className="bg-[#3D1B36] rounded-m shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)] p-8">
+            <Reveal className="shrink-0 w-[85%] snap-start sm:w-auto bg-[#3D1B36] rounded-m shadow-[0_16px_40px_-16px_rgba(27,36,48,0.28)] p-6 sm:p-8">
               <p className="text-[11px] font-bold uppercase tracking-wide text-orange mb-3">Guide Yaay to Yaay</p>
               <h3 className="font-serif text-xl text-cream mb-5">{COMPARAISON.yaay.titre}</h3>
               <ul className="space-y-3">
@@ -456,9 +456,10 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 sm:py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-          <Reveal className="relative">
+          {/* Sur téléphone, cette image répète la couverture du haut de page : masquée */}
+          <Reveal className="relative hidden sm:block">
             {ebook.couverture ? (
               <img loading="lazy" decoding="async" src={ebook.couverture} alt="" className="w-full rounded-m shadow-xl" />
             ) : (
@@ -469,11 +470,11 @@ export default function Ebook() {
             <FloatingBadge label="Une lecture douce, à votre rythme" tone="cream" className="bottom-5 left-5 right-5 sm:right-auto" />
           </Reveal>
           <div>
-            <Reveal className="mb-8">
+            <Reveal className="mb-6 sm:mb-8">
               <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">La voix du guide</p>
               <h2 className="font-serif text-[28px] sm:text-[34px] leading-[1.15] text-ink">Comme une grande sœur qui vous parle franchement</h2>
             </Reveal>
-            <div className="space-y-6">
+            <div className="space-y-5 sm:space-y-6">
               {CITATIONS.map((c) => (
                 <Reveal key={c.texte} className="border-l-4 border-orange pl-5">
                   <p className="font-serif text-[17px] text-ink italic leading-relaxed mb-2">« {c.texte} »</p>
@@ -485,9 +486,9 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 sm:py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
-          <Reveal className="max-w-2xl mb-16">
+          <Reveal className="max-w-2xl mb-8 sm:mb-16">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Votre chemin de lecture</p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink mb-5">Ouvrez le guide là où vous en êtes</h2>
             <p className="text-ink-soft text-[15.5px] leading-relaxed">
@@ -495,11 +496,11 @@ export default function Ebook() {
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-8 sm:gap-x-6 sm:gap-y-12">
             {PHASES.map((p, i) => (
               <Reveal key={p.n} className="relative">
-                <div className="flex items-center mb-5">
-                  <span className="h-14 w-14 rounded-full bg-[#3D1B36] text-white font-serif text-lg font-bold flex items-center justify-center shrink-0">
+                <div className="flex items-center mb-3 sm:mb-5">
+                  <span className="h-11 w-11 sm:h-14 sm:w-14 rounded-full bg-[#3D1B36] text-white font-serif text-lg font-bold flex items-center justify-center shrink-0">
                     {p.n}
                   </span>
                   {i < PHASES.length - 1 && <div className="hidden lg:block h-px flex-1 bg-line ml-4" />}
@@ -513,16 +514,16 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 sm:py-20 md:py-24">
         <div className="max-w-[1180px] mx-auto px-6 md:px-12">
-          <Reveal className="max-w-2xl mb-12">
+          <Reveal className="max-w-2xl mb-8 sm:mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Pour qui ?</p>
             <h2 className="font-serif text-[32px] sm:text-[42px] leading-[1.1] text-ink">Un guide pour toute la bulle qui entoure bébé</h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="-mx-6 px-6 flex overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pt-1 pb-6 sm:mx-0 sm:px-0 sm:pt-0 sm:pb-0 sm:overflow-visible sm:grid gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5">
             {AUDIENCES.map((a) => (
-              <Reveal key={a.titre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
+              <Reveal key={a.titre} className="shrink-0 w-[78%] snap-start sm:w-auto bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6">
                 <span className="h-11 w-11 rounded-full bg-orange/15 text-orange flex items-center justify-center mb-4">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5"><path d={ICONES[a.icone]} /></svg>
                 </span>
@@ -534,8 +535,8 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
-        <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+      <section className="bg-white py-12 sm:py-20 md:py-24">
+        <div className="max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-14 items-center">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">
               Inclus dans les {ebook.nb_pages || 'toutes les'} pages
@@ -548,9 +549,9 @@ export default function Ebook() {
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="-mx-6 px-6 flex overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pt-1 pb-6 sm:mx-0 sm:px-0 sm:pt-0 sm:pb-0 sm:overflow-visible sm:grid gap-3 sm:grid-cols-2 sm:gap-4">
             {OUTILS.map((o) => (
-              <Reveal key={o.titre} className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
+              <Reveal key={o.titre} className="shrink-0 w-[78%] snap-start sm:w-auto bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-5">
                 <div className="flex items-start gap-2.5">
                   <span className="h-6 w-6 rounded-full bg-teal/15 text-teal-dark flex items-center justify-center shrink-0 mt-0.5">
                     <CheckIcon className="h-3 w-3" />
@@ -566,10 +567,10 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section id="acheter" className="relative overflow-hidden bg-white py-20 md:py-24">
+      <section id="acheter" className="relative overflow-hidden bg-white py-12 sm:py-20 md:py-24">
         <div className="pointer-events-none absolute -top-20 -left-16 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-teal/20 to-transparent blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-16 h-[320px] w-[320px] rounded-full bg-gradient-to-tr from-orange/20 to-transparent blur-3xl" />
-        <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-14 items-start">
+        <div className="relative max-w-[1180px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-10 sm:gap-14 items-start">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Un compagnon à garder près de soi</p>
             <h2 className="font-serif text-[28px] sm:text-[36px] leading-[1.15] text-ink mb-4">
@@ -711,9 +712,9 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 sm:py-20 md:py-24">
         <div className="max-w-[820px] mx-auto px-6">
-          <Reveal className="mb-12">
+          <Reveal className="mb-8 sm:mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-dark mb-4">Questions fréquentes</p>
             <h2 className="font-serif text-[28px] sm:text-[36px] leading-[1.15] text-ink mb-4">Tout savoir avant de télécharger</h2>
             <p className="text-ink-soft text-[14.5px] leading-relaxed">Des réponses simples sur le format, la lecture et la version proposée.</p>
@@ -743,7 +744,7 @@ export default function Ebook() {
         </div>
       </section>
 
-      <section className="bg-[#3D1B36] py-16 md:py-20">
+      <section className="bg-[#3D1B36] py-12 sm:py-16 md:py-20">
         <div className="max-w-[900px] mx-auto px-6 text-center">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal mb-4">De Yaay à Yaay</p>
