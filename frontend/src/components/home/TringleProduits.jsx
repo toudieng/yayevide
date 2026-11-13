@@ -159,10 +159,10 @@ function TringleSquelette() {
 const TringleProduits = forwardRef(function TringleProduits({ produits, chargement }, ref) {
   const { addItem } = useCart();
   const [ajouteId, setAjouteId] = useState(null);
-  // Défilement automatique sur téléphone (voir useDefilementAuto) : une
-  // étiquette à la fois, en pause dès qu'on touche la tringle.
+  // Défilement continu et doux sur téléphone (voir useDefilementAuto), en
+  // pause dès qu'on touche la tringle.
   const scrollerRef = useRef(null);
-  useDefilementAuto({ ref: scrollerRef, selecteurCarte: ':scope > ul > li.snap-start', actif: !chargement });
+  useDefilementAuto({ ref: scrollerRef, actif: !chargement && produits.length > 0 });
   const pendulesRef = useRef([]); // éléments DOM qui se balancent
   const etat = useRef({ angles: [], vitesses: [], omegas: [], raf: 0, dernier: 0, scrollX: 0, scrollT: 0 });
   const glisser = useRef({ actif: false, x: 0, depart: 0, bouge: false });
@@ -226,6 +226,8 @@ const TringleProduits = forwardRef(function TringleProduits({ produits, chargeme
     const vitesse = ((el.scrollLeft - s.scrollX) / dt) * 1000; // px/s
     s.scrollX = el.scrollLeft;
     s.scrollT = now;
+    // défilement automatique (ou retour en boucle) : les étiquettes restent calmes
+    if (el.hasAttribute('data-defilement-auto') || Math.abs(vitesse) > 4000) return;
     if (Math.abs(vitesse) < 1) return;
     const impulsion = Math.max(-45, Math.min(45, -vitesse * 0.035));
     pendulesRef.current.forEach((_, i) => { s.vitesses[i] = (s.vitesses[i] || 0) + impulsion * (0.8 + (i % 3) * 0.1); });
@@ -319,6 +321,18 @@ const TringleProduits = forwardRef(function TringleProduits({ produits, chargeme
                 className="relative origin-top will-change-transform"
               >
                 {/* cordon entre le crochet et le trou de l'étiquette */}
+                <span className="absolute left-1/2 top-0 z-10 h-[29px] w-px -translate-x-1/2 bg-ink/35" aria-hidden="true" />
+                <div className="pt-4">
+                  <Etiquette produit={p} onAjouter={ajouter} ajoute={ajouteId === p.id} />
+                </div>
+              </div>
+            </li>
+          ))}
+          {/* copies pour la boucle sans fin du défilement (téléphone seulement) */}
+          {produits.map((p) => (
+            <li key={`doublon-${p.id}`} data-doublon="" inert className="relative shrink-0 w-[156px] pt-7 select-none sm:hidden">
+              <Crochet />
+              <div className="relative">
                 <span className="absolute left-1/2 top-0 z-10 h-[29px] w-px -translate-x-1/2 bg-ink/35" aria-hidden="true" />
                 <div className="pt-4">
                   <Etiquette produit={p} onAjouter={ajouter} ajoute={ajouteId === p.id} />

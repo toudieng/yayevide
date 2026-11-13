@@ -17,7 +17,10 @@ const VITRINES = CATEGORIES.filter((c) => c.href).map((c) => ({ nom: c.name, slu
 // photo de l'admin est absente ou ne se charge pas, puis fond dégradé.
 const IMAGE_SECOURS = Object.fromEntries(CATEGORIES.map((c) => [c.slug, c.img]));
 
-function CategoryCard({ cat }) {
+// `doublon` : copie invisible pour la boucle sans fin du défilement (téléphone)
+const PROPS_DOUBLON = { 'data-doublon': '', inert: true };
+
+function CategoryCard({ cat, doublon = false }) {
   const ref = useRef(null);
   // 0 = photo de l'API, 1 = photo de secours, 2 = aucune (fond dégradé)
   const [essai, setEssai] = useState(cat.image ? 0 : 1);
@@ -43,7 +46,8 @@ function CategoryCard({ cat }) {
       ref={ref}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      className="group relative block shrink-0 w-[44%] snap-start sm:w-auto aspect-[4/3] overflow-hidden rounded-m transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-18px_rgba(27,36,48,0.4)]"
+      {...(doublon ? PROPS_DOUBLON : {})}
+      className={`group relative shrink-0 w-[44%] snap-start sm:w-auto aspect-[4/3] ${doublon ? 'block sm:hidden' : 'block'} overflow-hidden rounded-m transition-[transform,box-shadow] duration-200 ease-out hover:shadow-[0_18px_36px_-18px_rgba(27,36,48,0.4)]`}
     >
       {/* fond doux affiché si aucune photo n'est disponible */}
       <div className="absolute inset-0 bg-gradient-to-br from-teal-dark to-ink" aria-hidden="true" />
@@ -110,6 +114,9 @@ export default function Categories() {
         >
           {categories.map((cat) => (
             <CategoryCard key={cat.slug} cat={cat} />
+          ))}
+          {categories.map((cat) => (
+            <CategoryCard key={`doublon-${cat.slug}`} cat={cat} doublon />
           ))}
         </div>
         </Reveal>

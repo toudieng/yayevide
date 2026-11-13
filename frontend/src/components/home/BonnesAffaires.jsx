@@ -40,11 +40,13 @@ export default function BonnesAffaires() {
 
           <Reveal as="div">
           <div ref={rangeeRef} className="flex gap-3.5 overflow-x-auto no-scrollbar pb-1.5">
-            {CHIPS.map((chip) => (
+            {/* 2e passage = copies pour la boucle sans fin du défilement (téléphone) */}
+            {[...CHIPS, ...CHIPS].map((chip, i) => (
               <Link
-                key={chip.name}
+                key={`${chip.name}-${i}`}
+                {...(i >= CHIPS.length ? { 'data-doublon': '', inert: true } : {})}
                 to={`/boutique?bonne_affaire=true&rayon=${chip.rayon}`}
-                className="group relative shrink-0 w-50 aspect-square overflow-hidden rounded-m border border-white/14"
+                className={`group relative shrink-0 w-50 aspect-square ${i >= CHIPS.length ? 'sm:hidden' : ''} overflow-hidden rounded-m border border-white/14`}
               >
                 <img loading="lazy" decoding="async"
                   src={chip.img}
