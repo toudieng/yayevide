@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
-import FlechesRangee from '../ui/FlechesRangee';
-import useDefilementRangee from '../../hooks/useDefilementRangee';
 import { CATEGORIES } from '../../data/categories';
 import { apiFetch } from '../../utils/api';
 
@@ -75,7 +73,6 @@ function CategoryCard({ cat }) {
 }
 
 export default function Categories() {
-  const { ref, bords, majBords, defiler } = useDefilementRangee();
   const [categories, setCategories] = useState(CATEGORIES.map((c) => ({ nom: c.name, slug: c.slug, image: c.img, href: c.href })));
 
   useEffect(() => {
@@ -102,17 +99,13 @@ export default function Categories() {
         />
 
         {/* Mobile : rangée qui défile de côté ; dès 640 px : grille de 4. */}
-        <Reveal as="div">
-        <div
-          ref={ref}
-          onScroll={majBords}
+        <Reveal
+          as="div"
           className="-mx-6 px-6 flex gap-3.5 overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pb-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-4"
         >
           {categories.map((cat) => (
             <CategoryCard key={cat.slug} cat={cat} />
           ))}
-        </div>
-        <FlechesRangee bords={bords} defiler={defiler} precedent="Catégories précédentes" suivant="Catégories suivantes" />
         </Reveal>
       </div>
     </section>

@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
-import FlechesRangee from '../ui/FlechesRangee';
-import useDefilementRangee from '../../hooks/useDefilementRangee';
 
 const ITEMS = [
   {
@@ -36,7 +34,6 @@ const ITEMS = [
 ];
 
 export default function Engagements() {
-  const { ref, bords, majBords, defiler } = useDefilementRangee();
   return (
     <section className="py-12">
       <div className="mx-auto max-w-[1280px] px-6 md:px-12">
@@ -48,10 +45,8 @@ export default function Engagements() {
 
         {/* Mobile : rangée qui défile de côté (la carte suivante dépasse pour
             inviter au glissement) ; dès 640 px : grille centrée. */}
-        <Reveal as="div">
-        <div
-          ref={ref}
-          onScroll={majBords}
+        <Reveal
+          as="div"
           className="-mx-6 px-6 flex gap-3.5 overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pb-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-10 sm:gap-y-12"
         >
           {ITEMS.map((item, i) => (
@@ -74,8 +69,6 @@ export default function Engagements() {
               </Link>
             </div>
           ))}
-        </div>
-        <FlechesRangee bords={bords} defiler={defiler} precedent="Engagements précédents" suivant="Engagements suivants" />
         </Reveal>
       </div>
     </section>
