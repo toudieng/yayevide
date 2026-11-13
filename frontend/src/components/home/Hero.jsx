@@ -89,7 +89,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[96vh]"
+      className="relative min-h-[96vh] max-sm:min-h-[calc(100svh-81px)]"
       onMouseEnter={() => setPause(true)}
       onMouseLeave={() => setPause(false)}
     >
@@ -108,7 +108,19 @@ export default function Hero() {
         </div>
       ))}
 
-      <div className="absolute left-1/2 bottom-6 -translate-x-1/2 z-[3] flex items-center gap-2.5">
+      {/* Téléphone : flèches de part et d'autre des points (le bloc tient
+          dans l'écran, sous le menu, pour qu'elles restent visibles) */}
+      <div className="absolute left-1/2 bottom-6 max-sm:bottom-4 -translate-x-1/2 z-[3] flex items-center gap-2.5">
+        <button
+          type="button"
+          aria-label="Diapositive précédente"
+          onClick={() => allerA((slide - 1 + SLIDE_COUNT) % SLIDE_COUNT)}
+          className="sm:hidden mr-2 h-11 w-11 flex items-center justify-center rounded-full bg-white/15 active:bg-white/25 text-cream"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+        </button>
         {Array.from({ length: SLIDE_COUNT }).map((_, i) => (
           <button
             key={i}
@@ -120,6 +132,16 @@ export default function Hero() {
             }`}
           />
         ))}
+        <button
+          type="button"
+          aria-label="Diapositive suivante"
+          onClick={() => allerA((slide + 1) % SLIDE_COUNT)}
+          className="sm:hidden ml-2 h-11 w-11 flex items-center justify-center rounded-full bg-white/15 active:bg-white/25 text-cream"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </button>
       </div>
 
       <button

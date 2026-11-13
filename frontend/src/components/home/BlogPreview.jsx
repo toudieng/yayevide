@@ -41,7 +41,7 @@ export default function BlogPreview() {
                 key={p.slug}
                 to={`/blog/${p.slug}`}
                 className={`flex gap-4 py-5 ${i !== SIDE_POSTS.length - 1 ? 'border-b border-line' : ''} ${
-                  i === 0 ? 'pt-0' : ''
+                  i === 0 ? 'pt-0 max-sm:border-b-0' : 'max-sm:hidden'
                 }`}
               >
                 <img loading="lazy" decoding="async" src={p.image} alt="" className="h-21 w-21 shrink-0 rounded-btn border border-line object-cover" />
