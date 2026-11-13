@@ -169,7 +169,7 @@ export default function Inscription({ role, onRoleChange }) {
                 : "text-ink-soft/75 hover:text-clay-dark hover:border-b-2 hover:border-orange/40"
             }`}
           >
-            Vendeuse
+            <span className="whitespace-nowrap">Vendeuse / Loueuse</span>
           </button>
         </div>
       </div>

@@ -28,7 +28,7 @@ export default function VerificationCompte() {
 
   const { username, token } = state;
   const messageWhatsapp = encodeURIComponent(
-    `Bonjour Yaay Vidé, je confirme mon inscription en tant que vendeuse.\nNom d'utilisateur : ${username}\nCode de vérification : ${token}`
+    `Bonjour Yaay Vidé, je confirme mon inscription en tant que vendeuse / loueuse.\nNom d'utilisateur : ${username}\nCode de vérification : ${token}`
   );
   const whatsappHref = `https://wa.me/${WHATSAPP_SUPPORT_NUMBER}?text=${messageWhatsapp}`;
 

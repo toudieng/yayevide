@@ -21,7 +21,7 @@ const PANELS = {
   vendeuse: {
     badge: "Déjà 15 000 pépites vendues sur Yaay Vidé",
     title: "Donnez une seconde vie aux trésors de vos enfants.",
-    subtitle: "Rejoignez la communauté de vendeuses Yaay Vidé et transformez vos articles en opportunités pour d'autres familles.",
+    subtitle: "Rejoignez la communauté de vendeuses et loueuses Yaay Vidé et transformez vos articles en opportunités pour d'autres familles.",
     points: [
       { titre: "Vente simplifiée", detail: "Listez vos articles en quelques clics, directement depuis votre mobile." },
       { titre: "Paiement garanti", detail: "Recevez vos gains directement sur votre portefeuille mobile, sans attendre." },
