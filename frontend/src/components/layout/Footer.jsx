@@ -144,7 +144,8 @@ export default function Footer() {
 
         <div className="border-t border-white/10 py-5.5 flex flex-col md:flex-row md:justify-between gap-2.5 text-xs">
           <span>
-            © 2026 Yaay Vidé. Tous droits réservés. Fait avec ♥ par{" "}
+            © 2026 Yaay Vidé. Tous droits réservés. · Conception et
+            développement :{" "}
             <a
               href="https://myportfolio-topaz-pi-81.vercel.app/fr"
               target="_blank"
@@ -153,8 +154,7 @@ export default function Footer() {
             >
               Astou DIENG
               <span className="sr-only"> (portfolio, nouvel onglet)</span>
-            </a>{" "}
-            au Sénégal.
+            </a>
           </span>
           <span>
             Paiements : Wave · Orange Money · Mixx by Yas · Espèces
