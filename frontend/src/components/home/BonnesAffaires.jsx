@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
+import useDefilementAuto from '../../hooks/useDefilementAuto';
 import imgTenues from '../../assets/categories/tenues-de-fete.webp';
 import imgChaussures from '../../assets/categories/chaussures-de-fete.webp';
 import imgDeguisements from '../../assets/categories/deguisements.webp';
@@ -16,6 +17,8 @@ const CHIPS = [
 const WAVE_PATH = 'M0,64 C240,10 480,0 720,22 C960,44 1200,54 1440,18 L1440,0 L0,0 Z';
 
 export default function BonnesAffaires() {
+  // Défilement automatique sur téléphone (voir useDefilementAuto)
+  const rangeeRef = useDefilementAuto();
   return (
     <div className="relative bg-night">
       <svg
@@ -35,7 +38,8 @@ export default function BonnesAffaires() {
             className="[&_h2]:text-cream [&_p]:text-cream/65"
           />
 
-          <Reveal as="div" className="flex gap-3.5 overflow-x-auto no-scrollbar pb-1.5">
+          <Reveal as="div">
+          <div ref={rangeeRef} className="flex gap-3.5 overflow-x-auto no-scrollbar pb-1.5">
             {CHIPS.map((chip) => (
               <Link
                 key={chip.name}
@@ -53,6 +57,7 @@ export default function BonnesAffaires() {
                 </span>
               </Link>
             ))}
+          </div>
           </Reveal>
 
           <Link

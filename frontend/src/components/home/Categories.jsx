@@ -4,6 +4,7 @@ import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import { CATEGORIES } from '../../data/categories';
 import { apiFetch } from '../../utils/api';
+import useDefilementAuto from '../../hooks/useDefilementAuto';
 
 // Les vraies catégories (photos, ordre) viennent de l'API, modifiables depuis
 // le dashboard admin. On y ajoute les deux vitrines automatiques du site
@@ -88,38 +89,8 @@ export default function Categories() {
       .catch(() => {});
   }, []);
 
-  // Défilement automatique (téléphone seulement, quand la rangée déborde) :
-  // une carte toutes les 3 s, retour au début à la fin. Il s'arrête 8 s dès
-  // qu'on touche la rangée ou qu'on y navigue au clavier, ne tourne que si la
-  // rangée est à l'écran et l'onglet visible, et jamais si l'utilisatrice a
-  // demandé à réduire les animations.
-  const rangeeRef = useRef(null);
-  const repriseApres = useRef(0);
-  const suspendre = () => {
-    repriseApres.current = Date.now() + 8000;
-  };
-
-  useEffect(() => {
-    const el = rangeeRef.current;
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    let visible = false;
-    const obs = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-    }, { threshold: 0.5 });
-    obs.observe(el);
-    const t = setInterval(() => {
-      if (!visible || document.hidden || Date.now() < repriseApres.current) return;
-      if (el.scrollWidth <= el.clientWidth + 2) return; // grille (tablette, ordinateur)
-      const carte = el.children[0];
-      const pas = carte ? carte.getBoundingClientRect().width + (parseFloat(getComputedStyle(el).columnGap) || 0) : el.clientWidth;
-      const auBout = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
-      el.scrollTo({ left: auBout ? 0 : el.scrollLeft + pas, behavior: 'smooth' });
-    }, 3000);
-    return () => {
-      clearInterval(t);
-      obs.disconnect();
-    };
-  }, []);
+  // Défilement automatique sur téléphone (voir useDefilementAuto)
+  const rangeeRef = useDefilementAuto();
 
   return (
     <section id="categories" className="py-12">
@@ -135,9 +106,6 @@ export default function Categories() {
         <Reveal as="div">
         <div
           ref={rangeeRef}
-          onPointerDown={suspendre}
-          onWheel={suspendre}
-          onFocus={suspendre}
           className="-mx-6 px-6 flex gap-3.5 overflow-x-auto snap-x snap-mandatory scroll-px-6 no-scrollbar pb-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-4"
         >
           {categories.map((cat) => (

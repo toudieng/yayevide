@@ -11,6 +11,7 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import useDefilementAuto from '../../hooks/useDefilementAuto';
 import { ETAT_LABELS, formatFCFA } from '../../utils/produit';
 
 const ANGLE_MAX = 14; // degrés
@@ -158,7 +159,10 @@ function TringleSquelette() {
 const TringleProduits = forwardRef(function TringleProduits({ produits, chargement }, ref) {
   const { addItem } = useCart();
   const [ajouteId, setAjouteId] = useState(null);
+  // Défilement automatique sur téléphone (voir useDefilementAuto) : une
+  // étiquette à la fois, en pause dès qu'on touche la tringle.
   const scrollerRef = useRef(null);
+  useDefilementAuto({ ref: scrollerRef, selecteurCarte: ':scope > ul > li.snap-start', actif: !chargement });
   const pendulesRef = useRef([]); // éléments DOM qui se balancent
   const etat = useRef({ angles: [], vitesses: [], omegas: [], raf: 0, dernier: 0, scrollX: 0, scrollT: 0 });
   const glisser = useRef({ actif: false, x: 0, depart: 0, bouge: false });
