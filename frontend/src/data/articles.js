@@ -1,4 +1,7 @@
 // frontend/src/data/articles.js
+// Photo locale (WebP ~27 Ko) choisie par la cliente pour l'article « valise de maternité »
+import imgValiseMaternite from '../assets/blog/valise-maternite.webp';
+
 export const ARTICLES = [
   {
     slug: 'seconde-main-controle',
@@ -74,7 +77,7 @@ export const ARTICLES = [
     tagColor: 'text-teal',
     title: 'Préparer sa valise de maternité sans se ruiner',
     excerpt: "La liste essentielle, version seconde main intelligente.",
-    image: 'https://images.unsplash.com/photo-1560707854-fb9a10eeaace?fm=jpg&q=80&w=1200&auto=format&fit=crop',
+    image: imgValiseMaternite,
     readTime: '4 min',
     date: '20 mai 2026',
     content: [
