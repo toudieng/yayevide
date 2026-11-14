@@ -357,11 +357,10 @@ sudo chmod -R 700 /srv/yaayvide/backend/media_prive
 3. **Copie des sauvegardes hors du serveur** : `/srv/sauvegardes` est sur le
    même VPS. Copier régulièrement ces fichiers ailleurs (OVH Object Storage,
    ou un téléchargement hebdomadaire sur un ordinateur).
-4. **Paiement InTouch / e-book** : les variables `INTOUCH_*` restent vides
-   tant que le contrat n'est pas signé. En production, la confirmation
-   « simulée » du paiement de l'e-book est volontairement bloquée
-   (`DEBUG=False`) : **l'e-book ne pourra donc pas être vendu en ligne avant
-   l'intégration d'InTouch**. Masquer le bouton d'achat ou prévoir une vente
-   manuelle d'ici là.
-5. **Numéro WhatsApp de l'équipe** : `WHATSAPP_SUPPORT_NUMBER` contient encore
-   un numéro d'exemple.
+4. ~~**E-book**~~ : **fait.** Paiement manuel par Wave, Orange Money ou
+   Mixx by Yas sur les numéros de `EBOOK_NUMERO_*`. L'équipe confirme chaque
+   achat dans `/admin/ebook`, ce qui envoie le lien par e-mail : les e-mails
+   doivent donc fonctionner (`EMAIL_*`) et au moins un compte admin doit avoir
+   une adresse e-mail pour être prévenu des achats à vérifier.
+5. ~~**Numéro WhatsApp de l'équipe**~~ : **fait** (71 018 91 91), réglé dans
+   `frontend/src/config/contact.js`.

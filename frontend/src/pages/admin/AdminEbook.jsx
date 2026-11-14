@@ -18,6 +18,14 @@ function formatDate(iso) {
 
 const VIDE = { titre: '', description: '', prix: '', nb_pages: '' };
 
+const MODES = { wave: 'Wave', orange_money: 'Orange Money', mixx: 'Mixx by Yas' };
+const STATUTS = {
+  a_verifier: { libelle: 'À vérifier', classe: 'bg-orange text-ink' },
+  paye: { libelle: 'Payé', classe: 'bg-teal-dark text-white' },
+  echoue: { libelle: 'Refusé', classe: 'bg-red-50 text-red-700' },
+  en_attente: { libelle: 'En attente', classe: 'bg-line text-ink' },
+};
+
 export default function AdminEbook() {
   const { moi, chargementSession } = useSession('admin');
 
@@ -31,6 +39,31 @@ export default function AdminEbook() {
   const [form, setForm] = useState(VIDE);
   const [fichiers, setFichiers] = useState({ couverture: null, fichier_apercu: null, fichier_complet: null });
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
+  const [actionAchat, setActionAchat] = useState(null);
+
+  // Paiement manuel : l'équipe retrouve (ou non) la transaction sur son relevé
+  const traiterAchat = async (achat, action) => {
+    const question = action === 'confirmer'
+      ? `Confirmer le paiement de ${achat.email} (référence ${achat.reference_client || '—'}) ? Le lien de téléchargement lui sera envoyé par e-mail.`
+      : `Refuser ce paiement ? ${achat.email} sera prévenue par e-mail qu'il n'a pas été retrouvé.`;
+    if (!window.confirm(question)) return;
+    setActionAchat(achat.id);
+    setErreur(null);
+    try {
+      const res = await apiFetch(`/admin/ebook-achats/${achat.id}/${action}/`, { method: 'POST' });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        setAchats((liste) => liste.map((a) => (a.id === achat.id ? data : a)));
+        setMessage(action === 'confirmer' ? 'Paiement confirmé : le lien est parti par e-mail.' : "Paiement refusé : l'acheteuse est prévenue.");
+      } else {
+        setErreur(data.general || "L'action n'a pas pu être enregistrée.");
+      }
+    } catch {
+      setErreur('Impossible de joindre le serveur.');
+    } finally {
+      setActionAchat(null);
+    }
+  };
 
   const charger = () => {
     Promise.all([apiFetch('/admin/ebook/'), apiFetch('/admin/ebook-achats/')])
@@ -240,25 +273,54 @@ export default function AdminEbook() {
       </div>
 
       <div>
-        <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Achats ({achats.length})</h3>
+        <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-1">Achats ({achats.length})</h3>
+        <p className="text-[13px] text-ink-soft mb-4">
+          Pour chaque achat « À vérifier », retrouvez la transaction (montant et référence) sur le relevé du moyen de paiement, puis confirmez ou refusez.
+        </p>
         {achats.length === 0 ? (
           <div className={`bg-white rounded-m ${SHADOW_CARD} p-12 text-center`}>
             <EtatVide compact bordure={false} icone="boite" texte="Aucun achat pour le moment." />
           </div>
         ) : (
           <div className={`bg-white rounded-m ${SHADOW_CARD} divide-y divide-line overflow-hidden`}>
-            {achats.map((a) => (
-              <div key={a.id} className="flex items-center gap-4 p-4 flex-wrap md:flex-nowrap">
-                <div className="flex-1 min-w-[180px]">
-                  <p className="text-sm font-semibold text-ink truncate">{a.email}</p>
-                  <p className="text-[12px] text-ink-soft/75">{a.ebook_titre} · {formatDate(a.date_creation)}</p>
+            {achats.map((a) => {
+              const statut = STATUTS[a.statut_paiement] || STATUTS.en_attente;
+              return (
+                <div key={a.id} className="flex items-start gap-4 p-4 flex-wrap md:flex-nowrap">
+                  <div className="flex-1 min-w-[200px]">
+                    <p className="text-sm font-semibold text-ink break-all">{a.email}</p>
+                    <p className="text-[12px] text-ink-soft">{a.ebook_titre} · {formatDate(a.date_creation)}</p>
+                    {(a.reference_client || a.mode_paiement) && (
+                      <p className="text-[12.5px] text-ink mt-1">
+                        {MODES[a.mode_paiement] || a.mode_paiement}
+                        {a.telephone && <> · depuis le <span className="font-semibold">{a.telephone}</span></>}
+                        {a.reference_client && <> · réf. <span className="font-mono font-semibold">{a.reference_client}</span></>}
+                      </p>
+                    )}
+                  </div>
+                  <p className="text-sm font-bold text-ink whitespace-nowrap">{formatFCFA(a.prix_paye)}</p>
+                  <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full whitespace-nowrap ${statut.classe}`}>
+                    {statut.libelle}
+                  </span>
+                  {a.statut_paiement === 'a_verifier' && (
+                    <div className="flex gap-2 w-full md:w-auto">
+                      <button
+                        type="button" onClick={() => traiterAchat(a, 'confirmer')} disabled={actionAchat === a.id}
+                        className="flex-1 md:flex-none min-h-[40px] px-4 rounded-btn bg-teal-dark hover:bg-ink text-white text-[12.5px] font-bold transition-colors disabled:opacity-50"
+                      >
+                        Confirmer
+                      </button>
+                      <button
+                        type="button" onClick={() => traiterAchat(a, 'refuser')} disabled={actionAchat === a.id}
+                        className="flex-1 md:flex-none min-h-[40px] px-4 rounded-btn border border-line text-ink hover:border-red-600 hover:text-red-700 text-[12.5px] font-bold transition-colors disabled:opacity-50"
+                      >
+                        Refuser
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <p className="text-sm font-bold text-ink whitespace-nowrap">{formatFCFA(a.prix_paye)}</p>
-                <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full whitespace-nowrap ${a.statut_paiement === 'paye' ? 'bg-teal text-white' : 'bg-orange/10 text-orange'}`}>
-                  {a.statut_paiement === 'paye' ? 'Payé' : 'En attente'}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

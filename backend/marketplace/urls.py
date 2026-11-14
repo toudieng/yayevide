@@ -73,6 +73,8 @@ from .ebook_api import (
     EbookDetailView,
     AcheterEbookView,
     SimulerPaiementEbookView,
+    ConfirmerAchatEbookView,
+    RefuserAchatEbookView,
     TelechargerEbookView,
 )
 
@@ -163,6 +165,8 @@ urlpatterns = [
     path('admin/ebook/', EbookAdminView.as_view(), name='api_admin_ebook'),
     path('admin/ebook/<int:pk>/', EbookAdminDetailView.as_view(), name='api_admin_ebook_detail'),
     path('admin/ebook-achats/', AchatsEbookAdminView.as_view(), name='api_admin_ebook_achats'),
+    path('admin/ebook-achats/<int:pk>/confirmer/', ConfirmerAchatEbookView.as_view(), name='api_admin_ebook_achat_confirmer'),
+    path('admin/ebook-achats/<int:pk>/refuser/', RefuserAchatEbookView.as_view(), name='api_admin_ebook_achat_refuser'),
 
     # Location : parcours complet sur le site
     path('produits/<int:pk>/reservations/', ReservationsProduitView.as_view(), name='api_reservations_produit'),

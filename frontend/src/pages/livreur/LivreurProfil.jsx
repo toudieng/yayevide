@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ShellLivreur from '../../components/livreur/ShellLivreur';
 import { useSession } from '../../hooks/useSession';
 import { apiFetch } from '../../utils/api';
+import { lienWhatsappEquipe } from '../../config/contact';
 import { GRADIENT_CARDS, SHADOW_CARD as SHADOW } from '../../utils/gradientCards';
 import SqueletteTableau from '../../components/ui/SqueletteTableau';
 
@@ -247,7 +248,7 @@ export default function LivreurProfil() {
               <p className="text-sm font-semibold text-ink">Modifier le mot de passe</p>
               <p className="text-[11.5px] text-ink-soft/75">Contactez l'équipe Yaay Vidé pour le réinitialiser.</p>
             </div>
-            <a href="https://wa.me/221771018991" target="_blank" rel="noreferrer" className="text-[12.5px] font-bold text-teal-dark hover:underline whitespace-nowrap">
+            <a href={lienWhatsappEquipe()} target="_blank" rel="noreferrer" className="text-[12.5px] font-bold text-teal-dark hover:underline whitespace-nowrap">
               Contacter →
             </a>
           </div>
@@ -265,7 +266,7 @@ export default function LivreurProfil() {
               <p className="text-sm font-semibold text-red-500">Supprimer le compte</p>
               <p className="text-[11.5px] text-ink-soft/75">Cette demande nécessite une vérification Yaay Vidé.</p>
             </div>
-            <a href="https://wa.me/221771018991" target="_blank" rel="noreferrer" className="text-[12.5px] font-bold text-red-500 hover:underline whitespace-nowrap">
+            <a href={lienWhatsappEquipe()} target="_blank" rel="noreferrer" className="text-[12.5px] font-bold text-red-500 hover:underline whitespace-nowrap">
               Demander →
             </a>
           </div>

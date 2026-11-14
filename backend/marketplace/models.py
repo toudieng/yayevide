@@ -604,6 +604,7 @@ class Ebook(models.Model):
 class AchatEbook(models.Model):
     STATUT_PAIEMENT_CHOICES = (
         ('en_attente', 'En attente de paiement'),
+        ('a_verifier', 'Paiement à vérifier par l\'équipe'),
         ('paye', 'Payé'),
         ('echoue', 'Paiement échoué'),
     )
@@ -619,6 +620,9 @@ class AchatEbook(models.Model):
     prix_paye = models.DecimalField(max_digits=10, decimal_places=0)
     statut_paiement = models.CharField(max_length=20, choices=STATUT_PAIEMENT_CHOICES, default='en_attente')
     reference_paiement = models.CharField(max_length=120, blank=True)
+    # Paiement manuel : référence de la transaction mobile money saisie par
+    # l'acheteuse, que l'équipe compare avec son relevé avant de confirmer.
+    reference_client = models.CharField(max_length=60, blank=True)
     date_paiement = models.DateTimeField(null=True, blank=True)
 
     # Jeton unique donnant accès au téléchargement une fois payé — envoyé

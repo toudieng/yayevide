@@ -286,7 +286,19 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Yaay Vidé <no-reply@
 # Numéro WhatsApp de l'équipe Yaay Vidé qui valide manuellement les nouvelles
 # boutiques (vérification WhatsApp = manuelle tant qu'il n'y a pas d'API
 # WhatsApp Business connectée). À remplacer par le vrai numéro.
-WHATSAPP_SUPPORT_NUMBER = os.environ.get('WHATSAPP_SUPPORT_NUMBER', '221770000000')
+WHATSAPP_SUPPORT_NUMBER = os.environ.get('WHATSAPP_SUPPORT_NUMBER', '221710189191')
+
+# ==========================================
+# E-BOOK : PAIEMENT MANUEL (sans InTouch)
+# ==========================================
+# La cliente paie par mobile money sur le numéro marchand de Yaay Vidé, puis
+# saisit la référence de sa transaction ; l'équipe vérifie et confirme dans
+# l'admin, et le lien de téléchargement part par e-mail.
+NUMEROS_PAIEMENT_EBOOK = {
+    'wave': os.environ.get('EBOOK_NUMERO_WAVE', '710189191'),
+    'orange_money': os.environ.get('EBOOK_NUMERO_ORANGE_MONEY', '710189191'),
+    'mixx': os.environ.get('EBOOK_NUMERO_MIXX', '769319911'),
+}
 
 # URL du frontend (utilisée dans le lien envoyé par email)
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5173')

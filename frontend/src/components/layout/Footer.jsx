@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { CATEGORIES } from "../../data/categories";
+import { lienWhatsappEquipe } from "../../config/contact";
 
 const SOCIALS = [
   {
@@ -7,7 +8,7 @@ const SOCIALS = [
     path: "M14 9h3V6h-3a4 4 0 0 0-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2a1 1 0 0 1 1-1z",
   },
   { label: "Instagram", rect: true },
-  { label: "WhatsApp", path: "M5 19l1.4-3.6A8 8 0 1 1 9.6 19L5 19z" },
+  { label: "WhatsApp", path: "M5 19l1.4-3.6A8 8 0 1 1 9.6 19L5 19z", href: lienWhatsappEquipe() },
 ];
 
 // Toutes les vraies catégories du site ; les vitrines automatiques
@@ -74,8 +75,9 @@ export default function Footer() {
               {SOCIALS.map((s) => (
                 <a
                   key={s.label}
-                  href="#"
-                  aria-label={s.label}
+                  href={s.href || "#"}
+                  {...(s.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  aria-label={s.href ? `${s.label} de l'équipe (nouvel onglet)` : s.label}
                   className="h-8.5 w-8.5 flex items-center justify-center rounded-btn border border-white/25 hover:border-teal hover:-translate-y-0.5 transition-all"
                 >
                   <svg

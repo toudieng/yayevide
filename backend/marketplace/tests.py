@@ -368,3 +368,69 @@ class DocumentsLivreurTests(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertTrue(res['Content-Disposition'].startswith('attachment'))
         self.assertEqual(res['X-Content-Type-Options'], 'nosniff')
+
+
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend', FRONTEND_URL='https://yaayvide.test')
+class EbookPaiementManuelTests(TestCase):
+    """E-book payé par mobile money : vérification par l'équipe, puis lien
+    envoyé par e-mail. Le jeton de téléchargement n'est jamais donné avant."""
+
+    def setUp(self):
+        from .models import Ebook
+        self.ebook = Ebook.objects.create(titre='Guide Yaay to Yaay', description='', prix=5000, actif=True)
+        self.admin = User.objects.create_user('equipe', 'equipe@test.sn', 'MotDePasse!2026', role='admin', phone_number='771110010')
+        self.client = APIClient()
+
+    def acheter(self, **extra):
+        donnees = {'ebook_id': self.ebook.id, 'email': 'maman@test.sn', 'telephone': '77 123 45 67',
+                   'mode_paiement': 'wave', 'reference_client': 'TX-ABC-123'}
+        donnees.update(extra)
+        return self.client.post('/api/ebook/acheter/', donnees, format='json')
+
+    def test_numeros_affiches(self):
+        data = self.client.get('/api/ebook/').json()
+        self.assertEqual(data['numeros_paiement']['wave'], '710189191')
+        self.assertEqual(data['numeros_paiement']['mixx'], '769319911')
+
+    def test_achat_a_verifier_sans_jeton_et_emails(self):
+        from .models import AchatEbook
+        res = self.acheter()
+        self.assertEqual(res.status_code, 201)
+        self.assertNotIn('token_telechargement', res.json())
+        achat = AchatEbook.objects.get()
+        self.assertEqual(achat.statut_paiement, 'a_verifier')
+        destinataires = sorted(d for m in mail.outbox for d in m.to)
+        self.assertEqual(destinataires, ['equipe@test.sn', 'maman@test.sn'])
+        # le lien ne marche pas tant que l'équipe n'a pas confirmé
+        self.assertEqual(self.client.get(f'/api/ebook/telecharger/{achat.token_telechargement}/').status_code, 403)
+
+    def test_champs_obligatoires_et_reference_unique(self):
+        res = self.acheter(reference_client='', telephone='12', mode_paiement='carte')
+        self.assertEqual(set(res.json()), {'reference_client', 'telephone', 'mode_paiement'})
+        self.assertEqual(self.acheter().status_code, 201)
+        self.assertIn('reference_client', self.acheter().json())
+
+    def test_confirmation_par_l_equipe_envoie_le_lien(self):
+        from .models import AchatEbook
+        self.acheter()
+        achat = AchatEbook.objects.get()
+        mail.outbox.clear()
+        self.assertIn(self.client.post(f'/api/admin/ebook-achats/{achat.id}/confirmer/').status_code, (401, 403))
+        self.client.force_authenticate(self.admin)
+        res = self.client.post(f'/api/admin/ebook-achats/{achat.id}/confirmer/')
+        self.assertEqual(res.status_code, 200)
+        achat.refresh_from_db()
+        self.assertEqual(achat.statut_paiement, 'paye')
+        self.assertEqual(mail.outbox[0].to, ['maman@test.sn'])
+        self.assertIn(f'https://yaayvide.test/api/ebook/telecharger/{achat.token_telechargement}/', mail.outbox[0].body)
+
+    def test_refus_previent_l_acheteuse(self):
+        from .models import AchatEbook
+        self.acheter()
+        achat = AchatEbook.objects.get()
+        mail.outbox.clear()
+        self.client.force_authenticate(self.admin)
+        self.assertEqual(self.client.post(f'/api/admin/ebook-achats/{achat.id}/refuser/').status_code, 200)
+        achat.refresh_from_db()
+        self.assertEqual(achat.statut_paiement, 'echoue')
+        self.assertEqual(mail.outbox[0].to, ['maman@test.sn'])

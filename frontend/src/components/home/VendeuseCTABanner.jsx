@@ -1,5 +1,6 @@
 // frontend/src/components/home/VendeuseCTABanner.jsx
 import { Link } from "react-router-dom";
+import { TELEPHONE_EQUIPE } from "../../config/contact";
 import bannerBg from "../../assets/cta-banner-bg.webp";
 
 const POINTS = [
@@ -119,7 +120,7 @@ export default function VendeuseCTABanner() {
               Commencer à vendre/louer
             </Link>
             <a
-              href="tel:+221710189191"
+              href={`tel:${TELEPHONE_EQUIPE}`}
               className="flex items-center justify-center gap-2 h-[52px] bg-white text-ink shadow-[0_6px_18px_-8px_rgba(27,36,48,0.22)] font-bold text-sm px-7 rounded-full w-full sm:w-auto hover:bg-[#2563eb]/5 transition-colors whitespace-nowrap"
             >
               <svg

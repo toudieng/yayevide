@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Layout from '../components/layout/Layout';
 import Reveal from '../components/ui/Reveal';
-import { apiFetch, API_BASE } from '../utils/api';
+import { apiFetch } from '../utils/api';
 import spreadChapitre0 from '../assets/ebook/spread_chapitre0.webp';
 // Chapitres 5 et 11 : versions floutées à la source (les pages nettes ne
 // sont jamais envoyées au navigateur) ; seul le chapitre 0 reste lisible.
@@ -13,12 +13,18 @@ function formatFCFA(value) {
   return Math.round(Number(value || 0)).toLocaleString('fr-FR') + ' FCFA';
 }
 
+// Paiement manuel : la cliente paie sur le numéro marchand (renvoyé par
+// l'API, /ebook/ → numeros_paiement), puis saisit la référence reçue par SMS.
 const MODES_PAIEMENT = [
   { value: 'wave', label: 'Wave' },
   { value: 'orange_money', label: 'Orange Money' },
   { value: 'mixx', label: 'Mixx by Yas' },
-  { value: 'carte', label: 'Carte bancaire' },
 ];
+
+// 710189191 → « 71 018 91 91 »
+function formatNumero(numero) {
+  return String(numero || '').replace(/\D/g, '').replace(/(\d{2})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4');
+}
 
 const CHAPITRES = [
   { n: '00', titre: "Préparer l'arrivée de bébé", desc: 'Valise de maternité, maison et mbottu dans la vraie vie dakaroise.', icone: 'maison' },
@@ -141,11 +147,11 @@ export default function Ebook() {
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
 
-  const [form, setForm] = useState({ email: '', telephone: '', mode_paiement: 'wave' });
+  const [form, setForm] = useState({ email: '', telephone: '', mode_paiement: 'wave', reference_client: '' });
   const [etape, setEtape] = useState('form');
-  const [achat, setAchat] = useState(null);
+  const [erreursChamps, setErreursChamps] = useState({});
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
-  const [confirmationEnCours, setConfirmationEnCours] = useState(false);
+  const [copie, setCopie] = useState(false);
   const [apercuIndex, setApercuIndex] = useState(0);
   const [faqOuvert, setFaqOuvert] = useState(0);
 
@@ -165,39 +171,44 @@ export default function Ebook() {
       .finally(() => setChargement(false));
   }, []);
 
-  const soumettre = async (e) => {
+  // Étape 1 → 2 : rien n'est envoyé, on affiche les instructions de paiement
+  const continuer = (e) => {
+    e.preventDefault();
+    setErreur(null);
+    setEtape('paiement');
+  };
+
+  // Étape 2 → 3 : la référence de la transaction part à l'équipe pour vérification
+  const envoyerReference = async (e) => {
     e.preventDefault();
     setEnvoiEnCours(true);
     setErreur(null);
-
-    const res = await apiFetch('/ebook/acheter/', {
-      method: 'POST',
-      body: { ebook_id: ebook.id, ...form },
-    });
-    const data = await res.json();
-
-    if (res.ok) {
-      setAchat(data.achat);
-      setEtape('paiement');
-    } else {
-      setErreur(data.email?.[0] || data.general || 'Une erreur est survenue.');
+    setErreursChamps({});
+    try {
+      const res = await apiFetch('/ebook/acheter/', { method: 'POST', body: { ebook_id: ebook.id, ...form } });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        setEtape('envoye');
+      } else {
+        setErreursChamps(data);
+        setErreur(data.general || 'Vérifiez les informations indiquées ci-dessous.');
+        if (data.email || data.mode_paiement) setEtape('form');
+      }
+    } catch {
+      setErreur('Impossible de joindre le serveur. Vos informations sont conservées, réessayez.');
+    } finally {
+      setEnvoiEnCours(false);
     }
-    setEnvoiEnCours(false);
   };
 
-  const confirmerPaiementSimule = async () => {
-    setConfirmationEnCours(true);
-    const res = await apiFetch('/ebook/paiement/simuler-confirmation/', {
-      method: 'POST',
-      body: { reference_paiement: achat.reference_paiement },
-    });
-    if (res.ok) {
-      setAchat(await res.json());
-      setEtape('succes');
-    } else {
-      setErreur('Impossible de confirmer le paiement.');
+  const copierNumero = async (numero) => {
+    try {
+      await navigator.clipboard.writeText(numero);
+      setCopie(true);
+      setTimeout(() => setCopie(false), 2000);
+    } catch {
+      /* copie indisponible : le numéro reste affiché */
     }
-    setConfirmationEnCours(false);
   };
 
   if (chargement) {
@@ -597,7 +608,7 @@ export default function Ebook() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6 text-teal shrink-0"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 01-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 011-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 011.52 0C14.51 3.81 17 5 19 5a1 1 0 011 1z" /><path d="m9 12 2 2 4-4" /></svg>
               <div>
                 <p className="text-[13.5px] font-bold text-ink">Achat sécurisé</p>
-                <p className="text-[12.5px] text-ink-soft/75">Le lien de téléchargement vous est envoyé par email dès le paiement confirmé.</p>
+                <p className="text-[12.5px] text-ink-soft/75">Paiement par Wave, Orange Money ou Mixx by Yas. Le lien de téléchargement vous est envoyé par e-mail dès que l'équipe a vérifié votre paiement.</p>
               </div>
             </div>
           </Reveal>
@@ -615,7 +626,7 @@ export default function Ebook() {
             <p className="text-[13px] text-ink-soft/75 mb-4">De maman à maman, à la dakaroise</p>
             <p className="font-serif text-3xl font-bold text-[#3D1B36] mb-5">{formatFCFA(ebook.prix)}</p>
             <ul className="space-y-2 mb-6">
-              {[`PDF${ebook.nb_pages ? ` de ${ebook.nb_pages} pages` : ''}`, '14 chapitres réels', 'Téléchargement après paiement confirmé'].map((f) => (
+              {[`PDF${ebook.nb_pages ? ` de ${ebook.nb_pages} pages` : ''}`, '14 chapitres réels', 'Lien envoyé par e-mail après vérification'].map((f) => (
                 <li key={f} className="flex items-center gap-2 text-[13.5px] text-ink-soft">
                   <CheckIcon className="h-4 w-4 text-teal-dark shrink-0" /> {f}
                 </li>
@@ -627,85 +638,131 @@ export default function Ebook() {
             )}
 
             {etape === 'form' && (
-              <form onSubmit={soumettre} className="space-y-3.5">
+              <form onSubmit={continuer} className="space-y-3.5">
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-1.5">
-                    Email (pour recevoir le lien) *
+                  <label htmlFor="ebook-email" className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                    E-mail (pour recevoir le lien) *
                   </label>
                   <input
-                    type="email" required value={form.email}
+                    id="ebook-email" type="email" required autoComplete="email" value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="w-full px-4 py-2.5 bg-sable border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
                     placeholder="vous@example.com"
                   />
+                  {erreursChamps.email && <p className="mt-1 text-[12px] text-red-700">{erreursChamps.email}</p>}
                 </div>
-                <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-1.5">
-                    Téléphone (optionnel)
-                  </label>
-                  <input
-                    type="text" value={form.telephone}
-                    onChange={(e) => setForm({ ...form, telephone: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-sable border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
-                    placeholder="77XXXXXXX"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-1.5">
-                    Moyen de paiement
-                  </label>
-                  <select
-                    value={form.mode_paiement}
-                    onChange={(e) => setForm({ ...form, mode_paiement: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-sable border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
-                  >
-                    {MODES_PAIEMENT.map((m) => <option key={m.value} value={m.value}>{m.label}</option>)}
-                  </select>
-                </div>
+                <fieldset>
+                  <legend className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-1.5">Moyen de paiement *</legend>
+                  <div className="grid grid-cols-3 gap-2">
+                    {MODES_PAIEMENT.map((m) => (
+                      <label
+                        key={m.value}
+                        className={`flex items-center justify-center text-center min-h-[44px] px-2 rounded-btn border text-[13px] font-semibold cursor-pointer transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-teal ${
+                          form.mode_paiement === m.value ? 'border-[#3D1B36] bg-[#3D1B36] text-white' : 'border-line bg-sable text-ink hover:border-ink'
+                        }`}
+                      >
+                        <input
+                          type="radio" name="mode_paiement" value={m.value} className="sr-only"
+                          checked={form.mode_paiement === m.value}
+                          onChange={() => setForm({ ...form, mode_paiement: m.value })}
+                        />
+                        {m.label}
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
                 <button
-                  type="submit" disabled={envoiEnCours}
-                  className="w-full bg-[#3D1B36] hover:bg-[#2c1327] text-white font-bold py-3.5 rounded-btn text-sm transition-colors disabled:opacity-50"
+                  type="submit"
+                  className="w-full bg-[#3D1B36] hover:bg-[#2c1327] text-white font-bold py-3.5 rounded-btn text-sm transition-colors"
                 >
-                  {envoiEnCours ? 'Un instant...' : `Acheter — ${formatFCFA(ebook.prix)}`}
+                  Continuer — {formatFCFA(ebook.prix)}
                 </button>
+                <p className="text-[12px] text-ink-soft/75 text-center">Pas de carte bancaire pour le moment : paiement par mobile money.</p>
               </form>
             )}
 
-            {etape === 'paiement' && achat && (
-              <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 text-center space-y-3">
-                <div className="h-12 w-12 mx-auto rounded-full bg-orange/10 flex items-center justify-center text-orange">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5">
-                    <rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" />
-                  </svg>
-                </div>
-                <p className="font-serif text-base text-ink">Paiement en attente</p>
-                <p className="text-[13px] text-ink-soft/75">Montant : <strong>{formatFCFA(achat.prix_paye)}</strong></p>
-                <p className="text-[11px] text-ink-soft/75">
-                  L'intégration InTouch n'est pas encore branchée — ce bouton simule une confirmation de paiement réussie, uniquement disponible en développement.
-                </p>
-                <button
-                  onClick={confirmerPaiementSimule} disabled={confirmationEnCours}
-                  className="bg-teal hover:bg-teal-dark text-white font-bold px-5 py-2.5 rounded-btn text-[13px] transition-colors disabled:opacity-50"
-                >
-                  {confirmationEnCours ? '...' : 'Simuler le paiement réussi'}
-                </button>
-              </div>
-            )}
+            {etape === 'paiement' && (() => {
+              const mode = MODES_PAIEMENT.find((m) => m.value === form.mode_paiement) || MODES_PAIEMENT[0];
+              const numero = ebook.numeros_paiement?.[mode.value] || '';
+              return (
+                <form onSubmit={envoyerReference} className="space-y-3.5">
+                  <ol className="space-y-3 rounded-m bg-creme p-4 text-[13.5px] text-ink">
+                    <li className="flex gap-3">
+                      <span className="h-6 w-6 shrink-0 rounded-full bg-[#3D1B36] text-white text-[12px] font-bold flex items-center justify-center" aria-hidden="true">1</span>
+                      <div className="min-w-0">
+                        <p>
+                          Envoyez <strong>{formatFCFA(ebook.prix)}</strong> par <strong>{mode.label}</strong> au :
+                        </p>
+                        <div className="mt-1.5 flex items-center gap-2 flex-wrap">
+                          <span className="font-bold text-[20px] tracking-wide text-[#3D1B36] whitespace-nowrap">{formatNumero(numero)}</span>
+                          <button
+                            type="button" onClick={() => copierNumero(numero)}
+                            className="min-h-[36px] px-3 rounded-full border border-line bg-white text-[12px] font-semibold text-ink hover:border-ink"
+                          >
+                            {copie ? 'Copié ✓' : 'Copier'}
+                          </button>
+                        </div>
+                        <p className="text-[12px] text-ink-soft mt-1">Bénéficiaire : Yaay Vidé</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="h-6 w-6 shrink-0 rounded-full bg-[#3D1B36] text-white text-[12px] font-bold flex items-center justify-center" aria-hidden="true">2</span>
+                      <p>Notez la <strong>référence de la transaction</strong> indiquée dans le SMS de confirmation, puis remplissez ci-dessous.</p>
+                    </li>
+                  </ol>
 
-            {etape === 'succes' && achat && (
-              <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 text-center space-y-3">
+                  <div>
+                    <label htmlFor="ebook-telephone" className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                      Numéro qui a payé *
+                    </label>
+                    <input
+                      id="ebook-telephone" type="tel" required inputMode="tel" autoComplete="tel" value={form.telephone}
+                      onChange={(e) => setForm({ ...form, telephone: e.target.value })}
+                      aria-invalid={Boolean(erreursChamps.telephone)}
+                      className="w-full px-4 py-2.5 bg-sable border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
+                      placeholder="77 123 45 67"
+                    />
+                    {erreursChamps.telephone && <p className="mt-1 text-[12px] text-red-700">{erreursChamps.telephone}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="ebook-reference" className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                      Référence de la transaction *
+                    </label>
+                    <input
+                      id="ebook-reference" type="text" required autoComplete="off" value={form.reference_client}
+                      onChange={(e) => setForm({ ...form, reference_client: e.target.value })}
+                      aria-invalid={Boolean(erreursChamps.reference_client)}
+                      className="w-full px-4 py-2.5 bg-sable border border-line rounded-btn text-sm focus:outline-none focus:border-teal"
+                      placeholder="Ex. : la référence du SMS"
+                    />
+                    {erreursChamps.reference_client && <p className="mt-1 text-[12px] text-red-700">{erreursChamps.reference_client}</p>}
+                  </div>
+                  <button
+                    type="submit" disabled={envoiEnCours}
+                    className="w-full bg-[#3D1B36] hover:bg-[#2c1327] text-white font-bold py-3.5 rounded-btn text-sm transition-colors disabled:opacity-50"
+                  >
+                    {envoiEnCours ? 'Envoi…' : "J'ai payé, envoyer"}
+                  </button>
+                  <button
+                    type="button" onClick={() => setEtape('form')}
+                    className="w-full min-h-[44px] text-[13px] font-semibold text-ink-soft hover:text-ink underline underline-offset-2"
+                  >
+                    Changer de moyen de paiement
+                  </button>
+                </form>
+              );
+            })()}
+
+            {etape === 'envoye' && (
+              <div className="bg-white rounded-m shadow-[0_10px_30px_-14px_rgba(27,36,48,0.22)] p-6 text-center space-y-3" role="status">
                 <div className="h-12 w-12 mx-auto rounded-full bg-teal/10 flex items-center justify-center text-teal-dark">
                   <CheckIcon className="h-5 w-5" />
                 </div>
-                <p className="font-serif text-base text-ink">Paiement confirmé !</p>
-                <p className="text-[13px] text-ink-soft/75">Votre e-book vous attend juste ici :</p>
-                <a
-                  href={`${API_BASE}/ebook/telecharger/${achat.token_telechargement}/`}
-                  className="inline-flex items-center gap-2 bg-[#3D1B36] hover:bg-[#2c1327] text-white font-bold px-5 py-2.5 rounded-btn text-[13px] transition-colors"
-                >
-                  Télécharger mon e-book
-                </a>
-                <p className="text-[11px] text-ink-soft/75">Gardez ce lien, il reste valable pour retélécharger votre e-book.</p>
+                <p className="font-serif text-base text-ink">Merci, c'est bien reçu !</p>
+                <p className="text-[13.5px] text-ink-soft">
+                  Nous vérifions votre paiement. Le lien de téléchargement arrive à <strong className="text-ink">{form.email}</strong>, en général sous 24 h.
+                </p>
+                <p className="text-[12px] text-ink-soft/75">Pensez à regarder dans vos courriers indésirables.</p>
               </div>
             )}
           </Reveal>

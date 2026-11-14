@@ -452,7 +452,7 @@ class AchatEbookSerializer(serializers.ModelSerializer):
         model = AchatEbook
         fields = [
             'id', 'ebook', 'ebook_titre', 'email', 'telephone', 'mode_paiement',
-            'prix_paye', 'statut_paiement', 'reference_paiement', 'date_paiement',
+            'prix_paye', 'statut_paiement', 'reference_paiement', 'reference_client', 'date_paiement',
             'token_telechargement', 'date_creation',
         ]
         read_only_fields = fields

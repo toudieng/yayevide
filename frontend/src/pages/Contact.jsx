@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import PageBanner from '../components/ui/PageBanner';
 import Reveal from '../components/ui/Reveal';
+import { WHATSAPP_EQUIPE } from '../config/contact';
 
-const WHATSAPP_SUPPORT_NUMBER = '221765879303'; // numéro de test (Xaali) — à remplacer par celui de la propriétaire au moment de la livraison finale
 
 export default function Contact() {
   const [formData, setFormData] = useState({ nom: '', email: '', message: '' });
@@ -18,7 +18,7 @@ export default function Contact() {
     const texte = encodeURIComponent(
       `Nouveau message via le site Yaay Vidé\nNom : ${formData.nom}\nEmail : ${formData.email}\n\n${formData.message}`
     );
-    window.open(`https://wa.me/${WHATSAPP_SUPPORT_NUMBER}?text=${texte}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP_EQUIPE}?text=${texte}`, '_blank');
     setEnvoye(true);
   };
 
@@ -106,7 +106,7 @@ export default function Contact() {
             <div>
               <p className="text-[11px] uppercase tracking-wider text-cream/50 mb-2.5">Une réponse rapide ?</p>
               <a
-                href={`https://wa.me/${WHATSAPP_SUPPORT_NUMBER}`}
+                href={`https://wa.me/${WHATSAPP_EQUIPE}`}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center justify-center gap-2 w-full bg-teal hover:bg-teal-dark text-white rounded-btn py-3.5 text-sm font-bold uppercase tracking-wide transition-all hover:-translate-y-0.5"

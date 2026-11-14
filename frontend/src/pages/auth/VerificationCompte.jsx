@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../../components/ui/Logo';
 import { apiFetch } from '../../utils/api';
+import { WHATSAPP_EQUIPE } from '../../config/contact';
 
-const WHATSAPP_SUPPORT_NUMBER = '221765879303'; // numéro de test (Xaali) — à remplacer par celui de la propriétaire au moment de la livraison finale
 
 export default function VerificationCompte() {
   const { state } = useLocation();
@@ -30,7 +30,7 @@ export default function VerificationCompte() {
   const messageWhatsapp = encodeURIComponent(
     `Bonjour Yaay Vidé, je confirme mon inscription en tant que vendeuse / loueuse.\nNom d'utilisateur : ${username}\nCode de vérification : ${token}`
   );
-  const whatsappHref = `https://wa.me/${WHATSAPP_SUPPORT_NUMBER}?text=${messageWhatsapp}`;
+  const whatsappHref = `https://wa.me/${WHATSAPP_EQUIPE}?text=${messageWhatsapp}`;
 
   const handleRenvoyer = async () => {
     setRenvoiEnCours(true);
